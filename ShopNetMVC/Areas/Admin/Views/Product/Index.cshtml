@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Sản phẩm";
+
+}
+
+@section header{
+    <h1>Quản lý sản phẩm</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i>Trang chủ</a></li>
+        <li><a href="/admin/product">Sản phẩm</a></li>
+        <li class="active">Danh sách sản phẩm</li>
+    </ol>
+}
+
+@section css{
+    <link href="~/assets/admin/dist/css/responsive.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/scripts/jquery.twbsPagination.min.js"></script>
+    <script src="~/assets/admin/js/productController.js"></script>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box fix-box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    Danh sách sản phẩm |
+                    <a href="/admin/product/create" class="btn btn-info btn-sm"> <i class="fa  fa-plus"></i> Thêm mới</a>
+                </h3>
+                <div class="box-tools pull-right">
+                    <div class="input-group input-group-sm pull-right">
+                        @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control pull-right", @placeholder = "Tìm kiếm" })
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Hình ảnh sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày chỉnh sửa</th>
+                            <th>Trạng thái</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-data"></tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><span id="dataTables_info"></span></p>
+                    </div>
+                    <div class="col-sm-6 pagination-ul">
+                        <ul id="pagination" class="pagination-sm no-margin pull-right"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+    </div>
+    <!-- /.box -->
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr id="row_{{ProdID}}">
+        <td>{{ProdID}}</td>
+        <td>{{ProdName}}</td>
+        <td>
+            <a data-id="{{ProdID}}" data-image="{{Image}}" class="product-image" href="#">
+                <img class="center-block img-responsive" id="image_{{ProdID}}" src="{{Image}}" style="width:100px; height: 100px;" />
+            </a>
+        </td>
+        <td>{{Cost}}</td>
+        <td>{{CreatedAt}}</td>
+        <td>{{UpdatedAt}}</td>
+        <td> <a href="#" data-id="{{ProdID}}" class="btn-status {{Class}}">{{Active}}</a> </td>
+        <td>
+            <a href="/admin/product/detail/{{ProdID}}">Chi tiết</a> |
+            <a href="/admin/product/edit/{{ProdID}}">Sửa</a> |
+            <a href="#" data-id="{{ProdID}}" class="btn-delete">Xóa</a>
+        </td>
+    </tr>
+</script>
+
+<script id="form-template" type="x-tmpl-mustache">
+    <form name="form-data">
+        <div class="form-group">
+            <label for="name">Tên tướng</label>
+            <input name="name" id="name" type="text" class="form-control" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="rare">Quý giá</label>
+            <input name="rare" id="rarw" type="checkbox" checked="checked" class="form-control" />
+        </div>
+    </form>
+</script>

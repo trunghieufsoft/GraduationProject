@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D1580D9-6AAD-4204-97D9-8D36BBF8BC3E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Models</RootNamespace>
+    <AssemblyName>Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\Encode\Converter.cs" />
+    <Compile Include="Common\Encode\Decrypt.cs" />
+    <Compile Include="Common\Encode\Encrypt.cs" />
+    <Compile Include="DataAccess\Dao\BillDao.cs" />
+    <Compile Include="DataAccess\Dao\CategoryDao.cs" />
+    <Compile Include="DataAccess\Dao\CommentDao.cs" />
+    <Compile Include="DataAccess\Dao\GrantDao.cs" />
+    <Compile Include="DataAccess\Dao\OrderDao.cs" />
+    <Compile Include="DataAccess\Dao\ProductDao.cs" />
+    <Compile Include="DataAccess\Dao\RatingDao.cs" />
+    <Compile Include="DataAccess\Dao\RepliesDao.cs" />
+    <Compile Include="DataAccess\Dao\UserDao.cs" />
+    <Compile Include="DataAccess\Dto\Request\Auditable.cs" />
+    <Compile Include="DataAccess\Dto\Request\BillRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\CartRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\CategoryRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\CommentRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\GrantRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\OrderRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\ProductRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\RatingRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\RepliesRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Request\UserRequestDto.cs" />
+    <Compile Include="DataAccess\Dto\Session\UserSession.cs" />
+    <Compile Include="DataAccess\Dto\UserDto.cs" />
+    <Compile Include="DataAccess\Dto\UserRegister.cs" />
+    <Compile Include="EntityFramework\Auditable.cs" />
+    <Compile Include="EntityFramework\Bill.cs" />
+    <Compile Include="EntityFramework\Category.cs" />
+    <Compile Include="EntityFramework\Comment.cs" />
+    <Compile Include="EntityFramework\Grant.cs" />
+    <Compile Include="EntityFramework\Order.cs" />
+    <Compile Include="EntityFramework\Product.cs" />
+    <Compile Include="EntityFramework\Rating.cs" />
+    <Compile Include="EntityFramework\Reply.cs" />
+    <Compile Include="EntityFramework\ShopDbContext.cs" />
+    <Compile Include="EntityFramework\User.cs" />
+    <Compile Include="Migrations\201812081447469_Initial_Database.cs" />
+    <Compile Include="Migrations\201812081447469_Initial_Database.Designer.cs">
+      <DependentUpon>201812081447469_Initial_Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812081447469_Initial_Database.resx">
+      <DependentUpon>201812081447469_Initial_Database.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

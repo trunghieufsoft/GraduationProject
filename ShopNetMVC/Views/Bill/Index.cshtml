@@ -1,0 +1,60 @@
+﻿
+@section JavaScript{
+
+    <script src="~/assets/client/js/billController.js"></script>
+}
+<div class="box box-primary" style="margin-top:15px;">
+    <div>
+        <h3 class="text-center box-title">Thông tin đặt hàng</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Giá</th>
+                    <th>Địa chỉ giao hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody id="table-data"></tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix">
+        <div class="row">
+            <div class="col-sm-6">
+                <p><span id="dataTables_info"></span></p>
+            </div>
+            <div class="col-sm-6 pagination-ul">
+                <ul id="pagination" class="pagination-sm no-margin pull-right"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.box -->
+
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr id="row-{{BillID}}">
+        <td>{{BillID}}</td>
+        <td>{{CustomerName}}</td>
+        <td>{{TotalPrice}}</td>
+        <td>{{DeliveryAddress}}</td>
+        <td>{{CreatedAt}}</td>
+        <td>
+            @if (ViewBag.IsUser)
+            {
+                <span class="{{Class}}">{{Status}}</span>
+            }
+            else
+            {
+                <a href="#" data-id="{{BillID}}" class="btn-status {{Class}}">{{Status}}</a>
+            }
+        </td>
+    </tr>
+</script>
