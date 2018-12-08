@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Danh Mục Sản Phẩm";
+
+}
+
+@section header{
+    <h1>Quản lý danh mục sản phẩm</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i>Trang chủ</a></li>
+        <li><a href="/admin/category">Danh mục sản phẩm</a></li>
+        <li class="active">Danh sách</li>
+    </ol>
+}
+
+@section css{
+    <link href="~/assets/admin/dist/css/responsive.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/scripts/jquery.twbsPagination.min.js"></script>
+    <script src="~/assets/admin/js/categoryController.js"></script>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box fix-box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    Danh sách danh mục sản phẩm |
+                    <a href="/admin/category/create" class="btn btn-info btn-sm"> <i class="fa  fa-plus"></i> Thêm mới</a>
+                </h3>
+                <div class="box-tools pull-right">
+                    <div class="input-group input-group-sm pull-right">
+                        @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control pull-right", @placeholder = "Tìm kiếm" })
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên danh mục</th>
+                            <th>Mã danh mục</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày chỉnh sửa</th>
+                            <th>Trạng thái</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-data"></tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><span id="dataTables_info"></span></p>
+                    </div>
+                    <div class="col-sm-6 pagination-ul">
+                        <ul id="pagination" class="pagination-sm no-margin pull-right"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr id="row_{{ID}}">
+        <td>{{ID}}</td>
+        <td>{{Name}}</td>
+        <td>{{Code}}</td>
+        <td>{{CreatedAt}}</td>
+        <td>{{UpdatedAt}}</td>
+        <td><a href="#" data-id="{{ID}}" class="btn-status {{Class}}">{{Text}}</a></td>
+        <td>
+            <a href="/admin/category/edit/{{ID}}">Sửa</a> |
+            <a href="#" data-id="{{ID}}" class="btn-delete">Xóa</a>
+        </td>
+    </tr>
+</script>

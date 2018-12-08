@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Phân quyền";
+}
+
+@section header{
+    <h1>Quản lý phân quyền</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i>Trang chủ</a></li>
+        <li><a href="/admin/category">Phân quyền</a></li>
+        <li class="active">Danh sách</li>
+    </ol>
+}
+
+@section css{
+    <link href="~/assets/admin/dist/css/responsive.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/scripts/jquery.twbsPagination.min.js"></script>
+    <script src="~/assets/admin/js/grantController.js"></script>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box fix-box">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách phân quyền |
+                    <a href="/admin/grant/create" class="btn btn-info btn-sm"> <i class="fa  fa-plus"></i> Thêm mới</a>
+                </h3>
+                <div class="box-tools pull-right">
+                    <div class="input-group input-group-sm pull-right">
+                        @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control pull-right", @placeholder = "Tìm kiếm" })
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mã quyền</th>
+                            <th>Tên quyền</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày chỉnh sửa</th>
+                            <th>Trạng thái</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-data"></tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><span id="dataTables_info"></span></p>
+                    </div>
+                    <div class="col-sm-6 pagination-ul">
+                        <ul id="pagination" class="pagination-sm no-margin pull-right"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr id="row_{{ID}}">
+        <td>{{ID}}</td>
+        <td>{{Name}}</td>
+        <td>{{CreatedAt}}</td>
+        <td>{{CreatedAt}}</td>
+        <td> <a href="#" data-id="{{ID}}" class="btn-change {{Class}}">{{Status}}</a> </td>
+        <td> <a href="/admin/grant/edit/{{ID}}">Sửa</a> </td>
+    </tr>
+</script>

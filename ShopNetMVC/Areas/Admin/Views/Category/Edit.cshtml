@@ -1,0 +1,63 @@
+﻿@model Models.DataAccess.CategoryRequestDto
+
+@{
+    ViewBag.Title = "Cập nhật danh mục";
+    
+}
+
+@section header{
+    <h1>Cập nhật danh mục sản phẩm</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i>Trang chủ</a></li>
+        <li><a href="/admin/category">Danh mục sản phẩm</a></li>
+        <li class="active">Cập nhật</li>
+    </ol>
+}
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6 col-md-offset-3">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Thông tin danh mục sản phẩm</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            @using (Html.BeginForm("edit", "category", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.CateID)
+            <div class="box-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CateName)
+                    @Html.TextBoxFor(model => model.CateName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CateName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group" hidden>
+                    @Html.LabelFor(model => model.CodeName)
+                    @Html.TextBoxFor(model => model.CodeName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CodeName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.isActive)
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(model => model.isActive)
+                            Kích hoạt
+                        </label>
+                        @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    @Html.ActionLink("Hủy", "Index", new object { }, new { @class = "btn btn-default col-md-offset-1" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title - The Coffee House</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/assets/client/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/assets/client/css/style.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="~/assets/client/css/font-awesome.css" media="screen">
+    <link rel="stylesheet" href="~/assets/client/css/flexslider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/assets/client/css/responsive.css" type="text/css" media="screen" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!--top-strip-->
+    <div class="top-strip">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 user">
+                    <p>
+                        Chào mừng đến với The Coffee House
+                    </p>
+                </div>
+                <div class="col-md-6 language">
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end-top-strip-->
+    <!--navbar-->
+    <div class="container header">
+        <nav id="myNavbar" class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="~/assets/client/images/logo.png" alt="logo" style="width: 200px;height: 24px"></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="./"><i class="glyphicon glyphicon-home"></i> Trang chủ</a></li>
+                        <li><a href="/cart">Giỏ hàng</a></li>
+
+                        <li><a href="/about">Giới thiệu</a></li>
+
+                        <li><a href="/contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </div>
+    <!--end-navbar-->
+
+    @RenderBody()
+    <!--footer-->
+    <br />
+    <div class="full-footer">
+        <div class="container-full">
+            <div class="container info">
+                <div class="row">
+                    <div class="col-sm-4 addres">
+                        <img src="~/assets/client/images/footer-logo.png" alt="logo">
+                        <h6>The Coffee House</h6>
+                        <p>
+                            123 Nguyễn Văn Linh, Hải Châu, Đà Nẵng
+                        </p>
+                        <p>
+                            Phone 0123 456 789/0123 456 788
+                        </p>
+                    </div>
+                    <div class="col-sm-2 account">
+                        <h4>Tài khoản của tôi</h4>
+                        <ul>
+                            <li><a href="./cart">Giỏ hàng</a></li>
+                            <li><a href="~/">Đặt hàng</a></li>
+                            <li><a href="">Thông tin cá nhân</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 assistance">
+                        <h4>Tiêu chí</h4>
+                        <ul>
+                            <li><a href="">Nhân viên nhiệt tình</a></li>
+                            <li><a href="">Không gian sang trọng</a></li>
+                            <li><a href="">Giao hàng miễn phí tận nơi</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 about">
+                        <h4>Về chúng tôi</h4>
+                        <p>
+                            Với đội ngũ nhân viên nhiệt tình cộng với chất lượng hảo hạn từ sản phẩm tại đây, hi vọng quý vị có những giây phút tuyệt với bên gia đình, bạn bè và ngưòi thân
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end-addres-->
+        <div class="container">
+            <div class="row bottom-strip">
+                <div class="col-sm-6 rights">
+                    <p>
+
+                    </p>
+                </div>
+                <div class="col-sm-6 social">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fa fa-asterisk"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end-footer-->
+    <script src="~/assets/client/js/jquery.min.js"></script>
+    <script src="~/assets/client/js/bootstrap.min.js"></script>
+    <script src="~/assets/client/js/modernizr.js"></script>
+    <script src="~/assets/client/js/jquery.flexslider-min.js"></script>
+    <script src="~/assets/client/app/main.js"></script>
+    <script src="~/node_modules/mustache/mustache.min.js"></script>
+    <script src="~/node_modules/twbs-pagination/jquery.twbsPagination.min.js"></script>
+    <script type="text/javascript">
+        // jQuery
+        (function ($) {
+            "use strict";
+            $(document).ready(function () {
+                // Main Slider
+                $('.main-flexslider').flexslider({
+                    directionNav: true,
+                    controlNav: false,
+                    animation: "fade",
+                    slideshowSpeed: 3000,
+                    prevText: "",
+                    nextText: "",
+                });
+            });
+        })(jQuery);
+    </script>
+    @RenderSection("JavaScript", false)
+</body>
+</html>

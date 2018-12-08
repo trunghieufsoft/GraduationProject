@@ -1,0 +1,45 @@
+﻿@model Models.DataAccess.GrantRequestDto
+
+@{
+    ViewBag.Title = "Chỉnh sửa phân quyền";
+}
+
+@section header{
+    <h1>Cập nhật phân quyền</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i>Trang chủ</a></li>
+        <li><a href="/admin/grant">Phân quyền</a></li>
+        <li class="active">Chỉnh sửa</li>
+    </ol>
+}
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6 col-md-offset-3">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Thông tin phân quyền</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            @using (Html.BeginForm("edit", "grant", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.GrantID);
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GrantName)
+                        @Html.TextBoxFor(model => model.GrantName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.GrantName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    @Html.ActionLink("Hủy", "index", new object { }, new { @class = "btn btn-default col-md-offset-1" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

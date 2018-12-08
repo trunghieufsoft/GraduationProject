@@ -1,0 +1,15 @@
+﻿@media(max-width: 767px) {
+    div.pagination-ul {
+        margin: 0 auto!important;
+        text-align: center;
+    }
+    ul#pagination {
+        float: none !important;
+        text-align: center;
+    }
+}
+.box-header>.box-tools {
+    right: 0px;
+    top: 10px;
+    width: 30%;
+}

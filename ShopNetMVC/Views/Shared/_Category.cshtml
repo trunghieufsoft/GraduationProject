@@ -1,0 +1,12 @@
+﻿<li class="dropdown">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Thực đơn</a>
+    <ul class="dropdown-menu">
+        @{
+            foreach (var item in ViewBag.Categories)
+            {
+                <li><a href="/category/@item.CateID">@item.CateName</a></li>
+            }
+        }
+    </ul>
+</li>
+

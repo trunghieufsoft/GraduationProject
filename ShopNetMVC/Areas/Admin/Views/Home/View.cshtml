@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="~/scripts/controller/controllerjs.js"></script>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Salary</td>
+            <td>Status</td>
+        </tr>
+    </thead>
+    <tbody id="table-data"></tbody>
+</table>
+<script id="table-template" type="x-tmpl-mustache">
+    <tr>
+        <td>{{ID}}</td>
+        <td>{{Name}}</td>
+        <td><input type="number" class="txtSalary" data-id="{{ID}}" value="{{Salary}}" /></td>
+        <td>{{{Status}}}</td>
+    </tr>
+</script>
