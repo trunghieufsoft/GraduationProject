@@ -3,14 +3,18 @@ using Models.DataAccess;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Models.Common.Encode;
+using Models.DataAccess.Dto;
+using Models.Common;
 
 namespace ShopNetMVC.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         // GET: Category
         public ActionResult Index(string code)
         {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
             var products = ProductDao.Instance.GetByCategoryCode(code);
 
             ViewBag.ProductCount = products.Count;

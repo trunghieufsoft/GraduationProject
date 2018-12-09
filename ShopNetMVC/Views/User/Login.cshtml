@@ -1,28 +1,96 @@
 ﻿@model Models.DataAccess.UserDto
-<div class="box box-primary" style="margin-top:15px;">
-    <div>
-        <h3 class="text-center box-title">Đăng nhập</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body no-padding col-md-4 col-md-offset-4">
-        @using (Html.BeginForm("Login", "User", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group ">
-            </div>
-            <div class="form-group ">
-                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Tên đăng nhập", @autofocus = "autofocus" })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group ">
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
-            </div>
 
-        }
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.activeHome = "active";
+}
+
+@section JavaScript{
+    @*<script src="~/assets/client/app/loginController.js"></script>*@
+}
+
+<!--articles-->
+<div class="container">
+    <div class="row articles">
+        <!-- list category order -->
+        <div class="col-md-9 white-bg">
+            <div class="col-md-12" style="background: #fff">
+                <div style="margin-top: 15px">
+                    <p class="box-title">Đăng nhập</p>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <!-- Content -->
+                    <div style="width: 60%; margin: auto">
+                        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group ">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Tên đăng nhập", @autofocus = "autofocus" })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group ">
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p><span id="dataTables_info"></span></p>
+                        </div>
+                        <div class="col-sm-6 pagination-ul">
+                            <ul id="pagination" class="pagination-sm no-margin pull-right"></ul>
+                        </div>
+                    </div>
+                </div>
+                <!--articles-->
+            </div>
+        </div>
+        <div class="col-md-3 shop-sidebar">
+            <div class="sidebar-widgets">
+                @{Html.RenderAction("RightCategory", "Category");}
+                <div class="shop-widget">
+                    <h4>được yêu thích</h4>
+                    <ul class="popular-product">
+                        @for (var i = 0; i < @ViewBag.Length; i++)
+                        {
+                            <li>
+                                <img src="@ViewBag.Related[@i].ImageUrl" alt="@ViewBag.Related[@i].ProdName" style="width: 50px;height: 50px; margin: 0">
+                                <div>
+                                    <h6><a href="/product/detail?code=@ViewBag.Related[@i].Code">@ViewBag.Related[@i].ProdName</a></h6>
+                                    <span>@ViewBag.listPrice[@i] đồng</span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!--end-prize-->
+<!-- /.box -->
+<script id="data-template" type="x-tmpl-mustache">
+    <tr id="row-{{ProdId}}">
+        <td>
+            <img class="img-responsive" style="width: 100px; height: 100px; margin-top: 0px;" src="{{ImageUrl}}" alt="{{ProdName}}" />
+        </td>
+        <td>{{ProdName}}</td>
+        <td>{{Code}}</td>
+        <td>{{Cost}}</td>
+        <td>{{Amount}}</td>
+        <td>
+            <a class="btn-delete" data-productid="{{ProdId}}" data-productname="{{ProdName}}" href="#">Xóa</a>
+            <a class="btn-edit" data-productid="{{ProdId}}" data-amount="{{Amount}}" href="#">Cập nhật</a>
+        </td>
+    </tr>
+</script>

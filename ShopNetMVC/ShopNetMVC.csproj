@@ -1425,6 +1425,7 @@
     <Content Include="assets\admin\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="assets\admin\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="assets\admin\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="assets\client\app\cartController.js" />
     <Content Include="assets\client\app\home.js" />
     <Content Include="assets\client\app\main.js" />
     <Content Include="assets\client\css\bootstrap.css" />
@@ -1757,6 +1758,7 @@
     <Content Include="Views\Shared\_Category.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Shared\_RightBarCategory.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1789,6 +1791,9 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\client\app\addCart.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

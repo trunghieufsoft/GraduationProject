@@ -14,6 +14,8 @@ namespace ShopNetMVC.Controllers
         // GET: Bill
         public ActionResult Index()
         {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
             ViewBag.IsUser = ((UserSession)Session[Constants.USER_SESSION]).GrantID == (int)Constants.GrantID.User;
             return View();
         }

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace ShopNetMVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: Home
         public ActionResult Index()
@@ -18,6 +18,7 @@ namespace ShopNetMVC.Controllers
         public ActionResult UserLogin()
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
             ViewBag.UserName = session == null ? string.Empty : session.UserName;
             return PartialView("_Loginbar");
         }
@@ -41,6 +42,13 @@ namespace ShopNetMVC.Controllers
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.IsLogin = session != null;
             return PartialView("_Bill");
+        }
+
+        public ActionResult Error()
+        {
+            ViewBag.Error = true;
+            ViewBag.Message = "Lỗi không xác định 404";
+            return PartialView("_Error");
         }
     }
 }

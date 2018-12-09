@@ -287,9 +287,38 @@ namespace Models.DataAccess
             return model;
         }
 
+        public IEnumerable<Product> RelatedProducts(int amount)
+        {
+            var products = db.Products.ToList();
+            double level = 0.0;
+            var listlvProd = new List<objLvProd>();
+            foreach (var element in products)
+            {
+                var listRating = db.Ratings.Where(rat => rat.ProdID == element.ProdID).ToList();
+                if (listRating.Count > 0)
+                {
+                    foreach (var item in listRating)
+                        level += item.Level;
+                    listlvProd.Add(new objLvProd(){
+                        product = element,
+                        level = Math.Round(level/listRating.Count)
+                    });
+                }
+            }
+            return listlvProd.Count > 0 
+                ? listlvProd.OrderByDescending(llp => llp.level).Select(p => p.product).Take(amount)
+                : db.Products.Where(p => p.CateID == 1).OrderByDescending(p => p.CreatedAt).Take(amount);
+        }
+
         public List<Product> GetByCategoryCode(string code)
         {
-            return db.Products.Where(x=> x.Category.CodeName == code).ToList();
+            return db.Products.Where(x => x.Category.CodeName == code).ToList();
         }
+    }
+
+    internal class objLvProd
+    {
+        public Product product { get; set; }
+        public double level { get; set; }
     }
 }

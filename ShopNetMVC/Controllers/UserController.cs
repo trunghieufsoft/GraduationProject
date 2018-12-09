@@ -1,18 +1,31 @@
-﻿using Models.Common;
+﻿using AutoMapper;
+using Models.Common;
+using Models.Common.Encode;
 using Models.DataAccess;
 using Models.DataAccess.Dto;
 using Models.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace ShopNetMVC.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         // GET: Register
         [HttpGet]
         public ActionResult Register()
         {
+            var related = ProductDao.Instance.RelatedProducts(4);
+
+            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+
+            var listPrice = new List<string>();
+            foreach (var item in related)
+                listPrice.Add(Converter.formatPrice(item.Cost));
+            ViewBag.listPrice = listPrice;
+            ViewBag.Length = listPrice.Count;
+
             return View();
         }
 
@@ -54,6 +67,16 @@ namespace ShopNetMVC.Controllers
 
         public ActionResult Login()
         {
+            var related = ProductDao.Instance.RelatedProducts(4);
+
+            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+
+            var listPrice = new List<string>();
+            foreach (var item in related)
+                listPrice.Add(Converter.formatPrice(item.Cost));
+            ViewBag.listPrice = listPrice;
+            ViewBag.Length = listPrice.Count;
+
             return View();
         }
 
@@ -89,11 +112,14 @@ namespace ShopNetMVC.Controllers
                         var u = UserDao.Instance.getByID(model.UserName);
                         var userSession = new UserSession(u.UserID, u.GrantID);
                         Session.Add(Constants.USER_SESSION, userSession);
+                        ViewBag.UserSession = true;
                         return RedirectToAction("Index", "Home");
                 }
+                ViewBag.UserSession = false;
             }
             else
             {
+                ViewBag.UserSession = false;
                 ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng");
             }
 

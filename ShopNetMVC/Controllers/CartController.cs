@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Models.Common.Encode;
 
 namespace ShopNetMVC.Controllers
 {
@@ -16,61 +17,32 @@ namespace ShopNetMVC.Controllers
         public ActionResult Index()
         {
             ViewBag.IsOrdered = (List<OrderRequestDto>)Session[Constants.CART_SESSION] != null;
+
+            var related = ProductDao.Instance.RelatedProducts(4);
+
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
+
+            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+
+            var listPrice = new List<string>();
+            foreach (var item in related)
+                listPrice.Add(Converter.formatPrice(item.Cost));
+            ViewBag.listPrice = listPrice;
+            ViewBag.Length = listPrice.Count;
+            
             return View();
         }
-
-        public ActionResult CheckOut()
-        {
-            var session = (UserSession)Session[Constants.USER_SESSION];
-            if (session == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-
-            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
-            var user = UserDao.Instance.getByID(session.UserName);
-            var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
-
-            var model = new BillRequestDto()
-            {
-                TotalPrice = totalPrice + 30000,
-                DeliveryAddress = user.Address,
-                CustomerName = user.FullName,
-                Phone = user.Phone
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult CheckOut(BillRequestDto model)
-        {
-            if (ModelState.IsValid)
-            {
-                var bill = Mapper.Map<Bill>(model);
-                bill.UserID = ((UserSession)Session[Constants.USER_SESSION]).UserName;
-                bill.TotalPrice = ((List<OrderRequestDto>)Session[Constants.CART_SESSION]).Sum(o => o.Count * o.Product.Cost) + 30000;
-                BillDao.Instance.insert(bill);
-                Session[Constants.CART_SESSION] = null;
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Thêm đơn đặt hàng thất bại");
-            }
-            return View(model);
-        }
-
-        /// <summary>
-        /// Thêm sản phẩm vào giỏ hàng
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <param name="amount"></param>
-        /// <returns></returns>
+        // POST: add cart
         public JsonResult AddToCart(int productId, int amount)
         {
             try
             {
                 List<OrderRequestDto> orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+                if (orders == null)
+                {
+                    orders = new List<OrderRequestDto>();
+                }
 
                 var product = Mapper.Map<ProductRequestDto>(ProductDao.Instance.getByID(productId));
 
@@ -107,31 +79,84 @@ namespace ShopNetMVC.Controllers
             }
         }
 
-        public JsonResult GetOrders(int page, int pageSize = 5)
+        public JsonResult GetOrders(int page, int pageSize)
         {
             try
             {
+                // Get session user
+                var session = (UserSession)Session[Constants.USER_SESSION];
+                var user = new User();
+                if (session != null)
+                {
+                    user = UserDao.Instance.getByID(session.UserName);
+                }
+                // Get Session order
                 var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
-                var totalRows = orders.Count;
-                var totalPages = (int)Math.Ceiling((double)totalRows / pageSize);
 
-                var result = orders.Skip((page - 1) * pageSize).Take(pageSize);
+                if (orders == null)
+                {
+                    orders = new List<OrderRequestDto>();
+                }
 
                 var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
 
+                double totalRows = orders.Count();
+                
                 return Json(new
                 {
-                    data = result,
-                    totalRows,
-                    totalPages,
+                    orders,
                     totalPrice,
-                    status = true
+                    totalRows,
+                    result = true
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = ex.Message, result = false }, JsonRequestBehavior.AllowGet);
             }
+        }
+        public ActionResult CheckOut()
+        {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            var user = new User();
+            if (session != null)
+            {
+                user = UserDao.Instance.getByID(session.UserName);
+            }
+            ViewBag.UserSession = session != null ? true : false;
+
+            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+            var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
+
+            var model = new BillRequestDto()
+            {
+                TotalPrice = totalPrice + 15000,
+                DeliveryAddress = user.Address,
+                CustomerName = user.FullName,
+                Phone = user.Phone
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CheckOut(BillRequestDto model)
+        {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
+            if (ModelState.IsValid)
+            {
+                var bill = Mapper.Map<Bill>(model);
+                bill.UserID = ((UserSession)Session[Constants.USER_SESSION]).UserName;
+                bill.TotalPrice = ((List<OrderRequestDto>)Session[Constants.CART_SESSION]).Sum(o => o.Count * o.Product.Cost) + 30000;
+                BillDao.Instance.insert(bill);
+                Session[Constants.CART_SESSION] = null;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Thêm đơn đặt hàng thất bại");
+            }
+            return View(model);
         }
 
         public JsonResult DeleteOrder(int id)

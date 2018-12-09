@@ -4,7 +4,7 @@
         @for (var i = 0; i < @ViewBag.Length; i++)
         {
             <li>
-                <a class="accordion-link" href="/Category?code=@ViewBag.ListCate[@i].CodeName">@ViewBag.ListCate[@i].CateName <span>(@ViewBag.CateCount[@i])</span></a>
+                <a class="accordion-link" href="/Category?code=@ViewBag.ListCate[@i].CodeName">@ViewBag.ListCate[@i].CateName (@ViewBag.CateCount[@i])</a>
             </li>
         }
     </ul>

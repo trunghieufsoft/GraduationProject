@@ -26,7 +26,17 @@
                     </p>
                 </div>
                 <div class="col-md-6 language">
-                    <ul></ul>
+                    <ul>
+                        @if (@ViewBag.UserSession == true)
+                        {
+                            <li><a href="/user/logout">Đăng xuất</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/user/login">Đăng nhập</a></li>
+                            <li><a href="/user/register">Đăng ký</a></li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
@@ -48,12 +58,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="./"><i class="glyphicon glyphicon-home"></i> Trang chủ</a></li>
-                        <li><a href="/cart">Giỏ hàng</a></li>
+                        <li class="@ViewBag.activeHome"><a href="/"><i class="glyphicon glyphicon-home"></i> Trang chủ</a></li>
+                        <li class="@ViewBag.activeCart"><a href="/cart">Giỏ hàng</a></li>
 
-                        <li><a href="/about">Giới thiệu</a></li>
+                        <li class="@ViewBag.activeAbout"><a href="/about">Giới thiệu</a></li>
 
-                        <li><a href="/contact">Liên hệ</a></li>
+                        <li class="@ViewBag.activeContact"><a href="/contact">Liên hệ</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -129,6 +139,10 @@
     <script src="~/assets/client/js/modernizr.js"></script>
     <script src="~/assets/client/js/jquery.flexslider-min.js"></script>
     <script src="~/assets/client/app/main.js"></script>
+    <!--bootboxjs-->
+    <script src="~/node_modules/bootbox.js/bootbox.min.js"></script>
+    <!--owl.carousel2-->
+    <script src="~/node_modules/owl.carousel2/dist/owl.carousel.min.js"></script>
     <script src="~/node_modules/mustache/mustache.min.js"></script>
     <script src="~/node_modules/twbs-pagination/jquery.twbsPagination.min.js"></script>
     <script type="text/javascript">

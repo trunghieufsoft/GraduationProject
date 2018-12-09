@@ -4,19 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Models.Common.Encode;
+using Models.Common;
+using Models.DataAccess.Dto;
 
 namespace ShopNetMVC.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         // GET: Product
         public ActionResult Index()
         {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
             return View();
         }
 
         public ActionResult Detail(string code)
         {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
+
             var product = ProductDao.Instance.GetByCode(code);
 
             var model = Mapper.Map<ProductRequestDto>(product);
