@@ -16,12 +16,16 @@ namespace ShopNetMVC.Controllers
         // GET: Cart
         public ActionResult Index()
         {
+            var session = (UserSession)Session[Constants.USER_SESSION];
+            ViewBag.UserSession = session != null ? true : false;
+
+            // Get Session order
+            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+            ViewBag.SessionCart = orders != null ? orders.Count : 0;
+
             ViewBag.IsOrdered = (List<OrderRequestDto>)Session[Constants.CART_SESSION] != null;
 
             var related = ProductDao.Instance.RelatedProducts(4);
-
-            var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null ? true : false;
 
             ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
 

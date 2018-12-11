@@ -9,6 +9,8 @@ namespace Models.DataAccess.Dao
 {
     public class RepliesDao
     {
+
+        #region Singleton
         /**
          * Constants
          */
@@ -36,12 +38,13 @@ namespace Models.DataAccess.Dao
                 return instance;
             }
         }
+        #endregion Singleton
 
+        #region Handle
         /**
          * @description -- get Replies by repNo
          * @param _key: int -- is field repNo
          */
-
         public Reply getByID(int _repNo, string _comID)
         {
             return db.Replies.SingleOrDefault(obj => obj.RepNo == _repNo && obj.ComID == _comID);
@@ -103,5 +106,6 @@ namespace Models.DataAccess.Dao
         {
             return db.Replies.OrderByDescending(x => x.CreatedAt).Take(top).ToList();
         }
+        #endregion Handle
     }
 }

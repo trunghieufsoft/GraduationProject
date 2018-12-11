@@ -9,6 +9,7 @@ namespace Models.DataAccess
 {
     public class RatingDao
     {
+        #region Singleton
         /**
          * Constants
          */
@@ -36,12 +37,13 @@ namespace Models.DataAccess
                 return instance;
             }
         }
+        #endregion Singleton
 
+        #region Handle
         /**
-         * @description -- get Rating by RatID
-         * @param _key: string -- is field RatID
-         */
-
+        * @description -- get Rating by RatID
+        * @param _key: string -- is field RatID
+        */
         public Rating getByID(string _key)
         {
             return db.Ratings.SingleOrDefault(obj => obj.RatID == _key);
@@ -115,7 +117,6 @@ namespace Models.DataAccess
         /// </summary>
         /// <param name="_search"></param>
         /// <returns>IEnumerable<Rating></returns>
-
         public IEnumerable<Rating> getObjectList(string _search)
         {
             return db.Ratings.Where(obj => obj.RatID.Contains(_search) || obj.UserID.Contains(_search)).OrderBy(p => p.CreatedAt).ToList();
@@ -126,16 +127,31 @@ namespace Models.DataAccess
          * @description -- check the existence of image
          * @param
          */
-         
         private bool hasRating(string _userID, int _prodID)
         {
             var rating = db.Ratings.SingleOrDefault(obj => obj.UserID == _userID &&  obj.ProdID == _prodID);
             return rating != default(Rating) ? Constants.trueValue : Constants.falseValue;
         }
 
-        public List<Rating> ListNewRating(int top)
+        public IEnumerable<Rating> lsRatProd(int _prodID)
         {
-            return db.Ratings.OrderByDescending(x => x.CreatedAt).Take(top).ToList();
+            return db.Ratings.Where(x => x.ProdID == _prodID).OrderByDescending(x => x.CreatedAt);
         }
+
+        /// <summary>
+        /// get assessment by product code
+        /// </summary>
+        /// <returns>level assessment by percent</returns>
+        public double getAssessment(int _idParam)
+        {
+            var assessment = 0.0;
+            var lsRatProduct = lsRatProd(_idParam);
+            foreach (var item in lsRatProduct)
+            {
+                assessment += item.Level;
+            }
+            return Math.Round(assessment / lsRatProduct.Count(), 2);
+        }
+        #endregion Handle
     }
 }

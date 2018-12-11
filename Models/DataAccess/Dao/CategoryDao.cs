@@ -9,6 +9,7 @@ namespace Models.DataAccess
 {
     public class CategoryDao
     {
+        #region Singleton
         /**
          * Constants
          */
@@ -36,9 +37,9 @@ namespace Models.DataAccess
                 return instance;
             }
         }
-
+        #endregion Singleton
         
-
+        #region Handle
         /**
          * @description -- get Category by CategoryID
          * @param _keyCategory: byte -- is field CateID
@@ -162,5 +163,6 @@ namespace Models.DataAccess
         {
             return db.Categories.SingleOrDefault(x=> x.CodeName == code);
         }
+        #endregion Handle
     }
 }

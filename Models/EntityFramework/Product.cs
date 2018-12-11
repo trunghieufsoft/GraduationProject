@@ -46,5 +46,7 @@ namespace Models.EntityFramework
         public ICollection<Order> Orders { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
     }
 }

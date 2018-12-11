@@ -1,6 +1,10 @@
 ﻿@{
     ViewBag.Title = "Trang chủ";
     ViewBag.activeHome = "active";
+    ViewBag.activeMenu = "";
+    ViewBag.activeCart = "";
+    ViewBag.activeAbout = "";
+    ViewBag.activeContact = "";
 }
 @section JavaScript{
     <script src="~/assets/client/app/home.js"></script>
@@ -124,7 +128,7 @@
             <p>
                 {{Cost}}
             </p>
-            <a href="/product/detail?code={{Code}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Đặt hàng</a>
+            <a href="/product/detail?code={{Code}}" class="btn btn-order"><i class="fa fa-shopping-cart"></i> Đặt hàng</a>
         </div>
     </div>
 </script>

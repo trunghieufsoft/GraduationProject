@@ -4,8 +4,60 @@
         pageSize: 5
     },
     init: function () {
-        cartController.loadData(false);
-        // cartController.getUserInfo();
+        cartController.loadData();
+    },
+    loadData: function (changePageSize) {
+        $.ajax({
+            url: '/cart/getOrders',
+            type: 'GET',
+            data: {
+                page: cartController.config.page,
+                pageSize: cartController.config.pageSize
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+                    var data = response.orders;
+                    var html = '';
+                    var template = $('#data-template').html();
+
+                    $.each(data, function (i, item) {
+                        html += Mustache.render(template, {
+                            Code: item.Product.Code,
+                            ProdName: item.Product.ProdName,
+                            Cost: cartController.formatPrice(item.Product.Cost),
+                            ImageUrl: item.Product.ImageUrl,
+                            Amount: item.Count,
+                            ProdId: item.Product.ProdID
+                        });
+                    });
+                    if (response.totalPrice < 1) {
+                        html = `<tr>
+                                <td colspan="6" style="text-align: center">
+                                    Chưa có sản phẩm nào được chọn!
+                                </td>
+                            </tr>`;
+                    }
+                    $('#table-data').html(html);
+
+                    //paging
+                    if (response.totalPages !== 0) {
+                        cartController.paging(response.totalRows, changePageSize, function () {
+                            cartController.loadData();
+                        });
+                    }
+
+                    cartController.registerEvents();
+                }
+            },
+            error: function (error) {
+                bootbox.alert({
+                    message: 'Không có sản phẩm nào trong giỏ hàng',
+                    size: 'small'
+                });
+                console.log(error.message);
+            }
+        });
     },
     registerEvents: function () {
         $('.btn-delete').off('click').on('click', function (e) {
@@ -174,59 +226,7 @@
                 }
             });
         });
-    },
-    loadData: function (changePageSize) {
-        $.ajax({
-            url: '/cart/getOrders',
-            type: 'GET',
-            data: {
-                page: cartController.config.page,
-                pageSize: cartController.config.pageSize
-            },
-            dataType: 'json',
-            success: function (response) {
-                if (response.result) {
-                    var data = response.orders;
-                    var html = '';
-                    var template = $('#data-template').html();
 
-                    $.each(data, function (i, item) {
-                        html += Mustache.render(template, {
-                            Code: item.Product.Code,
-                            ProdName: item.Product.ProdName,
-                            Cost: cartController.formatPrice(item.Product.Cost),
-                            ImageUrl: item.Product.ImageUrl,
-                            Amount: item.Count,
-                            ProdId: item.Product.ProdID
-                        });
-                    });
-                    if (response.totalPrice < 1) {
-                        html = `<tr>
-                                <td colspan="6" style="text-align: center">
-                                    Chưa có sản phẩm nào được chọn!
-                                </td>
-                            </tr>`;
-                    }
-                    $('#table-data').html(html);
-
-                    //paging
-                    if (response.totalPages !== 0) {
-                        cartController.paging(response.totalRows, changePageSize, function () {
-                            cartController.getOrders();
-                        });
-                    }
-
-                    cartController.registerEvents();
-                }
-            },
-            error: function (error) {
-                bootbox.alert({
-                    message: 'Không có sản phẩm nào trong giỏ hàng',
-                    size: 'small'
-                });
-                console.log(error.message);
-            }
-        });
     },
     paging: function (totalRows, changePageSize, callback) {
         var totalPages = Math.ceil(totalRows / cartController.config.pageSize);

@@ -9,6 +9,7 @@ namespace Models.DataAccess
 {
     public class UserDao
     {
+        #region Singleton
         /**
          * Constants
          */
@@ -39,7 +40,9 @@ namespace Models.DataAccess
                 return instance;
             }
         }
-
+        #endregion Singleton
+        
+        #region Handle
         /**
          * @description -- get User by UserID
          * @param _key: string -- is field UserID
@@ -259,5 +262,6 @@ namespace Models.DataAccess
             }
             return Constants.falseValue;
         }
+        #endregion Handle
     }
 }

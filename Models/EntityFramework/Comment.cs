@@ -26,6 +26,11 @@ namespace Models.EntityFramework
 
         public User User { get; set; }
 
+
+        public int ProdId { get; set; }
+
+        public Product Product { get; set; }
+
         public ICollection<Reply> Replies { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Models.DataAccess
 {
     public class CommentDao
     {
+        #region Singleton
         /**
          * Constants 
          */
@@ -17,13 +18,28 @@ namespace Models.DataAccess
         /**
          * @description -- init
          */
-        public CommentDao()
+        private CommentDao()
         {
             db = new ShopDbContext();
         }
 
 
+        private static CommentDao instance = null;
 
+        public static CommentDao Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new CommentDao();
+                }
+                return instance;
+            }
+        }
+        #endregion Singleton
+        
+        #region Handle
         /**
          * @description -- get Comment by ComID
          * @param _key: byte -- is field ComID
@@ -33,6 +49,20 @@ namespace Models.DataAccess
             return db.Comments.SingleOrDefault(x => x.ComID == _key);
         }
 
+
+        /**
+         * @description -- get Comment list by product code
+         * @param _prodCode: int
+         */
+        public List<Comment> GetComments(int _prodCode)
+        {
+            var comments = db.Comments.Include("Replies")
+                .Where(x=> x.ProdId == _prodCode)
+                .ToList();
+
+            return comments;
+        }
+
         /**
          * @description -- insert a Comment
          * @param _request: Comment -- entity object
@@ -40,6 +70,7 @@ namespace Models.DataAccess
         public bool insert(Comment _request)
         {
             _request.ComID = Converter.genIdFormat_ddmmyy(db, Converter.ItemTypes.Comment);
+            _request.CreatedAt = DateTime.Now;
             db.Comments.Add(_request);
             db.SaveChanges();
             return Constants.trueValue;
@@ -103,5 +134,7 @@ namespace Models.DataAccess
             }
             return Constants.falseValue;
         }
+
+        #endregion Handle
     }
 }

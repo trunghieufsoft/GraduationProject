@@ -3,10 +3,10 @@
         controller.registerEvents();
     },
     registerEvents: function () {
-        $("#submitAddCart").off("click").on("click",
+        $("#btn-order").off("click").on("click",
         function(e) {
             var quantity = $('.qty').val();
-            var prodID = $('.prod').val();
+            var prodID = $(this).data('id');
             $.ajax({
                 type: 'POST',
                 url: '/cart/addtocart',
@@ -18,7 +18,9 @@
                             message: "Thêm sản phẩm vào giỏ hàng thành công",
                             size: 'small',
                             title: 'Thông báo',
-                            callback: function (){ }
+                            callback: function () {
+                                window.location.href = "/";
+                            }
                         });
                     } else {
                         bootbox.confirm({
@@ -32,9 +34,9 @@
                 error: function (response) {
                     console.log(response.message);
                 }
-            })
+            });
         });
-    },
+    }
 };
 
 controller.init();

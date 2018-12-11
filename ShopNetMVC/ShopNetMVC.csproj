@@ -1428,7 +1428,9 @@
     <Content Include="assets\client\app\cartController.js" />
     <Content Include="assets\client\app\home.js" />
     <Content Include="assets\client\app\main.js" />
+    <Content Include="assets\client\app\productController.js" />
     <Content Include="assets\client\css\bootstrap.css" />
+    <Content Include="assets\client\css\comment.css" />
     <Content Include="assets\client\css\flexslider.css" />
     <Content Include="assets\client\css\font-awesome.css" />
     <Content Include="assets\client\css\fonts\fontawesome-webfont.svg" />
@@ -1526,6 +1528,7 @@
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -1770,6 +1773,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="assets\Data\images\files\" />
+    <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -16,13 +16,23 @@ namespace ShopNetMVC.Controllers
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.UserSession = session != null ? true : false;
+            // Get Session order
+            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+            ViewBag.SessionCart = orders != null ? orders.Count : 0;
             return View();
         }
 
-        public ActionResult Detail(string code)
+        public ActionResult Detail(string code = null)
         {
+            if (code == null)
+            {
+                return RedirectToAction("Home");
+            }
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.UserSession = session != null ? true : false;
+            // Get Session order
+            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+            ViewBag.SessionCart = orders != null ? orders.Count : 0;
 
             var product = ProductDao.Instance.GetByCode(code);
 
@@ -32,7 +42,7 @@ namespace ShopNetMVC.Controllers
             ViewBag.Price = Converter.formatPrice(model.Cost);
             ViewBag.CateName = CategoryDao.Instance.getByID(model.CateID).CateName;
 
-            var related = ProductDao.Instance.RelatedProducts(product.ProdID, 4);
+            var related = ProductDao.Instance.RelatedProducts();
 
             ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
 

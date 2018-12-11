@@ -1,21 +1,25 @@
 ﻿@model IEnumerable<Models.DataAccess.ProductRequestDto>
 @{
     ViewBag.Title = ViewBag.Category.CateName;
-    ViewBag.activeHome = "active";
+    ViewBag.activeHome = "";
+    ViewBag.activeMenu = "active";
+    ViewBag.activeCart = "";
+    ViewBag.activeAbout = "";
+    ViewBag.activeContact = "";
 }
 
 <div class="page-title">
     <div class="container">
         <div class="row">
-            <div class="col-md-9 produti">
-                <h4>Menu</h4>
-            </div>
-            <div class="col-md-3 cart">
-                <h4><a href="./cart">Giỏ hàng (0 items)</a></h4>
-                <ul>
-                    <li><a href="/">Trang chủ /</a></li>
-                    <li><a href="/category?code=@ViewBag.Category.CodeName">@ViewBag.Category.CateName (@ViewBag.ProductCount)</a></li>
+            <div class="col-md-10 produti">
+                <h4 style="display: inline-block">Menu</h4>
+                <ul style="display: inline-block; font-size: 13px;">
+                    <li style="display: inline-block"><a style="color: #e3d5ba;" href="/">Trang chủ /</a></li>
+                    <li style="display: inline-block"><a style="color: #e3d5ba;" href="/category?code=@ViewBag.Category.CodeName">@ViewBag.Category.CateName (@ViewBag.ProductCount)</a></li>
                 </ul>
+            </div>
+            <div class="col-md-2 cart">
+                <h4><a href="/cart">Giỏ hàng (@ViewBag.SessionCart items)</a></h4>
             </div>
         </div>
     </div>

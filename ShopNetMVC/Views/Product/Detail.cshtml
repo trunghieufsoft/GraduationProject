@@ -1,26 +1,36 @@
-﻿@model Models.DataAccess.ProductRequestDto
+﻿@using System.Globalization
+@model Models.DataAccess.ProductRequestDto
 
 @{
     ViewBag.Title = ViewBag.ProductName;
     ViewBag.activeHome = "active";
+    ViewBag.activeMenu = "";
+    ViewBag.activeCart = "";
+    ViewBag.activeAbout = "";
+    ViewBag.activeContact = "";
+}
+
+@section css{
+    <link href="~/assets/client/css/comment.css" rel="stylesheet" />
 }
 
 @section JavaScript{
     <script src="~/assets/client/app/addCart.js"></script>
+    <script src="~/assets/client/app/productController.js"></script>
 }
 
 <div class="page-title">
     <div class="container">
         <div class="row">
             <div class="col-md-10 produti">
-                <h4>@Model.ProdName</h4>
+                <h4 style="display: inline-block">@Model.ProdName</h4>
+                <ul style="display: inline-block; font-size: 13px;">
+                    <li style="display: inline-block"><a style="color: #e3d5ba;" href="/">Trang chủ /</a></li>
+                    <li style="display: inline-block"><a style="color: #e3d5ba;" href="/">Menu</a></li>
+                </ul>
             </div>
             <div class="col-md-2 cart">
-                <h4><a href="./cart">Giỏ hàng (0 items)</a></h4>
-                <ul>
-                    <li><a href="/">Trang chủ /</a></li>
-                    <li><a href="/">Menu</a></li>
-                </ul>
+                <h4><a href="/cart">Giỏ hàng (@ViewBag.SessionCart items)</a></h4>
             </div>
         </div>
     </div>
@@ -37,18 +47,21 @@
                 </div>
                 <div class="product-details col-md-6">
                     <h1>@Model.ProdName</h1>
+                    @{
+                        CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+                        string price = double.Parse(Model.Cost.ToString()).ToString("#,###", cul.NumberFormat).Replace(".", ",");
+                    }
                     <p class="price">
                         Giá : @ViewBag.Price đồng
                     </p>
                     <p>
-                        @Model.Decription
+                        @Html.Raw(Model.Decription)
                     </p>
-                    <form action="" method="post">
-                        <input type="hidden" name="product" class="prod" value="@Model.ProdID" />
-                        <input type="number" name="quantity" value="1" class="qty" min="1" max="100" required>
-
-                        <input type="submit" value="Thêm vào giỏ hàng" class="btn btn-warning" id="submitAddCart" style="margin-left: 10px">
-                    </form>
+                    <input type="number" name="productId" hidden value="@Model.ProdID" id="productId" />
+                    <input type="number" name="quantity" value="1" class="qty" min="1" max="100" required>
+                    <button type="button" class="btn btn-primary" data-id="@Model.ProdID" id="btn-order" style="margin-left: 10px">
+                        <i class="fa fa-shopping-cart"> Thêm vào giỏ hàng</i>
+                    </button>
                     <hr>
 
                     <div class="reviews">
@@ -63,34 +76,126 @@
                 </div>
                 <!-- End Single Product -->
             </div>
+
             <div class="col-md-12 tabs">
-                <div class="bs-example">
-                    <div class="tabbable">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab1" data-loading-text="Loading...">Category</a></li>
-                            <li><a data-toggle="tab" href="#tab2" data-loading-text="Loading...">Bình luận</a></li>
-                            <li><a data-toggle="tab" href="#tab3" data-loading-text="Loading...">Đánh giá</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="tab1" class="tab-pane active fade in">
-                                <p>
-                                    @ViewBag.CateName
-                                </p>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#feedback">Đánh giá</a></li>
+                    <li><a data-toggle="tab" href="#comment">Bình luận</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="feedback" class="tab-pane fade in active">
+                        <div class="row">
+                            <hr />
+                            <div class="col-sm-4">
+                                <div class="rating-block">
+                                    <h4>Đánh giá trung bình</h4>
+                                    <h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
+                                    <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </button>
+                                </div>
                             </div>
-                            <div id="tab2" class="tab-pane fade">
-                                <p>
-                                    Mô tả thêm...
-                                </p>
+                            <div class="col-sm-4">
+                                <h4>Biểu đồ đánh giá</h4>
+                                <div class="pull-left">
+                                    <div class="pull-left" style="width:35px; line-height:1;">
+                                        <div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
+                                    </div>
+                                    <div class="pull-left" style="width:180px;">
+                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
+                                                <span class="sr-only">80% Complete (danger)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right" style="margin-left:10px;">1</div>
+                                </div>
+                                <div class="pull-left">
+                                    <div class="pull-left" style="width:35px; line-height:1;">
+                                        <div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
+                                    </div>
+                                    <div class="pull-left" style="width:180px;">
+                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
+                                                <span class="sr-only">80% Complete (danger)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right" style="margin-left:10px;">1</div>
+                                </div>
+                                <div class="pull-left">
+                                    <div class="pull-left" style="width:35px; line-height:1;">
+                                        <div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
+                                    </div>
+                                    <div class="pull-left" style="width:180px;">
+                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
+                                                <span class="sr-only">80% Complete (danger)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right" style="margin-left:10px;">0</div>
+                                </div>
+                                <div class="pull-left">
+                                    <div class="pull-left" style="width:35px; line-height:1;">
+                                        <div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
+                                    </div>
+                                    <div class="pull-left" style="width:180px;">
+                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
+                                                <span class="sr-only">80% Complete (danger)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right" style="margin-left:10px;">0</div>
+                                </div>
+                                <div class="pull-left">
+                                    <div class="pull-left" style="width:35px; line-height:1;">
+                                        <div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
+                                    </div>
+                                    <div class="pull-left" style="width:180px;">
+                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
+                                                <span class="sr-only">80% Complete (danger)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right" style="margin-left:10px;">0</div>
+                                </div>
                             </div>
-                            <div id="tab3" class="tab-pane fade">
-                                <p>
-                                    Mô tả thêm...
-                                </p>
-                            </div>
+                        </div>
+                    </div>
+                    <!--Comment-->
+                    <div id="comment" class="tab-pane fade">
+                        <div class="row">
+                            <!-- Contenedor Principal -->
+                            <div class="comments-container">
+                                <ul id="comments-list" class="comments-list">
+                                    <!--load comment-->
+                                </ul>
+                                <div class="form-group">
+                                    <input type="text" name="commentInput" id="commentInput" class="form-control" />
+                                </div>
+                                <button class="btn btn-primary"  id="btn-comment">Bình luận</button>
+                            </div>                            
                         </div>
                     </div>
                 </div>
             </div>
+
             <!--articles-->
         </div>
         <div class="col-md-3 shop-sidebar">
@@ -116,3 +221,58 @@
     </div>
 </div>
 <!--prize-->
+
+<script id="comment-template" type="x-tmpl-mustache">
+    <li>
+        <div class="comment-main-level">
+            <!-- Avatar -->
+            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+            <!-- Contenedor del Comentario -->
+            <div class="comment-box">
+                <div class="comment-head">
+                    <h6 class="comment-name by-author">{{UserID}}</h6>
+                    <span>{{CreatedAt}}</span>
+                    <i class="fa fa-reply"></i>
+                </div>
+                <div class="comment-content">
+                    {{Content}}
+                </div>
+            </div>
+        </div>
+        <!-- Respuestas de los comentarios -->
+        <ul class="comments-list reply-list">
+            <li>
+                <!-- Avatar -->
+                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
+                        <span>hace 10 minutos</span>
+                        <i class="fa fa-reply"></i>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <div class="comment-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                    </div>
+                </div>
+            </li>
+            <li>
+                <!-- Avatar -->
+                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                        <span>hace 10 minutos</span>
+                        <i class="fa fa-reply"></i>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <div class="comment-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>
+</script>

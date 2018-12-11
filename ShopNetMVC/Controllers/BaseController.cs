@@ -1,7 +1,7 @@
 ﻿using Models.Common;
+using Models.DataAccess;
 using Models.DataAccess.Dto;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace ShopNetMVC.Controllers
 {
@@ -11,6 +11,11 @@ namespace ShopNetMVC.Controllers
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.UserSession = session != null ? true : false;
+            var cateCounts = ProductDao.Instance.GetProductCount();
+            ViewBag.CateCount = cateCounts;
+            var listCate = CategoryDao.Instance.GetListCategory();
+            ViewBag.ListCate = listCate;
+            ViewBag.Count = listCate.Count;
             base.OnActionExecuting(filterContext);
         }
     }

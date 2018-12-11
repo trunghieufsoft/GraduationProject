@@ -10,6 +10,8 @@ namespace Models.DataAccess
 {
     public class ProductDao
     {
+
+        #region Singleton
         /**
          * Constants
          */
@@ -54,7 +56,9 @@ namespace Models.DataAccess
                 return instance;
             }
         }
+        #endregion Singleton
 
+        #region Handle
         /**
          * @description -- get Product by ProdID
          * @param _key: int -- is field ProdID
@@ -287,11 +291,11 @@ namespace Models.DataAccess
             return model;
         }
 
-        public IEnumerable<Product> RelatedProducts(int amount)
+        public IEnumerable<Product> RelatedProducts(int amount = 4)
         {
-            var products = db.Products.ToList();
+            var products = db.Products;
             double level = 0.0;
-            var listlvProd = new List<objLvProd>();
+            var listlvProd = new List<any>();
             foreach (var element in products)
             {
                 var listRating = db.Ratings.Where(rat => rat.ProdID == element.ProdID).ToList();
@@ -299,14 +303,14 @@ namespace Models.DataAccess
                 {
                     foreach (var item in listRating)
                         level += item.Level;
-                    listlvProd.Add(new objLvProd(){
+                    listlvProd.Add(new any(){
                         product = element,
-                        level = Math.Round(level/listRating.Count)
+                        data = Math.Round(level/listRating.Count)
                     });
                 }
             }
             return listlvProd.Count > 0 
-                ? listlvProd.OrderByDescending(llp => llp.level).Select(p => p.product).Take(amount)
+                ? listlvProd.OrderByDescending(p => p.data).Select(p => p.product).Take(amount)
                 : db.Products.Where(p => p.CateID == 1).OrderByDescending(p => p.CreatedAt).Take(amount);
         }
 
@@ -314,11 +318,66 @@ namespace Models.DataAccess
         {
             return db.Products.Where(x => x.Category.CodeName == code).ToList();
         }
-    }
 
-    internal class objLvProd
+        public IEnumerable<Product> Recommendation(int amount = 4, bool isSearchByType = false, byte typeProd = 1)
+        {
+            if (amount < 4 || amount > 10)
+            {
+                amount = 4;
+            }
+            var lsObjPrdCount = new List<any>();
+            // step. 1: Get a list of favorite products
+            foreach (var product in db.Products)
+            {
+                var item = new any() {
+                    product = product,
+                    data = 0
+                };
+                foreach (var bill in db.Bills.Select(i => i.BillID))
+                {
+                    if (db.Orders.FirstOrDefault(i => i.BillID == bill && i.ProdID == product.ProdID) != default(Order))
+                    {
+                        item.data++;
+                    }
+                }
+                lsObjPrdCount.Add(item);
+            }
+            // step. 2: Sort lsObjPrdCount get List product
+            var Products = isSearchByType
+                ? lsObjPrdCount.Where(o => o.product.CateID == typeProd).OrderByDescending(o => o.data).Select(l => l.product).ToList()
+                : lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product).ToList();
+            // clear data source lsObjPrdCount
+            lsObjPrdCount.Clear();
+            // step. 3:
+            foreach (var product in Products.Take(10))
+            {
+                var item = new any()
+                {
+                    product = product,
+                    data = 0
+                };
+                var flag = 30;
+                foreach (var bill in db.Bills.OrderByDescending(i => i.CreatedAt).Select(i => i.BillID))
+                {
+                    if (flag == 0)
+                        break;
+                    flag--;
+                    if (db.Orders.FirstOrDefault(i => i.BillID == bill && i.ProdID == product.ProdID) != default(Order))
+                    {
+                        item.data++;
+                    }
+                }
+                lsObjPrdCount.Add(item);
+            }
+            // step. 4: return result Recommendation
+            lsObjPrdCount.OrderByDescending(o => o.data).Take(amount);
+            return lsObjPrdCount.Select(o => o.product).ToList();
+        }
+        #endregion Handle
+    }
+    internal class any
     {
         public Product product { get; set; }
-        public double level { get; set; }
+        public double data { get; set; }
     }
 }

@@ -17,6 +17,10 @@ namespace ShopNetMVC.Controllers
             ViewBag.UserSession = session != null ? true : false;
             var products = ProductDao.Instance.GetByCategoryCode(code);
 
+            // Get Session order
+            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+            ViewBag.SessionCart = orders != null ? orders.Count : 0;
+
             ViewBag.ProductCount = products.Count;
 
             var listPrice = new List<string>();

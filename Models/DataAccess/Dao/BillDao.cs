@@ -9,6 +9,8 @@ namespace Models.DataAccess
 {
     public class BillDao
     {
+
+        #region Singleton
         /**
          * Constants
          */
@@ -36,12 +38,13 @@ namespace Models.DataAccess
                 return instance;
             }
         }
+        #endregion
 
+        #region Handle
         /**
          * @description -- get bill by BillID
          * @param _key: string -- is field BillID
          */
-
         public Bill getByID(string _key)
         {
             return db.Bills.SingleOrDefault(x => x.BillID == _key);
@@ -209,5 +212,7 @@ namespace Models.DataAccess
             }
             return Constants.falseValue;
         }
+
+        #endregion Handle
     }
 }

@@ -1,5 +1,10 @@
 /*------------------------------------------------- = Table of Css 1.General 2.Header 3.Slider 4.Icon Block 5.Products 6.Logo Carousel 7.Promo Box 8.Shop 9.Single Product 10.Cart 11.Checkout 12.About 13.Contact 14.Footer-------------------------------------------------*/
 /********************************** General ********************************/
+a:hover{
+    color: black !important;
+    opacity: 1 !important;
+}
+
 ul {
   padding:0;
   margin:0;
@@ -948,7 +953,7 @@ i:hover {
   font-weight:bold;
   text-transform:uppercase;
   color:#ebebeb;
-  margin-top:45px;
+  margin-top:15px;
 }
 .cart h4 {
   background:#7f574c;
@@ -1338,7 +1343,6 @@ ul.product-list li.price {
 .category-shop-list li a.accordion-link:hover,.category-shop-list li a.accordion-link.active {
   color:#554a4c;
   background:#fff;
-  opacity:0.6;
 }
 .category-shop-list li a.accordion-link:after {
   position:absolute;
@@ -1546,7 +1550,7 @@ ul.pagination-list li a.active,ul.pagination-list li a:hover {
 }
 /* Smooth Caption */
 .smooth {
-  opacity:0.6;
+  opacity:1;
 }
 .smooth:hover {
   opacity:1;
@@ -1782,7 +1786,6 @@ ul.pagination-list li a.active,ul.pagination-list li a:hover {
   -webkit-transform:scale(1.2);
   -moz-transform:scale(1.2);
   -o-transform:scale(1.2);
-  opacity:0;
 }
 .hover-box a.zoom {
   right:50%;
@@ -2480,7 +2483,7 @@ i {
   -webkit-transform:rotate(0deg);
   -webkit-animation-delay:1s;
 }
-i:hover {
+p i:hover {
   transform:rotate(10deg);
   -ms-transform:rotate(10deg);
   -webkit-transform:rotate(10deg);
@@ -2504,4 +2507,14 @@ i:hover {
     background-color: #866c64;
     border-color: #866c64;
     opacity: 0.8;
+}
+.btn-order {
+    color: #fff;
+    background-color: #e27610;
+    border-color: #e27610;
+}
+.btn-order:hover {
+    color: #fff;
+    background-color: #bd6f24;
+    border-color: #bd6f24;
 }

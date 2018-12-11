@@ -1,10 +1,10 @@
 ﻿<div class="shop-widget">
-    <h4>Categories</h4>
+    <h4>Thể Loại</h4>
     <ul class="category-shop-list">
         @for (var i = 0; i < @ViewBag.Length; i++)
         {
             <li>
-                <a class="accordion-link" href="/Category?code=@ViewBag.ListCate[@i].CodeName">@ViewBag.ListCate[@i].CateName (@ViewBag.CateCount[@i])</a>
+                <a class="accordion-link" href="/category?code=@ViewBag.ListCate[@i].CodeName">@ViewBag.ListCate[@i].CateName (@ViewBag.CateCount[@i])</a>
             </li>
         }
     </ul>

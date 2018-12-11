@@ -12,5 +12,7 @@ namespace Models.DataAccess
 
         [Display(Name = "Mã khách hàng")]
         public string UserID { get; set; }
+
+        public int ProdId { get; set; }
     }
 }
