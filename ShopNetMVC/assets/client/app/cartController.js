@@ -39,7 +39,16 @@
                             </tr>`;
                     }
                     $('#table-data').html(html);
-
+                    $.ajax({
+                        url: '/cart/payOrders',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (result) {
+                        },
+                        error: function (error) {
+                            $('#bill-orders').html(error.responseText);
+                        }
+                    });
                     //paging
                     if (response.totalPages !== 0) {
                         cartController.paging(response.totalRows, changePageSize, function () {
@@ -126,36 +135,26 @@
                         var dialog = bootbox.dialog({
                             title: 'Thông tin đặt hàng',
                             message: `
-                            <div class="row">
-                        <div class="col-md-6 product_img">
-                            <img style="height: 250px;" src="` + data.ImageUrl + `" class="img-responsive">
-                        </div>
-                        <div class="col-md-6 product_content">
-                            <h4">Tên sản phẩm: <span class="text-info">` + data.ProdName + `</span></h4>
-                            <div class="rating">
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                (10 đánh giá)
+                            <div class ="row">
+	                            <div class ="col-md-6 product_img">
+		                            <img style="height: 250px;width: 100%;" src= "` + data.ImageUrl + `" class ="img-responsive">
+	                            </div>
+	                            <div class ="col-md-6 product_content" style="font-weight: 400;color: #965c2c;font-weight: bold;">
+		                            <p>Tên sản phẩm: <span class ="text-info" style="color: #e0a22f;"> ` + data.ProdName + ` </span></p>
+		                            <p>Mã sản phẩm: ` + data.Code + ` </p>
+		                            <p class ="cost">Giá sản phẩm: ` + cartController.formatPrice(data.Cost) + ` </p>
+		                            <p>Mô tả sản phẩm: </p>
+		                            <p>Sản phẩm nước giải khát được phân phối chính thức bởi công ty.</p>
+		                            <div class ="row">
+			                            <div class ="col-md-6 col-sm-6" style="vertical-align: middle;margin: 10px 0;">Số lượng: </div>
+			                            <div class ="col-md-4 col-sm-4">
+				                            <input type="number" min="0" value= "` + amount + `" name="amount" id="amount" class ="form-control" style="padding: 7px;">
+			                            </div>
+			                            <!--end col-->
+			                            </div>
+		                            <p class ="text-danger" id="amount-validation" name="amount-validation"></p>
+	                            </div>
                             </div>
-                            <p>Mã sản phẩm: ` + data.Code + `</p>
-                            <p class="cost">Giá sản phẩm: ` + cartController.formatPrice(data.Cost) + `</p>
-                            <p>Mô tả sản phẩm: </p>
-                            <p>Sản phẩm nước giải khát được phân phối chính thức bởi công ty.</p>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    Số lượng:
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                   <input type="number" min="0" value="` + amount + `" name="amount" id="amount" class="form-control"/>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <p class="text-danger" id="amount-validation" name="amount-validation"></p>
-                        </div>
-                    </div>
                         `,
                             buttons: {
                                 cancel: {
@@ -185,7 +184,7 @@
                                                             message: "Cập nhật giỏ hàng thành công",
                                                             size: 'small'
                                                         });
-                                                        cartController.getOrders();
+                                                        cartController.loadData(true);
                                                     } else {
                                                         bootbox.alert({
                                                             message: "Cập nhật giỏ hàng thất bại",
@@ -227,6 +226,91 @@
             });
         });
 
+        $('#add-bill').off('click').on('click', function (e) {
+            e.preventDefault();
+            var btn = $(this);
+            var totalpay = btn.data('totalpay');
+
+            $.ajax({
+                url: '/bill/getaccountlogin',
+                data: {},
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    var data = response.data;
+                    if (response.status) {
+                        var dialog = bootbox.dialog({
+                            title: 'Thông tin thanh toán',
+                            message: `
+                            
+                        `,
+                            buttons: {
+                                cancel: {
+                                    label: 'Hủy',
+                                    className: 'default'
+                                },
+                                noclose: {
+                                    label: 'Đồng ý',
+                                    className: 'btn-info',
+                                    callback: function () {
+                                        var data = {
+                                            userid: data.UserID,
+                                            cusName: $('#cusName').val(),
+                                            address: $('#address').val(),
+                                            phone: $('#phone').val(),
+                                            note: $('#note').val()
+                                        };
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/bill/addToBill',
+                                            data: data,
+                                            dataType: 'json',
+                                            success: function (response) {
+                                                if (response.result === true) {
+                                                    dialog.modal('hide');
+                                                    bootbox.alert({
+                                                        message: "Đặt hàng thành công",
+                                                        size: 'small'
+                                                    });
+                                                    cartController.loadData(true);
+                                                } else {
+                                                    bootbox.alert({
+                                                        message: "Đặt hàng thất bại",
+                                                        size: 'small'
+                                                    });
+                                                }
+                                            },
+                                            error: function (response) {
+                                                bootbox.alert({
+                                                    message: 'Đã xảy ra lỗi',
+                                                    size: 'small'
+                                                });
+                                                console.log(response.message);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        bootbox.alert({
+                            title: 'Thông báo',
+                            message: 'Đã xảy ra lỗi!',
+                            size: 'small'
+                        });
+                        console.log(data.message);
+                    }
+                },
+                error: function (response) {
+                    bootbox.alert({
+                        title: 'Thông báo',
+                        message: 'Đã xảy ra lỗi!',
+                        size: 'small'
+                    });
+                    console.log(response);
+                }
+            });
+        });
     },
     paging: function (totalRows, changePageSize, callback) {
         var totalPages = Math.ceil(totalRows / cartController.config.pageSize);

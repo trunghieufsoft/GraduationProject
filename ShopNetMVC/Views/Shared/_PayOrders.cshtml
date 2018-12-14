@@ -1,0 +1,42 @@
+﻿<tr>
+    <td style="padding: 10px; padding-right: 0;">
+        <span>Số lượng: </span>
+    </td>
+    <td style="padding: 10px">
+        <span style="float: right">@ViewBag._Count</span>
+    </td>
+</tr>
+<tr>
+    <td style="padding: 10px; padding-right: 0;">
+        <span>Tổng giá: </span>
+    </td>
+    <td style="padding: 10px">
+        <span style="float: right">@ViewBag._Price đ</span>
+    </td>
+</tr>
+<tr>
+    <td style="padding: 10px; padding-right: 0;">
+        <span>Phí vận chuyển: </span>
+    </td>
+    <td style="padding: 10px">
+        <span style="float: right">@ViewBag._fee đ</span>
+    </td>
+</tr>
+<tr>
+    <td colspan="2" style="padding: 10px 0">
+        <hr style="margin: 0px" />
+    </td>
+</tr>
+<tr>
+    <td style="padding: 10px; padding-right: 0;">
+        <span>Thanh Toán: </span>
+    </td>
+    <td style="padding: 10px">
+        <span style="float: right">@ViewBag._Pay đ</span>
+    </td>
+</tr>
+<tr>
+    <td colspan="2" style="padding: 10px 0 10px; text-align: center">
+        <button class="btn btn-order" id="add-bill" data-totalpay="@ViewBag._Pay">Thanh Toán</button>
+    </td>
+</tr>

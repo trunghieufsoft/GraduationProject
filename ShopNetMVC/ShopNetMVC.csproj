@@ -1762,6 +1762,7 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Shared\_RightBarCategory.cshtml" />
     <Content Include="Views\Shared\_Error.cshtml" />
+    <Content Include="Views\Shared\_PayOrders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

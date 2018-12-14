@@ -2518,3 +2518,15 @@ p i:hover {
     background-color: #bd6f24;
     border-color: #bd6f24;
 }
+.product_content p {
+    margin: 7px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+td .btn-delete:hover, td .btn-edit:hover {
+    color: #d05815 !important;
+}
+td .btn-delete, td .btn-edit {
+    font-weight: bold;
+    color: #31758f;
+}

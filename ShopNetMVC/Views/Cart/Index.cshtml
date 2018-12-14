@@ -61,50 +61,7 @@
             <div class="sidebar-widgets">
                 <div class="shop-widget">
                     <h4>Hóa Đơn</h4>
-                    <table class="category-shop-list" style="width: 100%">
-                        <tr>
-                            <td style="padding: 10px 0 5px 5px">
-                                <span>Số lượng: </span>
-                            </td>
-                            <td style="padding: 5px">
-                                <span style="float: right">3</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 5px 0 5px 5px">
-                                <span>Tổng giá: </span>
-                            </td>
-                            <td style="padding: 5px">
-                                <span style="float: right">150,000 đ</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 5px 0 5px 5px">
-                                <span>Phí vận chuyển: </span>
-                            </td>
-                            <td style="padding: 5px">
-                                <span style="float: right">0 đ</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="padding: 5px 0">
-                                <hr style="margin: 5px 0" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 5px 0 5px 5px">
-                                <span>Thanh Toán: </span>
-                            </td>
-                            <td style="padding: 5px">
-                                <span style="float: right">0 đ</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="padding: 5px 0; text-align: center">
-                                <button class="btn btn-order" id="add-bill">Thanh Toán</button>
-                            </td>
-                        </tr>
-                    </table>
+                    <table class="category-shop-list" id="bill-orders" style="width: 100%"></table>
                 </div>
                 @*@{Html.RenderAction("RightCategory", "Category");}*@
                 <div class="shop-widget">
@@ -138,7 +95,7 @@
         <td>{{Cost}}</td>
         <td>{{Amount}}</td>
         <td>
-            <a class="btn-delete" data-productid="{{ProdId}}" data-productname="{{ProdName}}" href="#">Xóa</a>
+            <a class="btn-delete" data-productid="{{ProdId}}" data-productname="{{ProdName}}" href="#">Xóa</a> | 
             <a class="btn-edit" data-productid="{{ProdId}}" data-amount="{{Amount}}" href="#">Cập nhật</a>
         </td>
     </tr>

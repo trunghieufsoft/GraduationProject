@@ -34,7 +34,7 @@ namespace ShopNetMVC.Controllers
                 listPrice.Add(Converter.formatPrice(item.Cost));
             ViewBag.listPrice = listPrice;
             ViewBag.Length = listPrice.Count;
-            
+
             return View();
         }
         // POST: add cart
@@ -190,6 +190,31 @@ namespace ShopNetMVC.Controllers
             {
                 return Json(new { message = ex.Message, result = false }, JsonRequestBehavior.AllowGet);
             }
+        }
+        public ActionResult PayOrders()
+        {
+            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
+
+            if (orders == null)
+            {
+                orders = new List<OrderRequestDto>();
+            }
+
+            var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
+
+            double totalRows = orders.Count();
+            ViewBag._Price = Converter.formatPrice(totalPrice);
+            var count = 0;
+            foreach(var item in orders)
+            {
+                if (item.Count > 0)
+                    count++;
+            }
+            ViewBag._Count = count.ToString() + (orders.Count >= 0 ? " SP" : "");
+            var fee = totalPrice > 150000 ? totalPrice > 300000 ? 30000 : 15000 : 0;
+            ViewBag._fee = Converter.formatPrice(fee);
+            ViewBag._Pay = Converter.formatPrice(totalPrice + fee);
+            return PartialView("_PayOrders");
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Models.Common.Encode;
 using Models.DataAccess.Dto;
 using Models.Common;
+using System.Linq;
 
 namespace ShopNetMVC.Controllers
 {
