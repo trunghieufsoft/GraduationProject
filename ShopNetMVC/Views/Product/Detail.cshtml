@@ -57,7 +57,6 @@
                     <p>
                         @Html.Raw(Model.Decription)
                     </p>
-                    <input type="number" name="productId" hidden value="@Model.ProdID" id="productId" />
                     <input type="number" name="quantity" value="1" class="qty" min="1" max="100" required>
                     <button type="button" class="btn btn-primary" data-id="@Model.ProdID" id="btn-order" style="margin-left: 10px">
                         <i class="fa fa-shopping-cart"> Thêm vào giỏ hàng</i>
@@ -87,7 +86,7 @@
                     <div id="feedback" class="tab-pane fade in active">
                         <div class="row">
                             <hr />
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 <div class="rating-block">
                                     <h4>Đánh giá trung bình</h4>
                                     <h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
@@ -186,10 +185,9 @@
                                 <ul id="comments-list" class="comments-list">
                                     <!--load comment-->
                                 </ul>
-                                <div class="form-group">
-                                    <input type="text" name="commentInput" id="commentInput" class="form-control" />
+                                <div class="form-group" style="margin: 0; margin-top: 60px;">
+                                    <input type="text" placeholder="Bình luận" data-prodId="@Model.ProdID" name="comment" id="commentInput" class="form-control" />
                                 </div>
-                                <button class="btn btn-primary"  id="btn-comment">Bình luận</button>
                             </div>                            
                         </div>
                     </div>
@@ -224,15 +222,15 @@
 
 <script id="comment-template" type="x-tmpl-mustache">
     <li>
+        <div class="line-comment" style="height: {{Height}}px"></div>
         <div class="comment-main-level">
             <!-- Avatar -->
-            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-            <!-- Contenedor del Comentario -->
-            <div class="comment-box">
+            <div class="comment-avatar"><img src="/assets/client/images/{{Img}}.jpg" /></div>
+            <div class="comment-box" style="margin-bottom: 5px">
                 <div class="comment-head">
-                    <h6 class="comment-name by-author">{{UserID}}</h6>
+                    <h6 class="comment-name"><a href="#">{{UserName}}</a></h6>
                     <span>{{CreatedAt}}</span>
-                    <i class="fa fa-reply"></i>
+                    {{{isDelete}}}
                 </div>
                 <div class="comment-content">
                     {{Content}}
@@ -241,38 +239,29 @@
         </div>
         <!-- Respuestas de los comentarios -->
         <ul class="comments-list reply-list">
+            <!-- load reply -->
             <li>
-                <!-- Avatar -->
-                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                <!-- Contenedor del Comentario -->
-                <div class="comment-box">
-                    <div class="comment-head">
-                        <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-                        <span>hace 10 minutos</span>
-                        <i class="fa fa-reply"></i>
-                        <i class="fa fa-heart"></i>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                    </div>
-                </div>
+                <ul>{{{Replies}}}</ul>
             </li>
             <li>
-                <!-- Avatar -->
-                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                <!-- Contenedor del Comentario -->
-                <div class="comment-box">
-                    <div class="comment-head">
-                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-                        <span>hace 10 minutos</span>
-                        <i class="fa fa-reply"></i>
-                        <i class="fa fa-heart"></i>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                    </div>
-                </div>
+                <input type="text" placeholder="Phản hồi bình luận" name="reply-{{ComID}}" id="reply-{{ComID}}" data-prodId="{{ProdId}}" data-comid="{{ComID}}" class="form-control reply-input" />
             </li>
         </ul>
+    </li>
+</script>
+<script id="reply-template" type="x-tmpl-mustache">
+    <li>
+        <!-- Avatar -->
+        <div class="comment-avatar"><img src="/assets/client/images/{{Img}}.jpg" /></div>
+        <div class="comment-box" style="margin-bottom: 5px">
+            <div class="comment-head">
+                <h6 class="comment-name"><a href="#">{{UserName}}</a></h6>
+                <span>{{CreatedAt}}</span>
+                {{{isDelete}}}
+            </div>
+            <div class="comment-content">
+                {{Content}}
+            </div>
+        </div>
     </li>
 </script>

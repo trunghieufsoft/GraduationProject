@@ -83,9 +83,12 @@ namespace Models.DataAccess
         public bool delete(string _key)
         {
             var comment = getByID(_key);
+            var res = true;
             if (hasReference(_key))
-                return Constants.falseValue;
-            db.Comments.Remove(comment);
+                res = deleteReference(_key);
+            if (res)
+                db.Comments.Remove(comment);
+            else return Constants.falseValue;
             db.SaveChanges();
             return Constants.trueValue;
         }
@@ -133,6 +136,26 @@ namespace Models.DataAccess
                 return count > Constants.zeroNumber ? Constants.trueValue : Constants.falseValue;
             }
             return Constants.falseValue;
+        }
+
+        private bool deleteReference(string _key)
+        {
+            var comment = getByID(_key);
+            if (comment != default(Comment))
+            {
+                var replies = db.Replies.Where(obj => obj.ComID == _key);
+                try
+                {
+                    foreach (var item in replies)
+                        db.Replies.Remove(item);
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return Constants.falseValue;
+                }
+            }
+            return Constants.trueValue;
         }
 
         #endregion Handle

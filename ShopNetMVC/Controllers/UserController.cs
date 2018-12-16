@@ -110,7 +110,7 @@ namespace ShopNetMVC.Controllers
 
                     default:
                         var u = UserDao.Instance.getByID(model.UserName);
-                        var userSession = new UserSession(u.UserID, u.GrantID);
+                        var userSession = new UserSession(u.UserID, u.FullName, u.GrantID);
                         Session.Add(Constants.USER_SESSION, userSession);
                         ViewBag.UserSession = true;
                         return RedirectToAction("Index", "Home");

@@ -26,24 +26,12 @@ namespace Models.DataAccess
             db = new ShopDbContext();
         }
 
-        public List<int> GetProductCount()
-        {
-            List<int> CateCounts = new List<int>();
-            var products = db.Products.ToList();
-            var categories = db.Categories.ToList();
-            foreach (var itemCate in categories)
-            {
-                CateCounts.Add(products.Count(x => x.CateID == itemCate.CateID));
-            }
-            return CateCounts;
-        }
-
         public Product GetByCode(string code)
         {
             return db.Products.SingleOrDefault(x => x.Code == code);
         }
 
-        private static ProductDao instance;
+        private static ProductDao instance = null;
 
         public static ProductDao Instance
         {
@@ -59,6 +47,18 @@ namespace Models.DataAccess
         #endregion Singleton
 
         #region Handle
+
+        public List<int> GetProductCount()
+        {
+            List<int> CateCounts = new List<int>();
+            var products = db.Products.ToList();
+            var categories = db.Categories.ToList();
+            foreach (var itemCate in categories)
+            {
+                CateCounts.Add(products.Count(x => x.CateID == itemCate.CateID));
+            }
+            return CateCounts;
+        }
         /**
          * @description -- get Product by ProdID
          * @param _key: int -- is field ProdID

@@ -230,86 +230,153 @@
             e.preventDefault();
             var btn = $(this);
             var totalpay = btn.data('totalpay');
+            if (totalpay > 0) {
+                $.ajax({
+                    url: '/bill/getaccountlogin',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status) {
+                            var info = response.info;
+                            var fullName = info !== null ? info.FullName : '';
+                            var phone = info !== null ? info.Phone : '';
+                            var address = info !== null ? info.Address : '';
 
-            $.ajax({
-                url: '/bill/getaccountlogin',
-                data: {},
-                type: 'POST',
-                dataType: 'json',
-                success: function (response) {
-                    var data = response.data;
-                    if (response.status) {
-                        var dialog = bootbox.dialog({
-                            title: 'Thông tin thanh toán',
-                            message: `
-                            
-                        `,
-                            buttons: {
-                                cancel: {
-                                    label: 'Hủy',
-                                    className: 'default'
-                                },
-                                noclose: {
-                                    label: 'Đồng ý',
-                                    className: 'btn-info',
-                                    callback: function () {
-                                        var data = {
-                                            userid: data.UserID,
-                                            cusName: $('#cusName').val(),
-                                            address: $('#address').val(),
-                                            phone: $('#phone').val(),
-                                            note: $('#note').val()
-                                        };
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/bill/addToBill',
-                                            data: data,
-                                            dataType: 'json',
-                                            success: function (response) {
-                                                if (response.result === true) {
-                                                    dialog.modal('hide');
+                            var dialog = bootbox.dialog({
+                                title: 'Thông tin thanh toán',
+                                message: `
+                                <div class ="row contact-all">
+                                    <form id="form-add-bill">
+                                        <div class ="text-fields">
+                                            <div class ="float-input tag-input">
+                                                <input type="text" name="cusName" id="cusName" class ="input-info" placeholder="họ tên khách hàng" value= "` + fullName + `" required>
+                                                <span><i class ="fa fa-user tag-i"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class ="submit-area">
+                                            <div class ="float-input tag-input">
+                                                <input type="text" name="phone" id="phone" class ="input-info" placeholder="số điện thoại liên hệ" value= "` + phone + `" onkeyup="testNumber();" required>
+                                                <span><i class ="fa fa-phone tag-i"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class ="address-area">
+                                            <div class ="float-input tag-input">
+                                                <textarea name="address" cols="60" placeholder="địa chỉ giao hàng" id="address" class ="input-info" rows="7" required> ` + address + ` </textarea>
+                                                <span><i class ="fa fa-map-marker tag-i"></i></span>
+                                            </div>
+                                            <div class ="float-input tag-input">
+                                                <textarea name="note" cols="60" placeholder="ghi chú" id="note" class ="input-info" rows="7"></textarea>
+                                                <span><i class ="fa fa-comment tag-i"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <script>
+                                    function testNumber() {
+                                      var rgx = /^[0-9]+$/g;
+                                      var text = document.getElementById("phone").value;
+                                      if (!rgx.test(text)) {
+  	                                    text = text.substring(0, text.length -1);
+                                        document.getElementById("phone").value = text;
+                                      }
+                                   }
+                                </script>
+                            `,
+                                buttons: {
+                                    cancel: {
+                                        label: 'Hủy',
+                                        className: 'default'
+                                    },
+                                    success: {
+                                        label: 'Đồng ý',
+                                        className: 'btn-info',
+                                        callback: function () {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/bill/addToBill',
+                                                data: { 
+                                                    userid: info !== null ? info.UserID : '',
+                                                    cusName: $('#cusName').val(),
+                                                    address: $('#address').val(),
+                                                    phone: $('#phone').val(),
+                                                    note: $('#note').val(),
+                                                    pay: totalpay
+                                                },
+                                                dataType: 'json',
+                                                success: function (response) {
+                                                    if (response.result === true) {
+                                                        dialog.modal('hide');
+                                                        // ajax add order
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/bill/addToOrder',
+                                                            data: {
+                                                                request: response.billID
+                                                            },
+                                                            dataType: 'json',
+                                                            success: function (response) {
+                                                                bootbox.alert({
+                                                                    message: "Thêm đơn đặt hàng thành công",
+                                                                    size: 'small'
+                                                                });
+                                                                cartController.loadData(true);
+                                                            },
+                                                            error: function (response) {
+                                                                bootbox.alert({
+                                                                    message: 'Đã xảy ra lỗi khi add orders',
+                                                                    size: 'small'
+                                                                });
+                                                                console.log(response.message);
+                                                            }
+                                                        });
+                                                    } else {
+                                                        bootbox.alert({
+                                                            message: "Thêm đơn đặt hàng thất bại",
+                                                            size: 'small'
+                                                        });
+                                                    }
+                                                },
+                                                error: function (response) {
                                                     bootbox.alert({
-                                                        message: "Đặt hàng thành công",
+                                                        message: 'Đã xảy ra lỗi',
                                                         size: 'small'
                                                     });
-                                                    cartController.loadData(true);
-                                                } else {
-                                                    bootbox.alert({
-                                                        message: "Đặt hàng thất bại",
-                                                        size: 'small'
-                                                    });
+                                                    console.log(response.message);
                                                 }
-                                            },
-                                            error: function (response) {
-                                                bootbox.alert({
-                                                    message: 'Đã xảy ra lỗi',
-                                                    size: 'small'
-                                                });
-                                                console.log(response.message);
-                                            }
-                                        });
+                                            });
+                                        }
                                     }
                                 }
-                            }
-                        });
-                    } else {
+                            });
+                        } else {
+                            bootbox.alert({
+                                title: 'Thông báo',
+                                message: 'Đã xảy ra lỗi!',
+                                size: 'small'
+                            });
+                            console.log(data.message);
+                        }
+                    },
+                    error: function (response) {
                         bootbox.alert({
                             title: 'Thông báo',
                             message: 'Đã xảy ra lỗi!',
                             size: 'small'
                         });
-                        console.log(data.message);
+                        console.log(response);
                     }
-                },
-                error: function (response) {
-                    bootbox.alert({
-                        title: 'Thông báo',
-                        message: 'Đã xảy ra lỗi!',
-                        size: 'small'
-                    });
-                    console.log(response);
-                }
-            });
+                });
+            } else {
+                bootbox.alert({
+                    title: 'Thông báo',
+                    message: `
+                        <div>
+                            <label style="margin-bottom: 15px"> Chưa có sản phẩm nào trong giỏ hàng, </label> <br/ >
+                            <label> Chọn sản phẩm mua hàng sau đó quay lại nhé!.</label>
+                        </div>
+                    `,
+                });
+            }
         });
     },
     paging: function (totalRows, changePageSize, callback) {

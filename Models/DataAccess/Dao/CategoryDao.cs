@@ -24,7 +24,7 @@ namespace Models.DataAccess
             db = new ShopDbContext();
         }
 
-        private static CategoryDao instance;
+        private static CategoryDao instance = null;
 
         public static CategoryDao Instance
         {

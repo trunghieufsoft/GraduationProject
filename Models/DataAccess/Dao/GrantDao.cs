@@ -11,8 +11,8 @@ namespace Models.DataAccess
         #region Singleton
 
         /**
- * Constants
- */
+         * Constants
+         */
         private ShopDbContext db = null;
 
         /**
@@ -24,7 +24,7 @@ namespace Models.DataAccess
             db = new ShopDbContext();
         }
 
-        private static GrantDao instance;
+        private static GrantDao instance = null;
 
         public static GrantDao Instance
         {

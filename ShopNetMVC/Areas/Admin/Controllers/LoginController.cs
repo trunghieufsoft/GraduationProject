@@ -38,7 +38,7 @@ namespace ShopNetMVC.Areas.Admin.Controllers
 
                     default:
                         var u = UserDao.Instance.getByID(user.UserName);
-                        var userSession = new UserSession(u.UserID, u.GrantID);
+                        var userSession = new UserSession(u.UserID, u.FullName, u.GrantID);
                         Session.Add(Constants.USER_SESSION, userSession);
                         return RedirectToAction("Index", "Home");
                 }

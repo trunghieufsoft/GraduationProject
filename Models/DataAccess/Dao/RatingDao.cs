@@ -24,7 +24,7 @@ namespace Models.DataAccess
             db = new ShopDbContext();
         }
 
-        private static RatingDao instance;
+        private static RatingDao instance = null;
 
         public static RatingDao Instance
         {

@@ -25,7 +25,7 @@ namespace Models.DataAccess
             db = new ShopDbContext();
         }
 
-        public static BillDao instance;
+        private static BillDao instance = null;
 
         public static BillDao Instance
         {
@@ -55,15 +55,17 @@ namespace Models.DataAccess
          * @param _request: Bill -- entity object
          */
 
-        public bool insert(Bill _request)
+        public string insert(Bill _request)
         {
+            _request.Status = false;
             _request.CreatedAt = DateTime.Now;
             _request.BillID = Converter.genIdFormat_ddmmyy(db, Converter.ItemTypes.Bill);
             if (_request.UserID.Equals(""))
                 _request.UserID = Constants.nullValue;
             db.Bills.Add(_request);
+            var x = db.Bills.ToList();
             db.SaveChanges();
-            return Constants.trueValue;
+            return _request.BillID;
         }
 
         public bool ChangeStatus(string billId)

@@ -1,6 +1,6 @@
 ﻿namespace Models.DataAccess
 {
-    public class RepliesRequestDto
+    public class RepliesRequestDto : Auditable
     {
         public string ComID { get; set; }
         

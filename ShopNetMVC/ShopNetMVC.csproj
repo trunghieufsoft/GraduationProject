@@ -1509,10 +1509,7 @@
     <Content Include="assets\Data\images\_thumbs\Images\43015814_2166566466936602_7257144156298936320_n.jpg" />
     <Content Include="assets\Data\images\_thumbs\Images\logo.png" />
     <Content Include="Global.asax" />
-    <Content Include="scripts\ai.0.22.9-build00167.js" />
-    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\jquery.twbsPagination.min.js" />
-    <Content Include="scripts\modernizr-2.6.2.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -1773,6 +1770,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="assets\client\images\users\" />
     <Folder Include="assets\Data\images\files\" />
     <Folder Include="Views\Comment\" />
   </ItemGroup>

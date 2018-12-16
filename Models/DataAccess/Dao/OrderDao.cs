@@ -21,7 +21,7 @@ namespace Models.DataAccess
         {
             db = new ShopDbContext();
         }
-        public static OrderDao instance;
+        public static OrderDao instance = null;
 
         public static OrderDao Instance
         {
@@ -56,7 +56,25 @@ namespace Models.DataAccess
         {
             db.Orders.Add(_request);
             db.SaveChanges();
-            BillDao.Instance.changeBillTotalPrice(_request.BillID, totalPrice(_request.BillID));
+            return Constants.trueValue;
+        }
+
+        /**
+         * @description -- insert a list Order
+         * @param _request: List<Order> -- entity object
+         */
+        public bool insert(List<Order> _request)
+        {
+            try
+            {
+                foreach (var item in _request)
+                    db.Orders.Add(item);
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Constants.falseValue;
+            }
             return Constants.trueValue;
         }
 

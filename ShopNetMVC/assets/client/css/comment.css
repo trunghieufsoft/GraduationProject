@@ -55,23 +55,31 @@ body {
  -----------------------*/
     .comments-list:before {
         content: '';
-        width: 2px;
+        width: 1px;
         height: 100%;
-        background: #c7cacb;
+        /*background: #c7cacb;*/
         position: absolute;
         left: 32px;
         top: 0;
     }
 
+    .line-comment {
+        position: absolute;
+        width: 1px;
+        top: 65px;
+        background: #c7cacb;
+        left: 32px;
+    }
+
     .comments-list:after {
         content: '';
         position: absolute;
-        background: #c7cacb;
-        bottom: 0;
-        left: 27px;
-        width: 7px;
-        height: 7px;
-        border: 3px solid #dee1e3;
+        background: #fff;
+        bottom: -2px;
+        left: 32px;
+        width: 1px;
+        height: 20px;
+        border: 0px solid #dee1e3;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
@@ -83,8 +91,8 @@ body {
 
 .reply-list li:before {
     content: '';
-    width: 60px;
-    height: 2px;
+    width: 55px;
+    height: 1px;
     background: #c7cacb;
     position: absolute;
     top: 25px;
@@ -93,7 +101,7 @@ body {
 
 
 .comments-list li {
-    margin-bottom: 15px;
+    margin-top: 15px;
     display: block;
     position: relative;
 }

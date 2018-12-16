@@ -1,6 +1,6 @@
 ﻿namespace Models.DataAccess
 {
-    public class RatingRequestDto
+    public class RatingRequestDto : Auditable
     {
         public string RatID { get; set; }
         

@@ -170,7 +170,7 @@ namespace Models.Common.Encode
                     return Constants.minusOneNumber; // error: return false
             }
             
-            return listData != null
+            return listData.Count > 0
                 ? listData[listData.Count + Constants.minusOneNumber] + Constants.oneNumber 
                 : Constants.oneNumber;
         }

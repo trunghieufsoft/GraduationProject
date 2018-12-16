@@ -1,8 +1,4 @@
-﻿@section JavaScript{
-
-    <script src="~/assets/client/app/cartController.js"></script>
-}
-@{
+﻿@{
     ViewBag.Title = "Category";
     ViewBag.activeHome = "";
     ViewBag.activeMenu = "";
@@ -11,7 +7,9 @@
     ViewBag.activeContact = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section JavaScript{
+    <script src="~/assets/client/app/cartController.js"></script>
+}
 <!--articles-->
 <div class="container">
     <div class="row articles">
@@ -61,9 +59,19 @@
             <div class="sidebar-widgets">
                 <div class="shop-widget">
                     <h4>Hóa Đơn</h4>
-                    <table class="category-shop-list" id="bill-orders" style="width: 100%"></table>
+                    <table class="category-shop-list" style="width: 100%">
+                        <tr>
+                            <td colspan="2">
+                                <div id="bill-orders"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding: 10px 0 10px; text-align: center">
+                                <input type="button" class="btn btn-order" id="add-bill" data-totalpay="@ViewBag.Pay" value="Thanh Toán" />
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                @*@{Html.RenderAction("RightCategory", "Category");}*@
                 <div class="shop-widget">
                     <h4>được yêu thích</h4>
                     <ul class="popular-product">

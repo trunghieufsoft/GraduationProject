@@ -25,7 +25,7 @@ namespace Models.DataAccess.Dao
             db = new ShopDbContext();
         }
 
-        private static RepliesDao instance;
+        private static RepliesDao instance = null;
 
         public static RepliesDao Instance
         {
@@ -71,8 +71,15 @@ namespace Models.DataAccess.Dao
 
         public bool delete(int _repNo, string _comID)
         {
-            db.Replies.Remove(getByID(_repNo, _comID));
-            db.SaveChanges();
+            try
+            {
+                db.Replies.Remove(getByID(_repNo, _comID));
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Constants.falseValue;
+            }
             return Constants.trueValue;
         }
 
@@ -97,9 +104,11 @@ namespace Models.DataAccess.Dao
         /// <param name="_search"></param>
         /// <returns>IEnumerable<Replies></returns>
 
-        public IEnumerable<Reply> getObjectList(string _search)
+        public IEnumerable<Reply> getObjectList(string _search, bool _isUser = true)
         {
-            return db.Replies.Where(obj => obj.ComID.Contains(_search) || obj.UserID.Contains(_search)).OrderBy(p => p.CreatedAt).ToList();
+            return _isUser 
+                ? db.Replies.Where(obj => obj.ComID.Contains(_search) || obj.UserID.Contains(_search)).OrderBy(p => p.CreatedAt)
+                : db.Replies.Where(obj => obj.ComID.Contains(_search));
         }
 
         public List<Reply> ListNewReplies(int top)

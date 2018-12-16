@@ -34,10 +34,15 @@ namespace ShopNetMVC.Controllers
                 listPrice.Add(Converter.formatPrice(item.Cost));
             ViewBag.listPrice = listPrice;
             ViewBag.Length = listPrice.Count;
+            
+            var totalPrice = orders != null ? orders.Sum(o => o.Count * o.Product.Cost) : 0;
+            var fee = totalPrice > 150000 ? totalPrice > 300000 ? 30000 : 15000 : 0;
+            ViewBag.Pay = totalPrice + fee;
 
             return View();
         }
         // POST: add cart
+        [HttpPost]
         public JsonResult AddToCart(int productId, int amount)
         {
             try
@@ -75,11 +80,11 @@ namespace ShopNetMVC.Controllers
                     Session[Constants.CART_SESSION] = orders;
                 }
 
-                return Json(new { result = true, message = "Thêm vào giỏ hàng thành công" }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = true, message = "Thêm vào giỏ hàng thành công" });
             }
             catch (Exception ex)
             {
-                return Json(new { result = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, message = ex.Message });
             }
         }
 
@@ -119,50 +124,8 @@ namespace ShopNetMVC.Controllers
                 return Json(new { message = ex.Message, result = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult CheckOut()
-        {
-            var session = (UserSession)Session[Constants.USER_SESSION];
-            var user = new User();
-            if (session != null)
-            {
-                user = UserDao.Instance.getByID(session.UserName);
-            }
-            ViewBag.UserSession = session != null ? true : false;
-
-            var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
-            var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
-
-            var model = new BillRequestDto()
-            {
-                TotalPrice = totalPrice + 15000,
-                DeliveryAddress = user.Address,
-                CustomerName = user.FullName,
-                Phone = user.Phone
-            };
-            return View(model);
-        }
 
         [HttpPost]
-        public ActionResult CheckOut(BillRequestDto model)
-        {
-            var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null ? true : false;
-            if (ModelState.IsValid)
-            {
-                var bill = Mapper.Map<Bill>(model);
-                bill.UserID = ((UserSession)Session[Constants.USER_SESSION]).UserName;
-                bill.TotalPrice = ((List<OrderRequestDto>)Session[Constants.CART_SESSION]).Sum(o => o.Count * o.Product.Cost) + 30000;
-                BillDao.Instance.insert(bill);
-                Session[Constants.CART_SESSION] = null;
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Thêm đơn đặt hàng thất bại");
-            }
-            return View(model);
-        }
-
         public JsonResult DeleteOrder(int id)
         {
             try
@@ -173,7 +136,7 @@ namespace ShopNetMVC.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { result = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, message = ex.Message });
             }
         }
 
