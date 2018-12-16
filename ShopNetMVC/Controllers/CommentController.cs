@@ -12,12 +12,13 @@ namespace ShopNetMVC.Controllers
 {
     public class CommentController : Controller
     {
+        [HttpPost]
         public JsonResult AddComment(string comment, int prodId)
         {
             var user = (UserSession)Session[Constants.USER_SESSION];
             if (user == null)
             {
-                return Json(new { status = false, message = "Vui lòng đăng nhập" }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = false, message = "Vui lòng đăng nhập" });
             }
 
             var model = new Comment
@@ -30,9 +31,9 @@ namespace ShopNetMVC.Controllers
 
             CommentDao.Instance.insert(model);
 
-            return Json(new { model, status = true }, JsonRequestBehavior.AllowGet);
+            return Json(new { model, status = true });
         }
-
+        [HttpPost]
         public JsonResult AddReply(string comment, string comId)
         {
             var user = (UserSession)Session[Constants.USER_SESSION];
@@ -48,7 +49,7 @@ namespace ShopNetMVC.Controllers
                 CreatedAt = DateTime.Now
             };
             RepliesDao.Instance.insert(reply);
-            return Json(new { reply, status = true }, JsonRequestBehavior.AllowGet);
+            return Json(new { reply, status = true });
         }
 
         public JsonResult GetComments(int request)

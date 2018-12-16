@@ -140,6 +140,7 @@ namespace ShopNetMVC.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult UpdateOrder(int id, int count)
         {
             try
@@ -147,13 +148,14 @@ namespace ShopNetMVC.Controllers
                 var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
 
                 orders.Find(o => o.ProdID == id).Count = count;
-                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = true });
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message, result = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = ex.Message, result = false });
             }
         }
+
         public ActionResult PayOrders()
         {
             var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];

@@ -90,6 +90,7 @@ namespace ShopNetMVC.Controllers
                 });
             }
         }
+
         [HttpPost]
         public JsonResult AddToOrder(string request)
         {
@@ -107,7 +108,7 @@ namespace ShopNetMVC.Controllers
                     };
                     itemSource.Add(orderItem);
                 }
-                
+
                 var result = OrderDao.Instance.insert(itemSource);
                 if (result)
                 {

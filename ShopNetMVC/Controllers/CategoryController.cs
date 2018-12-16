@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using Models.Common.Encode;
 using Models.DataAccess.Dto;
 using Models.Common;
-using System.Linq;
 
 namespace ShopNetMVC.Controllers
 {
@@ -14,6 +13,10 @@ namespace ShopNetMVC.Controllers
         // GET: Category
         public ActionResult Index(string code)
         {
+            if (code == "" || code == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.UserSession = session != null ? true : false;
             var products = ProductDao.Instance.GetByCategoryCode(code);
