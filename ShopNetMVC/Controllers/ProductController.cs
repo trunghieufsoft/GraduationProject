@@ -42,7 +42,8 @@ namespace ShopNetMVC.Controllers
             ViewBag.Price = Converter.formatPrice(model.Cost);
             ViewBag.CateName = CategoryDao.Instance.getByID(model.CateID).CateName;
 
-            var related = ProductDao.Instance.RelatedProducts();
+            //var related = ProductDao.Instance.RelatedProducts();
+            var related = ProductDao.Instance.Recommendations(4, true, product.CateID);
 
             ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
 

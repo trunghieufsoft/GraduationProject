@@ -2558,3 +2558,39 @@ td .btn-delete, td .btn-edit {
 input[type="text"]:focus, input[type="submit"]:focus, textarea:focus {
   outline: none;
 }
+/* validator */
+.tooltips-validator {
+    position: absolute;
+    top: -35px;
+    left: 45px;
+    z-index: 2;
+    background: #fff;
+    padding: 7px 10px;
+    border: 1px solid #eee;
+    font-size: 11px;
+    border-radius: 4px;
+    box-shadow: 3px 2px 7px 0px #adb2ca;
+}
+.tooltips-validator::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 15%;
+    margin-left: -5px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+.submit-area {
+    float: right;
+    width: 50%;
+    padding-left: 5px;
+}
+.text-fields {
+    float: left;
+    width: 50%;
+    padding-right: 5px;
+}
+.validator {
+    display: none;
+}

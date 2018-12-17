@@ -16,7 +16,25 @@ namespace ShopNetMVC.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            var related = ProductDao.Instance.RelatedProducts(4);
+            //var related = ProductDao.Instance.RelatedProducts(4);
+            var related = ProductDao.Instance.Recommendations();
+
+            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+
+            var listPrice = new List<string>();
+            foreach (var item in related)
+                listPrice.Add(Converter.formatPrice(item.Cost));
+            ViewBag.listPrice = listPrice;
+            ViewBag.Length = listPrice.Count;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            //var related = ProductDao.Instance.RelatedProducts(4);
+            var related = ProductDao.Instance.Recommendations();
 
             ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
 
@@ -65,21 +83,6 @@ namespace ShopNetMVC.Controllers
             return View(model);
         }
 
-        public ActionResult Login()
-        {
-            var related = ProductDao.Instance.RelatedProducts(4);
-
-            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
-
-            var listPrice = new List<string>();
-            foreach (var item in related)
-                listPrice.Add(Converter.formatPrice(item.Cost));
-            ViewBag.listPrice = listPrice;
-            ViewBag.Length = listPrice.Count;
-
-            return View();
-        }
-
         [HttpPost]
         public ActionResult Login(UserDto model)
         {
@@ -126,24 +129,25 @@ namespace ShopNetMVC.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public JsonResult GetUserInfo()
         {
             try
             {
                 var session = (UserSession)Session[Constants.USER_SESSION];
                 var user = UserDao.Instance.getByID(session.UserName);
-                return Json(new { user }, JsonRequestBehavior.AllowGet);
+                return Json(new { user });
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = ex.Message });
             }
         }
 
         public ActionResult LogOut()
         {
             Session[Constants.USER_SESSION] = null;
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

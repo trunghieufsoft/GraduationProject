@@ -319,7 +319,7 @@ namespace Models.DataAccess
             return db.Products.Where(x => x.Category.CodeName == code).ToList();
         }
 
-        public IEnumerable<Product> Recommendation(int amount = 4, bool isSearchByType = false, byte typeProd = 1)
+        public IEnumerable<Product> Recommendations(int amount = 4, bool isSearchByType = false, byte typeProd = 1)
         {
             if (amount < 4 || amount > 10)
             {
@@ -344,11 +344,11 @@ namespace Models.DataAccess
             }
             // step. 2: Sort lsObjPrdCount get List product
             var Products = isSearchByType
-                ? lsObjPrdCount.Where(o => o.product.CateID == typeProd).OrderByDescending(o => o.data).Select(l => l.product).ToList()
-                : lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product).ToList();
+                ? lsObjPrdCount.Where(o => o.product.CateID == typeProd).OrderByDescending(o => o.data).Select(l => l.product)
+                : lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product);
             // clear data source lsObjPrdCount
             lsObjPrdCount.Clear();
-            // step. 3:
+            // step. 3: Pick out the top 10 favorite products, with each favorite item, find in the 30 most recent orders, choose 4 most bought products
             foreach (var product in Products.Take(10))
             {
                 var item = new any()
@@ -369,9 +369,9 @@ namespace Models.DataAccess
                 }
                 lsObjPrdCount.Add(item);
             }
-            // step. 4: return result Recommendation
-            lsObjPrdCount.OrderByDescending(o => o.data).Take(amount);
-            return lsObjPrdCount.Select(o => o.product).ToList();
+            // step. 4: return result recommendations
+            Products = lsObjPrdCount.OrderByDescending(o => o.data).Select(o => o.product).Take(amount);
+            return Products;
         }
         #endregion Handle
     }

@@ -54,6 +54,7 @@ namespace Models.DataAccess
          */
         public bool insert(Order _request)
         {
+            _request.CreatedAt = DateTime.Now;
             db.Orders.Add(_request);
             db.SaveChanges();
             return Constants.trueValue;
@@ -68,7 +69,10 @@ namespace Models.DataAccess
             try
             {
                 foreach (var item in _request)
+                {
+                    item.CreatedAt = DateTime.Now;
                     db.Orders.Add(item);
+                }
                 db.SaveChanges();
             }
             catch
@@ -129,7 +133,7 @@ namespace Models.DataAccess
                 {
                     total += item.Count * item.Product.Cost;
                 }
-                return total;
+                return total > 150000 ? total > 300000 ? 30000 : 15000 : 0;
             }
             return Constants.zeroNumber;
         }

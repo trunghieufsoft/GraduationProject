@@ -249,20 +249,23 @@
                                     <form id="form-add-bill">
                                         <div class ="text-fields">
                                             <div class ="float-input tag-input">
-                                                <input type="text" name="cusName" id="cusName" class ="input-info" placeholder="họ tên khách hàng" value= "` + fullName + `" required>
+                                                <input type="text" name="cusName" style="text-transform: capitalize;" id="cusName" class ="input-info" placeholder="họ tên khách hàng" value= "` + fullName + `" onclick="gotFocus(0)">
                                                 <span><i class ="fa fa-user tag-i"></i></span>
+                                                <div id="validator-cusname" class ="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                                             </div>
                                         </div>
                                         <div class ="submit-area">
                                             <div class ="float-input tag-input">
-                                                <input type="text" name="phone" id="phone" class ="input-info" placeholder="số điện thoại liên hệ" value= "` + phone + `" onkeyup="testNumber();" required>
+                                                <input type="text" name="phone" id="phone" class ="input-info" placeholder="số điện thoại liên hệ" value= "` + phone + `" onkeyup="testNumber()" onclick="gotFocus(1)">
                                                 <span><i class ="fa fa-phone tag-i"></i></span>
+                                                <div id="validator-phone" class ="validator tooltips-validator"><label></label></div>
                                             </div>
                                         </div>
                                         <div class ="address-area">
                                             <div class ="float-input tag-input">
-                                                <textarea name="address" cols="60" placeholder="địa chỉ giao hàng" id="address" class ="input-info" rows="7" required> ` + address + ` </textarea>
+                                                <textarea name="address" cols="60" placeholder="địa chỉ giao hàng" id="address" class ="input-info" rows="7" onclick="gotFocus(2)">` + address + `</textarea>
                                                 <span><i class ="fa fa-map-marker tag-i"></i></span>
+                                                <div id="validator-address" class ="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                                             </div>
                                             <div class ="float-input tag-input">
                                                 <textarea name="note" cols="60" placeholder="ghi chú" id="note" class ="input-info" rows="7"></textarea>
@@ -273,13 +276,42 @@
                                 </form>
                                 <script>
                                     function testNumber() {
-                                      var rgx = /^[0-9]+$/g;
-                                      var text = document.getElementById("phone").value;
-                                      if (!rgx.test(text)) {
-  	                                    text = text.substring(0, text.length -1);
-                                        document.getElementById("phone").value = text;
-                                      }
-                                   }
+                                        var rgx = /^[0-9]+$/g;
+                                        var text = document.getElementById("phone").value;
+                                        if (!rgx.test(text)) {
+                                            text = text.substring(0, text.length -1);
+                                            document.getElementById("phone").value = text;
+                                        }
+                                    }
+                                    function gotFocus(key) {
+                                        var name = "validator";
+                                        var element, arr;
+                                        switch (key) {
+                                            case 0:
+                                                element = document.getElementById("validator-cusname");
+                                                arr = element.className.split(" ");
+                                                if (arr.indexOf(name) == -1) {
+                                                    element.className += " " +name;
+                                                }
+                                                break;
+                                            case 1:
+                                                element = document.getElementById("validator-phone");
+                                                arr = element.className.split(" ");
+                                                if (arr.indexOf(name) == -1) {
+                                                    element.className += " " +name;
+                                                }
+                                                break;
+                                            case 2:
+                                                element = document.getElementById("validator-address");
+                                                arr = element.className.split(" ");
+                                                if (arr.indexOf(name) == -1) {
+                                                    element.className += " " +name;
+                                                }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
                                 </script>
                             `,
                                 buttons: {
@@ -287,63 +319,82 @@
                                         label: 'Hủy',
                                         className: 'default'
                                     },
-                                    success: {
+                                    noclose: {
                                         label: 'Đồng ý',
                                         className: 'btn-info',
                                         callback: function () {
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: '/bill/addToBill',
-                                                data: { 
-                                                    userid: info !== null ? info.UserID : '',
-                                                    cusName: $('#cusName').val(),
-                                                    address: $('#address').val(),
-                                                    phone: $('#phone').val(),
-                                                    note: $('#note').val(),
-                                                    pay: totalpay
-                                                },
-                                                dataType: 'json',
-                                                success: function (response) {
-                                                    if (response.result === true) {
-                                                        dialog.modal('hide');
-                                                        // ajax add order
-                                                        $.ajax({
-                                                            type: 'POST',
-                                                            url: '/bill/addToOrder',
-                                                            data: {
-                                                                request: response.billID
-                                                            },
-                                                            dataType: 'json',
-                                                            success: function (response) {
-                                                                bootbox.alert({
-                                                                    message: "Thêm đơn đặt hàng thành công",
-                                                                    size: 'small'
-                                                                });
-                                                                cartController.loadData(true);
-                                                            },
-                                                            error: function (response) {
-                                                                bootbox.alert({
-                                                                    message: 'Đã xảy ra lỗi khi add orders',
-                                                                    size: 'small'
-                                                                });
-                                                                console.log(response.message);
-                                                            }
-                                                        });
-                                                    } else {
+                                            var data = { 
+                                                userid: info !== null ? info.UserID : '',
+                                                cusName: $('#cusName').val(),
+                                                address: $('#address').val(),
+                                                phone: $('#phone').val(),
+                                                note: $('#note').val(),
+                                                pay: totalpay
+                                            };
+                                            if (data.cusName === "") {
+                                                var x = $('#validator-cusName label').text();
+                                                $('#validator-cusname').removeClass('validator');
+                                                return false;
+                                            }
+                                            if (data.phone === "") {
+                                                $('#validator-phone').removeClass('validator');
+                                                $('#validator-phone label').text('Vui lòng điền vào trường này.');
+                                                return false;
+                                            }
+                                            if (data.phone.length !== 10) {
+                                                $('#validator-phone').removeClass('validator');
+                                                $('#validator-phone label').text('Vui lòng nhập đủ 10 số.');
+                                            } else if (data.address === "") {
+                                                $('#validator-address').removeClass('validator');
+                                            } else {
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/bill/addToBill',
+                                                    data: data,
+                                                    dataType: 'json',
+                                                    success: function (response) {
+                                                        if (response.result === true) {
+                                                            dialog.modal('hide');
+                                                            // ajax add order
+                                                            $.ajax({
+                                                                type: 'POST',
+                                                                url: '/bill/addToOrder',
+                                                                data: {
+                                                                    request: response.billID
+                                                                },
+                                                                dataType: 'json',
+                                                                success: function (response) {
+                                                                    bootbox.alert({
+                                                                        message: "Thêm đơn đặt hàng thành công",
+                                                                        size: 'small'
+                                                                    });
+                                                                    cartController.loadData(true);
+                                                                },
+                                                                error: function (response) {
+                                                                    bootbox.alert({
+                                                                        message: 'Đã xảy ra lỗi khi add orders',
+                                                                        size: 'small'
+                                                                    });
+                                                                    console.log(response.message);
+                                                                }
+                                                            });
+                                                        } else {
+                                                            bootbox.alert({
+                                                                message: "Thêm đơn đặt hàng thất bại",
+                                                                size: 'small'
+                                                            });
+                                                        }
+                                                    },
+                                                    error: function (response) {
                                                         bootbox.alert({
-                                                            message: "Thêm đơn đặt hàng thất bại",
+                                                            message: 'Đã xảy ra lỗi',
                                                             size: 'small'
                                                         });
+                                                        console.log(response.message);
                                                     }
-                                                },
-                                                error: function (response) {
-                                                    bootbox.alert({
-                                                        message: 'Đã xảy ra lỗi',
-                                                        size: 'small'
-                                                    });
-                                                    console.log(response.message);
-                                                }
-                                            });
+                                                });
+                                            }
+                                            return false;
                                         }
                                     }
                                 }

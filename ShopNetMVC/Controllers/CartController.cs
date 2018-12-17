@@ -25,7 +25,8 @@ namespace ShopNetMVC.Controllers
 
             ViewBag.IsOrdered = (List<OrderRequestDto>)Session[Constants.CART_SESSION] != null;
 
-            var related = ProductDao.Instance.RelatedProducts(4);
+            //var related = ProductDao.Instance.RelatedProducts(4);
+            var related = ProductDao.Instance.Recommendations();
 
             ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
 

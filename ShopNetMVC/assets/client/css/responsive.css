@@ -152,4 +152,18 @@
 	    border-bottom:1px solid #eaeaea;
 	    padding-bottom: 22px;
     }
+    .tooltips-validator {
+        top: -43px;
+    }
+    #validator-address {
+        top: -35px;
+    }
+}
+@media (max-width:423px) {
+    .tooltips-validator {
+        top: -56px;
+    }
+    #validator-address {
+        top: -35px;
+    }
 }
