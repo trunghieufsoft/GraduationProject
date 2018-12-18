@@ -344,8 +344,8 @@ namespace Models.DataAccess
             }
             // step. 2: Sort lsObjPrdCount get List product
             var Products = isSearchByType
-                ? lsObjPrdCount.Where(o => o.product.CateID == typeProd).OrderByDescending(o => o.data).Select(l => l.product)
-                : lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product);
+                ? lsObjPrdCount.Where(o => o.product.CateID == typeProd).OrderByDescending(o => o.data).Select(l => l.product).ToList()
+                : lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product).ToList();
             // clear data source lsObjPrdCount
             lsObjPrdCount.Clear();
             // step. 3: Pick out the top 10 favorite products, with each favorite item, find in the 30 most recent orders, choose 4 most bought products
@@ -370,8 +370,7 @@ namespace Models.DataAccess
                 lsObjPrdCount.Add(item);
             }
             // step. 4: return result recommendations
-            Products = lsObjPrdCount.OrderByDescending(o => o.data).Select(o => o.product).Take(amount);
-            return Products;
+            return lsObjPrdCount.OrderByDescending(o => o.data).Select(o => o.product).Take(amount);
         }
         #endregion Handle
     }
