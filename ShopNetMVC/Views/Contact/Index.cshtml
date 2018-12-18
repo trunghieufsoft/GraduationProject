@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.activeContact = "active";
+}
+
+@section JavaScript{
+    @*<script src="~/assets/client/app/loginController.js"></script>*@
+}
+
+<!--articles-->
+<div class="container">
+    <div class="row articles">
+        <!-- list category order -->
+        <div class="col-md-9 white-bg">
+            <div class="col-md-12" style="background: #fff" id="contact-right">
+                <p class="box-title">liên hệ với chúng tôi</p>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <!-- Content -->
+                    <form id="form-contact">
+                        <div class="contact-inpleft">
+                            <div class="contact-inpitem-left">
+                                <input type="text" id="first" placeholder="Họ và tên" title="Họ và tên" name="name" required/>
+                                <span><i class="fa fa-user"></i></span>
+                            </div>
+                            <div class="contact-inpitem-left">
+                                <input type="text" placeholder="Email" title="Địa chỉ email" name="email" required/>
+                                <span><i class="fa fa-envelope-o"></i></span>
+                            </div>
+                            <div class="contact-inpitem-left">
+                                <input type="text" placeholder="Số điện thoại" title="Số điện thoại" name="phone" required/>
+                                <span><i class="fa fa-phone"></i></span>
+                            </div>
+                        </div>
+                        <div class="contact-inpright">
+                            <textarea title="Nội dung liên hệ" cols="63" rows="6" placeholder="Nội dung liên hệ" name="content" required></textarea>
+                            <input type="submit" id="submit_contact" class="main-button" value="gửi liên hệ">
+                            <div id="msg" class="message">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+
+                </div>
+                <!--articles-->
+            </div>
+        </div>
+        <div class="col-md-3 shop-sidebar">
+            <div class="sidebar-widgets">
+                <div class="shop-widget">
+                    <h4>giờ mở cửa</h4>
+                    <table class="calendar-right" style="width: 100%">
+                        <tr>
+                            <td style="padding-right: 0;"><span>Thứ Hai</span></td>
+                            <td><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                        <tr class="colored">
+                            <td style="padding-right: 0;"><span>Thứ Ba</span></td>
+                            <td><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 0;"><span>Thứ Tư</span></td>
+                            <td style="padding: 10px"><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                        <tr class="colored">
+                            <td style="padding-right: 0;"><span>Thứ Năm</span></td>
+                            <td><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 0;"><span>Thứ Sáu</span></td>
+                            <td><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                        <tr class="colored">
+                            <td style="padding-right: 0;"><span>Thứ Bảy</span></td>
+                            <td><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 0;"><span>Chủ Nhật</span></td>
+                            <td><span style="float: right; text-align: center">8am-5pm</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="shop-widget">
+                    <h4>thông tin liên hệ</h4>
+                    <!-- TODO -->
+                    <ul class="info-contact">
+                        <li><p>Chocco Webshop</p>
+                        </li>
+                        <li>
+                            <p>Street Phan Châu Trinh, Hải Châu, Đà Nẵng</p>
+                        </li>
+                    </ul>
+                    <ul class="info-contact">
+                        <li><p>Hotline : 0634 933 996</p></li>
+                        <li><p>Phone : 0344 434 343</p></li>
+                        <li><p>Email : coffeehome.info@choco.com</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end-prize-->
+<!-- /.box -->

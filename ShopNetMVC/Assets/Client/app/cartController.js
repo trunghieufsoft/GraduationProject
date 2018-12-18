@@ -272,48 +272,47 @@
                                                 <span><i class ="fa fa-comment tag-i"></i></span>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                                <script>
-                                    function testNumber() {
-                                        var rgx = /^[0-9]+$/g;
-                                        var text = document.getElementById("phone").value;
-                                        if (!rgx.test(text)) {
-                                            text = text.substring(0, text.length -1);
-                                            document.getElementById("phone").value = text;
+                                    </form>
+                                    <script>
+                                        function testNumber() {
+                                            var rgx = /^[0-9]+$/g;
+                                            var text = document.getElementById("phone").value;
+                                            if (!rgx.test(text)) {
+                                                text = text.substring(0, text.length -1);
+                                                document.getElementById("phone").value = text;
+                                            }
                                         }
-                                    }
-                                    function gotFocus(key) {
-                                        var name = "validator";
-                                        var element, arr;
-                                        switch (key) {
-                                            case 0:
-                                                element = document.getElementById("validator-cusname");
-                                                arr = element.className.split(" ");
-                                                if (arr.indexOf(name) == -1) {
-                                                    element.className += " " +name;
-                                                }
-                                                break;
-                                            case 1:
-                                                element = document.getElementById("validator-phone");
-                                                arr = element.className.split(" ");
-                                                if (arr.indexOf(name) == -1) {
-                                                    element.className += " " +name;
-                                                }
-                                                break;
-                                            case 2:
-                                                element = document.getElementById("validator-address");
-                                                arr = element.className.split(" ");
-                                                if (arr.indexOf(name) == -1) {
-                                                    element.className += " " +name;
-                                                }
-                                                break;
-                                            default:
-                                                break;
+                                        function gotFocus(key) {
+                                            var name = "validator";
+                                            var element, arr;
+                                            switch (key) {
+                                                case 0:
+                                                    element = document.getElementById("validator-cusname");
+                                                    arr = element.className.split(" ");
+                                                    if (arr.indexOf(name) == -1) {
+                                                        element.className += " " +name;
+                                                    }
+                                                    break;
+                                                case 1:
+                                                    element = document.getElementById("validator-phone");
+                                                    arr = element.className.split(" ");
+                                                    if (arr.indexOf(name) == -1) {
+                                                        element.className += " " +name;
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    element = document.getElementById("validator-address");
+                                                    arr = element.className.split(" ");
+                                                    if (arr.indexOf(name) == -1) {
+                                                        element.className += " " +name;
+                                                    }
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                         }
-                                    }
-                                </script>
-                            `,
+                                    </script>
+                                `,
                                 buttons: {
                                     cancel: {
                                         label: 'Hủy',

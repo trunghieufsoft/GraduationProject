@@ -25,33 +25,5 @@ namespace ShopNetMVC.Controllers
             ViewBag.UserName = session == null ? string.Empty : session.UserName;
             return PartialView("_Loginbar");
         }
-
-
-        [ChildActionOnly]
-        public ActionResult Category()
-        {
-            var categories = CategoryDao.Instance.GetListCategory();
-            
-            ViewBag.Categories = categories;
-
-            return PartialView("_Category");
-        }
-
-
-
-        [ChildActionOnly]
-        public ActionResult Bill()
-        {
-            var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.IsLogin = session != null;
-            return PartialView("_Bill");
-        }
-
-        public ActionResult Error()
-        {
-            ViewBag.Error = true;
-            ViewBag.Message = "Lỗi không xác định 404";
-            return PartialView("_Error");
-        }
     }
 }
