@@ -5,7 +5,7 @@
 }
 
 @section JavaScript{
-    @*<script src="~/assets/client/app/loginController.js"></script>*@
+    <script src="~/assets/client/app/contactController.js"></script>
 }
 
 <!--articles-->
@@ -18,23 +18,26 @@
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <!-- Content -->
-                    <form id="form-contact">
+                    <form id="form-contact" method="post">
                         <div class="contact-inpleft">
                             <div class="contact-inpitem-left">
-                                <input type="text" id="first" placeholder="Họ và tên" title="Họ và tên" name="name" required/>
+                                <input type="text" id="first validator-name" placeholder="Họ và tên" title="Họ và tên" name="name" />
                                 <span><i class="fa fa-user"></i></span>
+                                <div class="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                             </div>
                             <div class="contact-inpitem-left">
-                                <input type="text" placeholder="Email" title="Địa chỉ email" name="email" required/>
+                                <input type="text" id="validator-email" placeholder="Email" title="Địa chỉ email" name="email" />
                                 <span><i class="fa fa-envelope-o"></i></span>
+                                <div class="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                             </div>
                             <div class="contact-inpitem-left">
-                                <input type="text" placeholder="Số điện thoại" title="Số điện thoại" name="phone" required/>
+                                <input type="text" id="validator-phone" placeholder="Số điện thoại" title="Số điện thoại" name="phone" />
                                 <span><i class="fa fa-phone"></i></span>
+                                <div class="validator tooltips-validator"><label>Vui lòng nhập đúng định dạng: 10 số.</label></div>
                             </div>
                         </div>
                         <div class="contact-inpright">
-                            <textarea title="Nội dung liên hệ" cols="63" rows="6" placeholder="Nội dung liên hệ" name="content" required></textarea>
+                            <textarea title="Nội dung liên hệ" cols="63" id="validator-content" rows="6" placeholder="Nội dung liên hệ" name="content" required></textarea>
                             <input type="submit" id="submit_contact" class="main-button" value="gửi liên hệ">
                             <div id="msg" class="message">
                             </div>

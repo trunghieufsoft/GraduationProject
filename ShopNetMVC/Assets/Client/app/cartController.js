@@ -342,7 +342,7 @@
                                             }
                                             if (data.phone.length !== 10) {
                                                 $('#validator-phone').removeClass('validator');
-                                                $('#validator-phone label').text('Vui lòng nhập đủ 10 số.');
+                                                $('#validator-phone label').text('Vui lòng nhập đúng format 10 số.');
                                             } else if (data.address === "") {
                                                 $('#validator-address').removeClass('validator');
                                             } else {
