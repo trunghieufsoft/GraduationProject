@@ -77,8 +77,7 @@ namespace ShopNetMVC.Controllers
                 return Json(new { message = ex.Message, result = false }, JsonRequestBehavior.AllowGet);
             }
         }
-
-        [HttpPost]
+        
         public JsonResult GetProduct(int id)
         {
             try
@@ -86,12 +85,13 @@ namespace ShopNetMVC.Controllers
                 var product = ProductDao.Instance.getByID(id);
                 var model = Mapper.Map<ProductRequestDto>(product);
                 return Json(
-                    new { data = model, status = true }
+                    new { data = model, status = true },
+                    JsonRequestBehavior.AllowGet
                 );
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message, status = false });
+                return Json(new { message = ex.Message, status = false }, JsonRequestBehavior.AllowGet);
             }
         }
     }

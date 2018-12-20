@@ -24,7 +24,7 @@ namespace ShopNetMVC.Controllers
         public JsonResult GetBills(int pageIndex, int pageSize)
         {
             var user = ((UserSession)Session[Constants.USER_SESSION]);
-            var isStaff = user.GrantID == (int)Constants.GrantID.Staff;
+            var isStaff = user.GrantID == (int)Constants.GrantID.Staff || user.GrantID == (int)Constants.GrantID.Manager;
             var bills = BillDao.Instance.GetBills(user.UserName, isStaff);
             if (bills == null)
             {
