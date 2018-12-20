@@ -21,26 +21,25 @@
                     <form id="form-contact" method="post">
                         <div class="contact-inpleft">
                             <div class="contact-inpitem-left">
-                                <input type="text" id="first validator-name" placeholder="Họ và tên" title="Họ và tên" name="name" />
+                                <div id="validator-name" style="top: 55px; left: 70px;" class="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
+                                <input type="text" id="first" placeholder="Họ và tên" title="Họ và tên" name="name" />
                                 <span><i class="fa fa-user"></i></span>
-                                <div class="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                             </div>
                             <div class="contact-inpitem-left">
-                                <input type="text" id="validator-email" placeholder="Email" title="Địa chỉ email" name="email" />
+                                <div id="validator-email" style="top: 123px; left: 70px;" class="validator tooltips-validator"><label>Vui lòng nhập đúng định dạng mail.</label></div>
+                                <input type="text" id="input-email" placeholder="Email" title="account.email@email.com" name="email" />
                                 <span><i class="fa fa-envelope-o"></i></span>
-                                <div class="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                             </div>
                             <div class="contact-inpitem-left">
-                                <input type="text" id="validator-phone" placeholder="Số điện thoại" title="Số điện thoại" name="phone" />
+                                <div id="validator-phone" style="top: 187px; left: 70px;" class="validator tooltips-validator"><label>Vui lòng nhập đúng định dạng: 10 số.</label></div>
+                                <input type="text" id="input-phone" placeholder="Số điện thoại" title="Số điện thoại" name="phone" />
                                 <span><i class="fa fa-phone"></i></span>
-                                <div class="validator tooltips-validator"><label>Vui lòng nhập đúng định dạng: 10 số.</label></div>
                             </div>
                         </div>
                         <div class="contact-inpright">
-                            <textarea title="Nội dung liên hệ" cols="63" id="validator-content" rows="6" placeholder="Nội dung liên hệ" name="content" required></textarea>
+                            <div id="validator-content" style="top: 55px; left: 50%;" class="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
+                            <textarea title="Nội dung liên hệ" cols="63" id="areatext-content" rows="6" placeholder="Nội dung liên hệ" name="content" ></textarea>
                             <input type="submit" id="submit_contact" class="main-button" value="gửi liên hệ">
-                            <div id="msg" class="message">
-                            </div>
                         </div>
                     </form>
                 </div>

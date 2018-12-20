@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Models.Common;
+using Models.Common.Encode;
 using Models.DataAccess;
 using Models.DataAccess.Dto;
 using Models.EntityFramework;
@@ -18,6 +19,18 @@ namespace ShopNetMVC.Controllers
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.UserSession = session != null ? true : false;
             ViewBag.IsUser = ((UserSession)Session[Constants.USER_SESSION]).GrantID == (int)Constants.GrantID.User;
+
+            //var related = ProductDao.Instance.RelatedProducts(4);
+            var related = ProductDao.Instance.Recommendations();
+
+            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+
+            var listPrice = new List<string>();
+            foreach (var item in related)
+                listPrice.Add(Converter.formatPrice(item.Cost));
+            ViewBag.listPrice = listPrice;
+            ViewBag.Length = listPrice.Count;
+
             return View();
         }
 

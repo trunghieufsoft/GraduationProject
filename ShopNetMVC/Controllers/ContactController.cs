@@ -31,8 +31,8 @@ namespace ShopNetMVC.Controllers
             };
             try
             {
-                sentMail_To_Custommer(sentTo, subject, body[1]);
                 sentMail_To_Shop(sentTo, subject, body);
+                //sentMail_To_Custommer(sentTo, subject, body[1]);
                 return Json(new { message = "Cảm ơn bạn đã gửi thông tin về chúng tôi.<br/>Chúng tôi sẽ cố gắng hoàn thiện hơn trong thời gian tơi.", status = true });
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace ShopNetMVC.Controllers
             MailMessage msg = new MailMessage(smtpSection.From, sentTo);
             msg.IsBodyHtml = true;
             msg.Body += "<h1>Trung tâm quản lý đánh giá chất lượng sản phẩm Coffee Home</h1>";
-            msg.Body += "<h3> http://" + WebConfigurationManager.AppSettings["domain"].ToString() + "</h3>";
+            msg.Body += "<h3> http://ShopCoffee.com.vn </h3>";
             msg.Body += "Bạn vừa gửi thông tin đến hệ thống web Coffee Home.<br/>";
             msg.Body += "<br/>Cảm ơn bạn đã gửi thông tin về chúng tôi.";
             msg.Body += "<hr/><br/>Thông tin:";
@@ -76,7 +76,7 @@ namespace ShopNetMVC.Controllers
             MailMessage msg = new MailMessage(sentFrom, smtpSection.From);
             msg.IsBodyHtml = true;
             msg.Body += "<h1>" + body[0] + "</h1>";
-            msg.Body += "<h3> http://" + WebConfigurationManager.AppSettings["domain"].ToString() + "</h3>";
+            msg.Body += "<h3> http://ShopCoffee.com.vn </h3>";
             msg.Body += "<hr/><b>Thông Tin:</b>";
             msg.Body += "<p style='font-size: 13px'>" + body[1] + "</p>";
             msg.Body += "<br/>" + body[0];
