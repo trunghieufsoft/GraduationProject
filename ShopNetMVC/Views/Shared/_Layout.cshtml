@@ -72,7 +72,13 @@
                                 }
                             </ul>
                         </li>
+
                         <li class="@ViewBag.activeCart"><a href="/cart">Giỏ hàng</a></li>
+
+                        @if (@ViewBag.UserSession == true)
+                        {
+                            <li class="@ViewBag.activeBill"><a href="/bill">Đơn hàng</a></li>
+                        }
 
                         <li class="@ViewBag.activeAbout"><a href="/about">Giới thiệu</a></li>
 

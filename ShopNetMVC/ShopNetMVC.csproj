@@ -1427,6 +1427,7 @@
     <Content Include="Assets\Admin\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Assets\Admin\plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Assets\Client\app\addCart.js" />
+    <Content Include="Assets\Client\app\billController.js" />
     <Content Include="Assets\Client\app\cartController.js" />
     <Content Include="Assets\Client\app\contactController.js" />
     <Content Include="Assets\Client\app\home.js" />

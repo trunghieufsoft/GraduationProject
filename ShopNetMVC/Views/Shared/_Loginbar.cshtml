@@ -2,20 +2,20 @@
     if (ViewBag.UserName == string.Empty)
     {
         <li class="ms-show">
-            <a href="/user/login">Login</a>
+            <a href="/user/login">Đăng nhập</a>
         </li>
         <li>|</li>
         <li class="ms-show">
-            <a href="/user/register">Register</a>
+            <a href="/user/register">Đăng ký</a>
         </li>
     }
     else
     {
         <li class="ms-show">
-            Xin chào @ViewBag.UserName
+            <a href="javascript:void(0)">Xin chào @ViewBag.UserName</a>
         </li>
         <li>
-            <a href="/user/logout">Log out</a>
+            <a href="/user/logout">Đăng xuất</a>
         </li>
     }
 }
