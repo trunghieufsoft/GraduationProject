@@ -1,21 +1,20 @@
 ﻿@{
-    if (ViewBag.UserName == string.Empty)
-    {
-        <li class="ms-show">
-            <a href="/user/login">Đăng nhập</a>
-        </li>
-        <li>|</li>
-        <li class="ms-show">
-            <a href="/user/register">Đăng ký</a>
-        </li>
-    }
-    else
+    if (ViewBag.UserSession == true)
     {
         <li class="ms-show">
             <a href="javascript:void(0)">Xin chào @ViewBag.UserName</a>
         </li>
         <li>
             <a href="/user/logout">Đăng xuất</a>
+        </li>
+    }
+    else
+    {
+        <li class="ms-show">
+            <a href="/user/login">Đăng nhập</a>
+        </li>
+        <li class="ms-show">
+            <a href="/user/register">Đăng ký</a>
         </li>
     }
 }

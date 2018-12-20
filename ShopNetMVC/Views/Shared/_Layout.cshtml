@@ -29,14 +29,8 @@
                 </div>
                 <div class="col-md-6 language">
                     <ul>
-                        @if (@ViewBag.UserSession == true)
-                        {
-                            <li><a href="/user/logout">Đăng xuất</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="/user/login">Đăng nhập</a></li>
-                            <li><a href="/user/register">Đăng ký</a></li>
+                        @{
+                            Html.RenderAction("UserLogin", "Home");
                         }
                     </ul>
                 </div>

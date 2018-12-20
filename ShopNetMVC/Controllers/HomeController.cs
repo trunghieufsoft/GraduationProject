@@ -21,7 +21,7 @@ namespace ShopNetMVC.Controllers
         public ActionResult UserLogin()
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null ? true : false;
+            ViewBag.UserSession = session != null;
             ViewBag.UserName = session == null ? string.Empty : session.UserName;
             return PartialView("_Loginbar");
         }
