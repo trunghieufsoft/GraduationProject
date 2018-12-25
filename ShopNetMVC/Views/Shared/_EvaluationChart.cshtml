@@ -1,0 +1,16 @@
+﻿@for (var i = 5; i > 0; i--)
+{
+    <div class="pull-left">
+        <div class="pull-left" style="width:35px; line-height:1;">
+            <div style="height:9px; margin:5px 0;">@i <span class="glyphicon glyphicon-star"></span></div>
+        </div>
+        <div class="pull-left" style="width:180px;">
+            <div class="progress" style="height:9px; margin:8px 0;">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: @ViewBag.PercentStar[@i-1]%">
+                    <span class="sr-only">@ViewBag.PercentStar[@i - 1]% Complete (danger)</span>
+                </div>
+            </div>
+        </div>
+        <div class="pull-right" style="margin-left:10px;">@ViewBag.CountRating[@i - 1]</div>
+    </div>
+}

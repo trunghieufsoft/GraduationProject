@@ -26,11 +26,6 @@ namespace Models.DataAccess
             db = new ShopDbContext();
         }
 
-        public Product GetByCode(string code)
-        {
-            return db.Products.SingleOrDefault(x => x.Code == code);
-        }
-
         private static ProductDao instance = null;
 
         public static ProductDao Instance
@@ -47,6 +42,11 @@ namespace Models.DataAccess
         #endregion Singleton
 
         #region Handle
+
+        public Product GetByCode(string code)
+        {
+            return db.Products.SingleOrDefault(x => x.Code == code);
+        }
 
         public List<int> GetProductCount()
         {
@@ -294,7 +294,7 @@ namespace Models.DataAccess
         public IEnumerable<Product> RelatedProducts(int amount = 4)
         {
             var products = db.Products;
-            double level = 0.0;
+            var level = 0.0;
             var listlvProd = new List<any>();
             foreach (var element in products)
             {

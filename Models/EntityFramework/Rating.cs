@@ -18,7 +18,7 @@ namespace Models.EntityFramework
         public string Content { get; set; }
 
         [Required]
-        public byte Level { get; set; }
+        public double Level { get; set; }
 
         [Required]
         [StringLength(50)]

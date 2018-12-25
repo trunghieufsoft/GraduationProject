@@ -100,9 +100,9 @@
     <Compile Include="EntityFramework\Reply.cs" />
     <Compile Include="EntityFramework\ShopDbContext.cs" />
     <Compile Include="EntityFramework\User.cs" />
-    <Compile Include="Migrations\201812102156081_Initial_Database.cs" />
-    <Compile Include="Migrations\201812102156081_Initial_Database.Designer.cs">
-      <DependentUpon>201812102156081_Initial_Database.cs</DependentUpon>
+    <Compile Include="Migrations\201812251649243_Initial_Database.cs" />
+    <Compile Include="Migrations\201812251649243_Initial_Database.Designer.cs">
+      <DependentUpon>201812251649243_Initial_Database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,8 +114,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201812102156081_Initial_Database.resx">
-      <DependentUpon>201812102156081_Initial_Database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812251649243_Initial_Database.resx">
+      <DependentUpon>201812251649243_Initial_Database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

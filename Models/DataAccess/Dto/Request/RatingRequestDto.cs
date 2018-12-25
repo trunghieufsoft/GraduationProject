@@ -8,7 +8,7 @@
         
         public string Content { get; set; }
         
-        public byte Level { get; set; }
+        public double Level { get; set; }
         
         public string UserID { get; set; }
     }

@@ -1510,6 +1510,11 @@
     <Content Include="Assets\Client\js\modernizr.js" />
     <Content Include="Assets\Client\js\script.js" />
     <Content Include="Assets\Client\js\waypoint.min.js" />
+    <Content Include="Assets\Client\rateit\delete.gif" />
+    <Content Include="Assets\Client\rateit\jquery.rateit.js" />
+    <Content Include="Assets\Client\rateit\jquery.rateit.min.js" />
+    <Content Include="Assets\Client\rateit\rateit.css" />
+    <Content Include="Assets\Client\rateit\star.gif" />
     <Content Include="Assets\Data\images\files\1200px-Tazzina_di_caffè_a_Ventimiglia.jpg" />
     <Content Include="Assets\Data\images\files\americano_large.jpg" />
     <Content Include="Assets\Data\images\files\blacktea_macchiat_large.jpg" />
@@ -1814,6 +1819,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2042,6 +2048,8 @@
     <Content Include="Assets\Client\fonts\webfonts\geo-semibold\ttf\style_169898.ttf" />
     <Content Include="Assets\Client\fonts\webfonts\geo-semibold\woff\style_169898.woff" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Assets\Client\rateit\jquery.rateit.min.js.map" />
+    <Content Include="Views\Shared\_EvaluationChart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2055,6 +2063,7 @@
     <Folder Include="Assets\Client\images\users\" />
     <Folder Include="Assets\Data\images\flash\" />
     <Folder Include="Views\Comment\" />
+    <Folder Include="Views\Rating\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

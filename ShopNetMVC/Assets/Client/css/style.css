@@ -2728,3 +2728,29 @@ p.box-title {
 #form-contact .contact-inpright input[type="submit"]:hover {
     color: #dbdbdb
 }
+/* stars */
+#rateit_star div.rateit-range, #rateit_star0 div.rateit-range {
+    background: url(../rateit/star-white32.png);
+    height: 32px;
+}
+#rateit_star div.rateit-hover, #rateit_star0 div.rateit-hover {
+    background: url(../rateit/star-gold32.png);
+}
+#rateit_star div.rateit-selected, #rateit_star0 div.rateit-selected {
+    background: url(../rateit/star-red32.png);
+}
+#rateit_star div.rateit-reset, #rateit_star0 div.rateit-reset {
+    background: url(../rateit/star-black32.png);
+    width: 32px;
+    height: 32px;
+}
+#rateit_star div.rateit-reset:hover, #rateit_star0 div.rateit-reset:hover {
+    background: url(../rateit/star-white32.png);
+}
+#add-rating {
+    position: absolute;
+    right: 40px
+}
+#feedback {
+    padding-top: 20px;
+}

@@ -26,7 +26,7 @@ namespace ShopNetMVC.Controllers
         {
             if (code == null)
             {
-                return RedirectToAction("Home");
+                return RedirectToAction("index", "Home");
             }
             var session = (UserSession)Session[Constants.USER_SESSION];
             ViewBag.UserSession = session != null ? true : false;
@@ -38,6 +38,7 @@ namespace ShopNetMVC.Controllers
 
             var model = Mapper.Map<ProductRequestDto>(product);
 
+            ViewBag.prdID = model.ProdID;
             ViewBag.ProductName = model.ProdName;
             ViewBag.Price = Converter.formatPrice(model.Cost);
             ViewBag.CateName = CategoryDao.Instance.getByID(model.CateID).CateName;
@@ -52,7 +53,7 @@ namespace ShopNetMVC.Controllers
                 listPrice.Add(Converter.formatPrice(item.Cost));
             ViewBag.listPrice = listPrice;
             ViewBag.Length = listPrice.Count;
-
+            
             return View(model);
         }
 

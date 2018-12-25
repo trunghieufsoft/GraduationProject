@@ -16,7 +16,7 @@
             }
         });
 
-        //add reply event
+        // add reply event
         $('.reply-input').off('keypress').on('keypress', function (e) {
             var btn = $(this);
             if (e.which === 13) {
@@ -112,6 +112,43 @@
                 }
             });
         });
+
+        // add rating to customer
+        $('#add-rating').off('click').on('click', function () {
+            var ri = $('.bigstars #rateit_star');
+            var rating = ri.rateit('value');
+            var product = ri.data('id');
+            var content = $('#ratingContent').val();
+            // handle
+            $.ajax({
+                url: '/rating/addrating',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    content: content,
+                    product: product,
+                    rating: rating
+                },
+                success: function (response) {
+                    if (response.status) {
+                        $('#ratingContent').val('');
+                        controller.loadComments(product);
+                        bootbox.alert({
+                            message: 'Bạn đã đánh giá ' + rating + ' sao cho sản phẩm ' + response.prdName,
+                            size: 'small'
+                        });
+                    } else {
+                        bootbox.alert({
+                            message: response.message,
+                            size: 'small'
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        })
     },
     loadComments: function () {
         var prodId = $('#commentInput').data('prodid');
@@ -124,7 +161,6 @@
                 if (response.status && response.comment) {
                     var commentTemplate = $('#comment-template').html();
                     var replyTemplate = $('#reply-template').html();
-
                     /**
                      * Set data form buiding value
                      * response.comment: list<object> = [ {comment: Comments, userName: string, replies: Replies[]} ]
@@ -159,11 +195,23 @@
                         
                     });
                     $('#comments-list').html(commentsHtml);
-
+                    controller.loadRatings(prodId);
                     controller.registerEvents();
                 }
             }
         });
+    },
+    loadRatings: function (code) {
+        $.ajax({
+            url: '/rating/evaluationChart?code=' + code,
+            type: 'GET',
+            dataType: 'json',
+            success: function () { },
+            error: function (error) {
+                $('#evaluation-chart').html(error.responseText);
+            }
+        });
+        controller.registerEvents();
     },
     addReply: function (comment, comId) {
         $.ajax({

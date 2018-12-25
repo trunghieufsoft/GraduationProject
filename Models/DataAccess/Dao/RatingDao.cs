@@ -117,9 +117,11 @@ namespace Models.DataAccess
         /// </summary>
         /// <param name="_search"></param>
         /// <returns>IEnumerable<Rating></returns>
-        public IEnumerable<Rating> getObjectList(string _search)
+        public IEnumerable<Rating> getObjectList(string _search = null)
         {
-            return db.Ratings.Where(obj => obj.RatID.Contains(_search) || obj.UserID.Contains(_search)).OrderBy(p => p.CreatedAt).ToList();
+            return _search != null 
+                ? db.Ratings.Where(obj => obj.RatID.Contains(_search) || obj.UserID.Contains(_search)).OrderBy(p => p.CreatedAt)
+                : db.Ratings.OrderBy(p => p.CreatedAt);
         }
 
         /**
