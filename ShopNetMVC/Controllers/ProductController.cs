@@ -53,7 +53,7 @@ namespace ShopNetMVC.Controllers
                 listPrice.Add(Converter.formatPrice(item.Cost));
             ViewBag.listPrice = listPrice;
             ViewBag.Length = listPrice.Count;
-            
+
             return View(model);
         }
 

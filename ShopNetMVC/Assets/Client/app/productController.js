@@ -1,9 +1,13 @@
 ﻿var controller = {
     config: {
-
+        page: 1,
+        pageSize: 5
     },
     init: function () {
-        controller.loadComments();
+        var prodId = $('#commentInput').data('prodid');
+        controller.loadComments(prodId);
+        controller.loadRatings(prodId);
+        controller.loadFeedbacks(prodId);
     },
     registerEvents: function () {
         // add comment event
@@ -132,7 +136,7 @@
                 success: function (response) {
                     if (response.status) {
                         $('#ratingContent').val('');
-                        controller.loadComments(product);
+                        controller.loadRatings(product);
                         bootbox.alert({
                             message: 'Bạn đã đánh giá ' + rating + ' sao cho sản phẩm ' + response.prdName,
                             size: 'small'
@@ -150,8 +154,7 @@
             });
         })
     },
-    loadComments: function () {
-        var prodId = $('#commentInput').data('prodid');
+    loadComments: function (prodId) {
         $.ajax({
             url: '/comment/getcomments',
             dataType: 'json',
@@ -195,9 +198,11 @@
                         
                     });
                     $('#comments-list').html(commentsHtml);
-                    controller.loadRatings(prodId);
                     controller.registerEvents();
                 }
+            },
+            error: function (error) {
+                console.log(error);
             }
         });
     },
@@ -206,9 +211,64 @@
             url: '/rating/evaluationChart?code=' + code,
             type: 'GET',
             dataType: 'json',
-            success: function () { },
             error: function (error) {
                 $('#evaluation-chart').html(error.responseText);
+                var value = $('#start-medium-val').val();
+                $('#rateit_star0').rateit('value', +value);
+            }
+        });
+        controller.registerEvents();
+    },
+    loadFeedbacks: function (code) {
+        $.ajax({
+            url: '/rating/getFeedback',
+            data: {
+                product: code,
+                page: controller.config.page,
+                pageSize: controller.config.pageSize
+            },
+            type: 'Post',
+            dataType: 'json',
+            success: function (response) {
+                if (response.totalRows > 0) {
+                    var template = $('#rating-template').html();
+                    var html = '';
+                    var data = response.data;
+                    $.each(data, function (i, item) {
+                        html += Mustache.render(template, {
+                            Img: '',
+                            UserName: response.Uname[i],
+                            CreatedAt: item.CreatedAt,
+                            Content: item.Content,
+                            Count: i
+                        });
+                    });
+                    setTimeout(function () {
+                        $.each(data, function (i, item) {
+                            $('#rating-val-' + i).rateit('value', +item.Level);
+                        });
+                    }, 200);
+
+                    $('#feedback-main').html(html);
+                    // paging
+                    if (response.totalPages !== 1) {
+                        $('#pagination').twbsPagination({
+                            totalPages: response.totalPages,
+                            visiblePages: 5,
+                            first: 'Đầu',
+                            prev: 'Trước',
+                            last: 'Cuối',
+                            next: 'Tiếp',
+                            onPageClick: function (event, page) {
+                                controller.config.page = page;
+                                controller.loadRatings();
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (error) {
+                console.log(error);
             }
         });
         controller.registerEvents();

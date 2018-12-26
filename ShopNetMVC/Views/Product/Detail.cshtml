@@ -11,12 +11,6 @@
     <link href="~/assets/client/rateit/rateit.css" rel="stylesheet" type="text/css">
 }
 
-@section JavaScript{
-    <script src="~/assets/client/rateit/jquery.rateit.js" type="text/javascript"></script> 
-    <script src="~/assets/client/app/addCart.js"></script>
-    <script src="~/assets/client/app/productController.js"></script>
-}
-
 <div class="page-title">
     <div class="container">
         <div class="row">
@@ -58,8 +52,8 @@
                         </button>
                     </div>
                     <hr>
-                    <div class="bigstars">
-                        <div id="rateit_star0" class="rateit" data-rateit-value="@ViewBag.MediumStar" data-rateit-step="0.5" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-readonly="true"></div>
+                    <div class="bigstars" id="start-medium">
+                        <div id="rateit_star0" class="rateit" data-rateit-value="0" data-rateit-step="0.5" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-readonly="true"></div>
                     </div>
                 </div>
                 <!-- End Single Product -->
@@ -68,10 +62,12 @@
             <div class="col-md-12 tabs">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#feedback">Đánh giá</a></li>
+                    <li><a data-toggle="tab" href="#commentfeedback">Nội dung đánh giá</a></li>
                     <li><a data-toggle="tab" href="#comment">Bình luận</a></li>
                 </ul>
 
                 <div class="tab-content">
+                    <!-- Rating -->
                     <div id="feedback" class="tab-pane fade in active">
                         <div class="row">
                             <hr />
@@ -93,6 +89,20 @@
                                             <input type="button" id="add-rating" class="btn btn-primary" value="Đánh giá" />
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feedback-->
+                    <div id="commentfeedback" class="tab-pane fade">
+                        <hr />
+                        <div class="row">
+                            <div class="pagination-ul">
+                                <div id="feedback-main" class="">
+                                    <!-- load feedback -->
+                                </div>
+                                <div class="pagination-ul">
+                                    <ul id="pagination" class="pagination-sm no-margin pull-right"></ul>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +185,7 @@
         <div class="comment-avatar"><img src="/assets/client/images/{{Img}}.jpg" /></div>
         <div class="comment-box" style="margin-bottom: 5px">
             <div class="comment-head">
-                <h6 class="comment-name"><a href="#">{{UserName}}</a></h6>
+                <h6 class="comment-name">{{UserName}}</h6>
                 <span>{{CreatedAt}}</span>
                 {{{isDelete}}}
             </div>
@@ -185,3 +195,22 @@
         </div>
     </li>
 </script>
+<script id="rating-template" type="x-tmpl-mustache">
+    <div class="rating-avatar"><img src="/assets/client/images/{{Img}}.jpg" /></div>
+    <div class="rating-box" style="margin-bottom: 5px">
+        <div class="rating-head">
+            <div>
+                <h6 class="rating-name">{{UserName}}</h6>
+                <span>{{CreatedAt}}</span>
+                <div id="rating-val-{{Count}}" class="rateit" data-rateit-value="" data-rateit-readonly="true"></div>
+            </div>
+            <div>{{Content}}</div>
+        </div>
+    </div>
+</script>
+
+@section JavaScript{
+    <script src="~/assets/client/rateit/jquery.rateit.js" type="text/javascript"></script>
+    <script src="~/assets/client/app/addCart.js"></script>
+    <script src="~/assets/client/app/productController.js"></script>
+}

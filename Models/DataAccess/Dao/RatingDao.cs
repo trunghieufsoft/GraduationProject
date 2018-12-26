@@ -3,6 +3,7 @@ using Models.Common.Encode;
 using Models.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Models.DataAccess
@@ -138,6 +139,18 @@ namespace Models.DataAccess
         public IEnumerable<Rating> lsRatProd(int _prodID)
         {
             return db.Ratings.Where(x => x.ProdID == _prodID).OrderByDescending(x => x.CreatedAt);
+        }
+        public ICollection<Rating> GetRatings(int product, int page, int pageSize, out int totalPages, out int totalRows)
+        {
+            var model = db.Ratings.Where(x => x.ProdID == product).Include(nameof(User))
+                        .OrderByDescending(x => x.CreatedAt);
+
+            totalRows = model.Count();
+            totalPages = (int)Math.Ceiling((double)totalRows / pageSize);
+
+            return model.Skip((page - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
         }
 
         /// <summary>

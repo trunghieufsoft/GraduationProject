@@ -11,7 +11,7 @@ namespace ShopNetMVC.Controllers
 {
     public class RatingController : Controller
     {
-        // GET: Rating
+        [HttpPost]
         public ActionResult Index()
         {
             return View();
@@ -41,8 +41,17 @@ namespace ShopNetMVC.Controllers
 
             return Json(new { status = true, prdName = prd.ProdName });
         }
-        
+
         public ActionResult EvaluationChart(int code)
+        {
+            Tuple<List<double>, List<double>, double> data = GetMediumStart(code);
+            ViewBag.CountRating = data.Item1;
+            ViewBag.PercentStar = data.Item2;
+            ViewBag.MediumStar = data.Item3;
+            return PartialView("_EvaluationChart");
+        }
+
+        private Tuple<List<double>, List<double>, double> GetMediumStart(int code)
         {
             var product = ProductDao.Instance.getByID(code);
             // rating star
@@ -81,16 +90,28 @@ namespace ShopNetMVC.Controllers
                     }
                 }
             }
-            ViewBag.CountRating = CountStar;
             foreach (var item in CountStar)
             {
                 PercentStar.Add(Math.Round((item / LsRating.Count) * 100, 2));
             }
-            ViewBag.PercentStar = PercentStar;
-            var medium = Math.Round((PercentStar[0] + PercentStar[1] + PercentStar[2] + PercentStar[3] + PercentStar[4]) / 500, 2);
-            double medi = (medium - (int)medium) * -1;
-            ViewBag.MediumStar = medi > 0.5 ? (int)medium + 1 : medium < 0.24 ? (int)medium : (int)medium + 0.5;
-            return PartialView("_EvaluationChart");
+            var medium = 5 * CountStar[4] + 4 * CountStar[3] + 3 * CountStar[2] + 2 * CountStar[1] + CountStar[0];
+            medium = medium / (CountStar[0] + CountStar[1] + CountStar[2] + CountStar[3] + CountStar[4]);
+            var medi = medium - (int)medium;
+            medium = medi > 0.76 ? (int)medium + 1 : medi > 0.33 ? (int)medium + 0.5 : (int)medium;
+            return Tuple.Create(CountStar, PercentStar, medium);
+        }
+
+        public JsonResult getFeedback(int product, int page, int pageSize)
+        {
+            int totalPages, totalRows;
+            var ratings = RatingDao.Instance.GetRatings(product, page, pageSize, out totalPages, out totalRows);
+            var Uname = new List<string>();
+            foreach (var rat in ratings)
+            {
+                Uname.Add(UserDao.Instance.getByID(rat.UserID).FullName);
+            }
+            
+            return Json(new { data = Mapper.Map<List<RatingRequestDto>>(ratings), Uname, totalPages, totalRows }, JsonRequestBehavior.AllowGet);
         }
     }
 }
