@@ -184,10 +184,6 @@ body {
         left: -12px;
     }
 
-.reply-list .comment-box {
-    width: 610px;
-}
-
 .comment-box .comment-head {
     background: #FCFCFC;
     padding: 10px 12px;
@@ -261,15 +257,80 @@ body {
         border-radius: 3px;
     }
 
+.evalua {
+    width:35px;
+    line-height:1;
+    text-align: center;
+    vertical-align: super;
+}
+
+.evalua-pull {
+    float: none!important;
+    padding: 10px 0;
+}
+
+.evalua-persent {
+    width:180px;
+    display: inline-block;
+}
 /** =====================
  * Responsive
  ========================*/
+@media only screen and (max-width: 1200px) {
+    .evalua-persent {
+        width:77%;
+        display: inline-block;
+    }
+}
+
 @media only screen and (max-width: 766px) {
-    .comments-list .comment-box {
-        width: 77%;
+    .evalua-persent {
+        width:73%;
+        display: inline-block;
+    }
+    .reply-list {
+        padding-left: 72px;
     }
 
-    .reply-list .comment-box {
-        width: 320px;
+    .comments-list .comment-box {
+        width: 88%;
+    }
+
+    .reply-list li:before {
+        width: 40px;
+        left: -40px;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .reply-list {
+        padding-left: 72px;
+    }
+
+    .reply-list li:before {
+        width: 40px;
+        left: -40px;
+    }
+
+    .comments-list .comment-box {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .comments-list .comment-box {
+        width: 81%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .comments-list .comment-box {
+        width: 78%;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .comments-list .comment-box {
+        width: 75%;
     }
 }

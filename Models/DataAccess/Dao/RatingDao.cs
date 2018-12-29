@@ -120,7 +120,7 @@ namespace Models.DataAccess
         /// <returns>IEnumerable<Rating></returns>
         public IEnumerable<Rating> getObjectList(string _search = null)
         {
-            return _search != null 
+            return _search != null
                 ? db.Ratings.Where(obj => obj.RatID.Contains(_search) || obj.UserID.Contains(_search)).OrderBy(p => p.CreatedAt)
                 : db.Ratings.OrderBy(p => p.CreatedAt);
         }
@@ -132,7 +132,7 @@ namespace Models.DataAccess
          */
         private bool hasRating(string _userID, int _prodID)
         {
-            var rating = db.Ratings.SingleOrDefault(obj => obj.UserID == _userID &&  obj.ProdID == _prodID);
+            var rating = db.Ratings.SingleOrDefault(obj => obj.UserID == _userID && obj.ProdID == _prodID);
             return rating != default(Rating) ? Constants.trueValue : Constants.falseValue;
         }
 
@@ -140,17 +140,28 @@ namespace Models.DataAccess
         {
             return db.Ratings.Where(x => x.ProdID == _prodID).OrderByDescending(x => x.CreatedAt);
         }
-        public ICollection<Rating> GetRatings(int product, int page, int pageSize, out int totalPages, out int totalRows)
+        public ICollection<Rating> GetRatings(int product, int page, int pageSize, bool required, out int totalPages, out int totalRows)
         {
-            var model = db.Ratings.Where(x => x.ProdID == product).Include(nameof(User))
-                        .OrderByDescending(x => x.CreatedAt);
+            IEnumerable<Rating> model = db.Ratings.Where(x => x.ProdID == product).OrderByDescending(x => x.CreatedAt);
+            var lsRequired = new List<Rating>();
 
-            totalRows = model.Count();
+            if (required)
+            {
+                foreach (var element in model.ToList())
+                {
+                    if (element.Content != "" && element.Content != null)
+                    {
+                        lsRequired.Add(element);
+                    }
+                }
+            }
+            model = lsRequired;
+            totalRows = lsRequired.Count();
             totalPages = (int)Math.Ceiling((double)totalRows / pageSize);
 
-            return model.Skip((page - 1) * pageSize)
+            return totalRows > 0 ? model.Skip((page - 1) * pageSize)
                         .Take(pageSize)
-                        .ToList();
+                        .ToList() : model.ToList();
         }
 
         /// <summary>

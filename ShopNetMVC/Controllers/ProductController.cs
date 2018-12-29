@@ -19,7 +19,7 @@ namespace ShopNetMVC.Controllers
             // Get Session order
             var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];
             ViewBag.SessionCart = orders != null ? orders.Count : 0;
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Detail(string code = null)

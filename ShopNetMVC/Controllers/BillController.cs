@@ -17,7 +17,12 @@ namespace ShopNetMVC.Controllers
         public ActionResult Index()
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null ? true : false;
+            var isLogin = session != null;
+            if (!isLogin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.UserSession = isLogin;
             ViewBag.IsUser = ((UserSession)Session[Constants.USER_SESSION]).GrantID == (int)Constants.GrantID.User;
 
             //var related = ProductDao.Instance.RelatedProducts(4);

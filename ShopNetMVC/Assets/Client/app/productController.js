@@ -5,7 +5,7 @@
     },
     init: function () {
         var prodId = $('#commentInput').data('prodid');
-        controller.loadComments(prodId);
+        controller.loadComments();
         controller.loadRatings(prodId);
         controller.loadFeedbacks(prodId);
     },
@@ -154,11 +154,12 @@
             });
         })
     },
-    loadComments: function (prodId) {
+    loadComments: function () {
+        var prodId = $('#commentInput').data('prodid');
         $.ajax({
             url: '/comment/getcomments',
             dataType: 'json',
-            type: 'GET',
+            type: 'Get',
             data: { request: prodId },
             success: function (response) {
                 if (response.status && response.comment) {
@@ -179,7 +180,7 @@
                                     Img: elm.userGrant === 1 ? 'user' : 'custommer',
                                     UserName: elm.userName,
                                     Content: elm.reply.Content,
-                                    CreatedAt: elm.reply.CreatedAt,
+                                    CreatedAt: controller.formatDayTime(elm.reply.CreatedAt),
                                     isDelete: elm.reply.UserID === item.userID ? '<p><i id="trash-reply" data-comid="' + elm.reply.ComID + '" data-repno="' + elm.reply.RepNo + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : ''
                                 });
                                 count++;
@@ -190,7 +191,7 @@
                             Img: item.userGrant === 1 ? 'user' : 'custommer',
                             UserName: item.userName,
                             Content: item.comment.Content,
-                            CreatedAt: item.comment.CreatedAt,
+                            CreatedAt: controller.formatDayTime(item.comment.CreatedAt),
                             Replies: repliesHtml,
                             Height: 93 * count + 54,
                             isDelete: item.comment.UserID === item.userID ? '<p><i id="trash-comment" data-comid="' + item.comment.ComID  + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : ''
@@ -209,7 +210,7 @@
     loadRatings: function (code) {
         $.ajax({
             url: '/rating/evaluationChart?code=' + code,
-            type: 'GET',
+            type: 'Get',
             dataType: 'json',
             error: function (error) {
                 $('#evaluation-chart').html(error.responseText);
@@ -236,19 +237,14 @@
                     var data = response.data;
                     $.each(data, function (i, item) {
                         html += Mustache.render(template, {
-                            Img: '',
+                            Img: 'user',
                             UserName: response.Uname[i],
-                            CreatedAt: item.CreatedAt,
+                            CreatedAt: controller.formatDayTime(item.CreatedAt),
                             Content: item.Content,
-                            Count: i
+                            Level: item.Level,
+                            Level_width: 80 - (5 - item.Level) * 16
                         });
                     });
-                    setTimeout(function () {
-                        $.each(data, function (i, item) {
-                            $('#rating-val-' + i).rateit('value', +item.Level);
-                        });
-                    }, 200);
-
                     $('#feedback-main').html(html);
                     // paging
                     if (response.totalPages !== 1) {
@@ -312,7 +308,21 @@
             }
         });
     },
-
+    formatDayTime: function (date) {
+        if (date == '')
+            return 'Chưa có chỉnh sửa';
+        date = new Date(date);
+        var dateString = date.toLocaleDateString('vi-vi', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'Asia/Ho_Chi_Minh'
+        });
+        var timeString = date.toLocaleTimeString('en-vi', {
+            timeZone: 'Asia/Ho_Chi_Minh'
+        });
+        return dateString + ' ' + timeString;
+    },
 };
 
 controller.init();

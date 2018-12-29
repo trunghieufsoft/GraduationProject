@@ -1437,8 +1437,11 @@
     <Content Include="Assets\Client\css\comment.css" />
     <Content Include="Assets\Client\css\flexslider.css" />
     <Content Include="Assets\Client\css\font-awesome.css" />
+    <Content Include="Assets\Client\css\font.css" />
+    <Content Include="Assets\Client\css\fonts.css" />
     <Content Include="Assets\Client\css\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\Client\css\product-slider.css" />
+    <Content Include="Assets\Client\css\rating.css" />
     <Content Include="Assets\Client\css\responsive.css" />
     <Content Include="Assets\Client\css\site.css" />
     <Content Include="Assets\Client\css\style.css" />

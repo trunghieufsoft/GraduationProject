@@ -5,6 +5,7 @@ using Models.DataAccess.Dto;
 using Models.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace ShopNetMVC.Controllers
@@ -41,7 +42,7 @@ namespace ShopNetMVC.Controllers
 
             return Json(new { status = true, prdName = prd.ProdName });
         }
-
+        
         public ActionResult EvaluationChart(int code)
         {
             Tuple<List<double>, List<double>, double> data = GetMediumStart(code);
@@ -57,7 +58,7 @@ namespace ShopNetMVC.Controllers
             // rating star
             var LsRating = new List<RatingRequestDto>();
             var ListRat = RatingDao.Instance.getObjectList();
-            LsRating = Mapper.Map<List<RatingRequestDto>>(ListRat);
+            LsRating = Mapper.Map<List<RatingRequestDto>>(ListRat.ToList());
             var CountStar = new List<double>() { 0, 0, 0, 0, 0 };
             var PercentStar = new List<double>();
             foreach (var item in LsRating)
@@ -104,7 +105,7 @@ namespace ShopNetMVC.Controllers
         public JsonResult getFeedback(int product, int page, int pageSize)
         {
             int totalPages, totalRows;
-            var ratings = RatingDao.Instance.GetRatings(product, page, pageSize, out totalPages, out totalRows);
+            var ratings = RatingDao.Instance.GetRatings(product, page, pageSize, true, out totalPages, out totalRows);
             var Uname = new List<string>();
             foreach (var rat in ratings)
             {
