@@ -14,13 +14,9 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.result === true) {
-                        bootbox.confirm({
-                            message: "Thêm sản phẩm vào giỏ hàng thành công",
-                            size: 'small',
-                            title: 'Thông báo',
-                            callback: function () {
-                                window.location.href = "/";
-                            }
+                        bootbox.alert({
+                            message: "Thêm sản phẩm vào giỏ hàng thành công.",
+                            size: 'small'
                         });
                     } else {
                         bootbox.confirm({

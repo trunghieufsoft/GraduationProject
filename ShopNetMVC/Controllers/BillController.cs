@@ -24,8 +24,7 @@ namespace ShopNetMVC.Controllers
             }
             ViewBag.UserSession = isLogin;
             ViewBag.IsUser = ((UserSession)Session[Constants.USER_SESSION]).GrantID == (int)Constants.GrantID.User;
-
-            //var related = ProductDao.Instance.RelatedProducts(4);
+            
             var related = ProductDao.Instance.Recommendations();
 
             ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
@@ -39,11 +38,21 @@ namespace ShopNetMVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult BillDetails(string billId)
+        {
+            var products = BillDao.Instance.BillDetails(billId);
+            var data = Mapper.Map<List<ProductRequestDto>>(products);
+            var count = BillDao.Instance.ProductCountDetails(billId);
+            return Json(new { data, count });
+        }
+
+
         public JsonResult GetBills(int pageIndex, int pageSize)
         {
             var user = ((UserSession)Session[Constants.USER_SESSION]);
             var isStaff = user.GrantID == (int)Constants.GrantID.Staff || user.GrantID == (int)Constants.GrantID.Manager;
-            var bills = BillDao.Instance.GetBills(user.UserName, isStaff);
+            var bills = BillDao.Instance.GetBills(user.UserID, isStaff);
             if (bills == null)
             {
                 return Json(new { status = false }, JsonRequestBehavior.AllowGet);

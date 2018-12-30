@@ -5,8 +5,8 @@
     },
     init: function () {
         var prodId = $('#commentInput').data('prodid');
-        controller.loadComments();
         controller.loadRatings(prodId);
+        controller.loadComments();
         controller.loadFeedbacks(prodId);
     },
     registerEvents: function () {

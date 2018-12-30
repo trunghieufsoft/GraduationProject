@@ -50,6 +50,16 @@ namespace Models.DataAccess
             return db.Bills.SingleOrDefault(x => x.BillID == _key);
         }
 
+        public List<Product> BillDetails(string billId)
+        {
+            return db.Orders.Include("Products").Where(x => x.BillID == billId).Select(x => x.Product).ToList();
+        }
+
+        public List<int> ProductCountDetails(string billId)
+        {
+            return db.Orders.Include("Products").Where(x => x.BillID == billId).Select(x => x.Count).ToList();
+        }
+
         /**
          * @description -- insert a bill
          * @param _request: Bill -- entity object
@@ -78,7 +88,6 @@ namespace Models.DataAccess
             }
             catch (Exception )
             {
-
                 return false;
             }
             return true;
@@ -173,11 +182,9 @@ namespace Models.DataAccess
         }
 
 
-        public IEnumerable<Bill> GetBills(string userName, bool isStaff)
+        public IEnumerable<Bill> GetBills(string userID, bool isStaff)
         {
-            var model = isStaff  ? db.Bills.ToList() :  db.Bills.Where(b=>b.UserID == userName).AsEnumerable();
-
-            return model;
+            return isStaff ? db.Bills.ToList() : db.Bills.Where(b => b.UserID == userID).AsEnumerable();
         }
 
         /**

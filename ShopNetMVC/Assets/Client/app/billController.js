@@ -1,7 +1,8 @@
 ﻿var controller = {
     config: {
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        bills: []
     },
     init: function () {
         controller.getBills();
@@ -19,6 +20,7 @@
             success: function (response) {
                 if (response.status) {
                     var data = response.data;
+                    controller.config.bills = data;
                     var html = '';
                     var template = $('#data-template').html();
                     if (response.totalRows === 0) {
@@ -30,12 +32,13 @@
                     } else {
                         $.each(data, function (i, item) {
                             html += Mustache.render(template, {
+                                Stt: i + 1,
                                 BillID: item.BillID,
                                 CustomerName: item.CustomerName,
-                                TotalPrice: main.formatPrice(item.TotalPrice),
+                                TotalPrice: main.formatPriceBill(item.TotalPrice),
                                 DeliveryAddress: item.DeliveryAddress,
-                                CreatedAt: item.CreatedAt,
-                                Status: item.Status === true ? 'Hoàn thành' : 'Đang xử lý',
+                                CreatedAt: main.formatTime(item.CreatedAt),
+                                Status: item.Status === true ? '<i class="fa fa-check-square-o" aria-hidden="true" title="đơn hàng đã được gửi"></i>' : '<i class="fa fa-circle-o" aria-hidden="true" title="đang chờ xác nhận"></i>',
                                 Class: item.Status === true ? 'btn-success' : 'btn-danger'
                             });
                         });
@@ -63,7 +66,7 @@
 
             bootbox.confirm({
                 size: 'small',
-                message: 'Bạn muốn hoàn đổi trạng thái đơn hàng này?',
+                message: 'Bạn muốn thay đổi trạng thái đơn hàng này?',
                 callback: function (result) {
                     if (result) {
                         $.ajax({
@@ -81,6 +84,65 @@
 
                 }
             });
+        });
+        $('.btn-info').off('click').on('click', function (e) {
+            e.preventDefault();
+            var btn = $(this);
+            var id = btn.data('id');
+            var detail = '';
+            $.ajax({
+                url: '/bill/billdetails',
+                type: 'Post',
+                data: {
+                    billId: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    var data = response.data;
+                    var template = $('#detail-template').html();
+                    $.each(data, function (i, item) {
+                        detail += Mustache.render(template, {
+                            Stt: i + 1,
+                            ProdId: item.ProdID,
+                            ProdName: item.ProdName,
+                            Count: response.count[i],
+                            Cost: main.formatPriceBill(item.Cost),
+                            ImageUrl: item.ImageUrl,
+                            Price: main.formatPriceBill(item.Cost * response.count[i]),
+                        });
+                    });
+
+                    bootbox.dialog({
+                        title: 'Chi tiết đơn hàng ' + id,
+                        size: 'large',
+                        message: `
+                  <table class ="table table-striped table-bordered table-hover">
+                    <thead>
+                        <th style="width: 4%">Stt</th>
+                        <th style="width: 20%">Ảnh sản phẩm</th>
+                        <th style="width: 21%">Tên sản phẩm</th>
+                        <th style="width: 20%">Giá tiền</th>
+                        <th style="width: 15%">Số lượng</th>
+                        <th style="width: 20%">Thành tiền</th>
+                    </thead>
+                    <tbody>
+                        `+ detail + `
+                    </tbody>
+                  </table>
+                `,
+                        buttons: {
+                            cancel: {
+                                label: "Đóng  ",
+                                className: 'btn-default'
+                            }
+                        }
+                    });
+
+                }
+
+
+            });
+
         });
     }
 };
