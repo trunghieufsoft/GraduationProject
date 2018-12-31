@@ -1,0 +1,18 @@
+AnhNP		Nguyễn Phương Anh	FSU2.HCM		NguyenPhuongAnh@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+ChauDD		Đặng Đình Châu	FSU2.HCM		DangDinhChau@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+DaoTTA1		Trần Thị Anh Đào	P3.HCM	0424324245	TranThiAnhDao@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+HaiDT2		Đỗ Thanh Hải	FSU1.HCM		DoThanhHai@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+HieuLT22	4a/q3di+hRwSBfNaRDLXig==	Lương Trung Hiếu	P3.HCM	0344158136	HieuLT22@fsoft.com.vn	1	True	2018-12-11 05:19:17.527	NULL
+LinhCN6		Châu Nguyên Linh	GES.HCM	0833853244	ChauNguyenLinh@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+LongLQ		Lê Quang Long	FSU1.HCM		LeQuangLong@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+LongTT		Triệu Tiến Long	P3.HCM		TrieuTienLong@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+LuanNT		Nguyễn Thành Luân	P3.HCM		NguyenThanhLuan@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+Manager	4a/q3di+hRwSBfNaRDLXig==	Manager	FSU1.HCM	0341038492	CoffeeHouse.HCM.CF@gmail.com	1	True	2018-12-11 05:19:17.527	NULL
+NgocDT		Đỗ Thanh Ngọc	FSU2.HCM		DoThangNgoc@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+NhanDLT		Đồng Lâm Trí Nhân	P3.HCM		DongLamTriNhan@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+NhanDNH		Đoàn Nguyễn Hiếu Nhân	FSU2.HCM		DoanNguyenHieuNhan@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+ThuanHM		Huỳnh Minh Thuận	P3.HCM		HuynhMinhThuan@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+TrongTD		Trần Đình Trọng	FSU1.HCM		TranDinhTrong@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+VyVP		Võ Phương Vy	P3.HCM		VoPhuongVy@gmail.com	3	True	2018-12-11 05:19:17.527	NULL
+YNNT		Nguyễn Nhật Thành Ý	FSU2.HCM	0844940420	NguyenNhatThanhY@gmail.com	2	True	2018-12-11 05:19:17.527	NULL
+NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL

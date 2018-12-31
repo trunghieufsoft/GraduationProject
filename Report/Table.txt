@@ -1,0 +1,15 @@
+User, Grant/ tài khoản, người dùng
+Rating/ đánh giá, feed back
+Comment, reply/ bình luận, phản hồi
+Bill, Order/ Đơn đặt hàng
+Category/ Giỏ sản phẩm
+
+- quyền: người dùng, nhân viên, quản lý
+- một khách hàng có thể mua một hoặc nhiều sản phẩm
+- một quản lý có thể quản lý một hoặc nhiều tài khoản khác
+- một tài khoản có thể viết một hoặc nhiều bình luận cho nhiều sản phẩm khác nhau
+- một tài khoản có thể có thể phản hồi một hoặc nhiều bình luận cho nhiều sản phẩm khác nhau
+- một tài khoản có thể quản lý 1 hoặc nhiều đơn hàng
+- một đơn đặt hàng có 0 hoặc 1 tài khoản
+- một giỏ sản phẩm có một hoặc nhiều sản phẩm
+- một đánh giá chỉ đánh giá cho một sản phẩm và được đánh giá bởi một khách hàng có tài khoản

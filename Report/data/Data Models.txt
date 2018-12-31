@@ -1,0 +1,63 @@
+namespace Models.Migrations
+{
+    using EntityFramework;
+    using Common;
+    using Models.Common.Encode;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity.Migrations;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<ShopDbContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
+
+        protected override void Seed(ShopDbContext context)
+        {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
+            //  to avoid creating duplicate seed data.
+            List<Grant> grants = new List<Grant> {
+                new Grant{ GrantName = "Manager", isActive = true, CreatedAt = DateTime.Now },
+                new Grant{ GrantName = "Staff", isActive = true , CreatedAt = DateTime.Now },
+                new Grant{ GrantName = "Customer", isActive = true , CreatedAt = DateTime.Now }
+            };
+
+            foreach (var item in grants)
+            {
+                context.Grants.Add(item);
+            }
+
+            //Add Seed Data for Category
+            List<Category> categories = new List<Category> {
+                new Category{ CodeName = "coffee" ,CateName="Coffee",isActive=true, CreatedAt = DateTime.Now },
+                new Category{ CodeName = "do-uong-dong-chai" ,CateName="Đồ uống đóng chai",isActive=true, CreatedAt = DateTime.Now },
+                new Category{ CodeName = "do-uong-trai-cay" ,CateName="Đồ uống trai cay",isActive=true, CreatedAt = DateTime.Now },
+            };
+
+            foreach (var item in categories)
+            {
+                context.Categories.Add(item);
+            }
+
+            
+
+            //Add Seed Data for User with password='1234'
+            List<User> users = new List<User> {
+                new User{ UserID = "HieuLT22",Password="4a/q3di+hRwSBfNaRDLXig==",FullName="Lương Trung Hiếu",Address="P3.HCM",Phone="0344158136",Email="HieuLT22@fsoft.com.vn",GrantID=1,isActive=true, CreatedAt = DateTime.Now },
+                new User{ UserID = "Manager",Password="4a/q3di+hRwSBfNaRDLXig==",FullName="Manager",Address="FSU1.HCM",Phone="0341038492",Email="CoffeeHouse.HCM.CF@gmail.com",GrantID=1,isActive=true, CreatedAt = DateTime.Now },
+                new User{ UserID = "YNNT",Password="",FullName="Nguyễn Nhật Thành Ý",Address="FSU2.HCM",Phone="0844940420",Email="NguyenNhatThanhY@gmail.com",GrantID=2,isActive=true, CreatedAt = DateTime.Now },
+                new User{ UserID = "LinhCN6",Password="",FullName="Châu Nguyên Linh",Address="GES.HCM",Phone="0833853244",Email="ChauNguyenLinh@gmail.com",GrantID=3,isActive=true, CreatedAt = DateTime.Now },
+                new User{ UserID = "DaoTTA1",Password="",FullName="Trần Thị Anh Đào",Address="P3.HCM",Phone="0424324245",Email="TranThiAnhDao@gmail.com",GrantID=3,isActive=true, CreatedAt = DateTime.Now }
+            };
+
+            foreach (var item in users)
+            {
+                context.Users.Add(item);
+            }
+        }
+    }
+}

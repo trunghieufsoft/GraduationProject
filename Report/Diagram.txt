@@ -1,0 +1,9 @@
+﻿sơ đồ phân rã chức năng
+ERD / thực thể quan hệ
+sơ đồ cơ sở dữ liệu
+biểu đồ use case
+đặc tả use case
+sơ đồ hoạt động
+kiến trúc hệ thống
+kiến trúc phần mềm
+thiết kế giao diện UI

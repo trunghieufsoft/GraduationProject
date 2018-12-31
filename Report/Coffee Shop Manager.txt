@@ -1,0 +1,14 @@
+﻿Coffee Shop Manager
+Quản lý sản phẩm (1)
+Quản lý người dùng (2)
+Quản lý đánh giá (3)
+Quản lý đơn đặt hàng (4)
+Quản Lý bình luận và phản hồi (5)
+Quản Lý giỏ sản phẩm (6)
+
+(1): Thêm mới sản phẩm, Cập nhập thông tin sản phẩm, Xóa sản phẩm, Đăng ký mở bán sản phẩm
+(2): Quản lý quyền, Quản lý tài khoản (Đăng ký tài khoản)
+(3): Thêm mới đánh giá, Xem chi tiết đánh giá, Cập nhập đánh giá
+(4): Cập nhật tình trạng đơn hàng, Quản lý chi tiết đơn hàng
+(5): Quản lý bình luận, Quản lý phản hồi bình luận(Xem bình luận, Xóa bình luận, Cập nhập bình luận, ...), Sent Mail
+(6): Thêm mới giỏ sản phẩm, Đăng ký trạng thái xử dụng

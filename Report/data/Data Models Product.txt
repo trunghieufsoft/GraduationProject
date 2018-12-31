@@ -1,0 +1,27 @@
+1	Americano	americano	NULL	/assets/Data/Images/images/americano_large.jpg		39000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:37:21.883
+2	Bạc Sỉu	bac-siu	NULL	/assets/Data/Images/images/white_vnese_coffee_9968c1184d7f4634a9bb9fce7b5ff313_large.jpg		29000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:38:27.440
+3	Cafe Đen	cafe-den	NULL	/assets/Data/Images/images/vnese_coffee_large.jpg		29000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:39:06.220
+4	Cafe Sữa	cafe-sua	NULL	/assets/Data/Images/images/cfs_large.jpg		29000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:41:44.830
+5	Capucinno	capucinno	NULL	/assets/Data/Images/images/cappuccino_large.jpg		45000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:42:04.037
+6	Caramel Macchiato	caramel-macchiato	NULL	/assets/Data/Images/images/caramel_macchiato_large.jpg		55000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:42:39.507
+7	Espresso	espresso	NULL	/assets/Data/Images/images/espresso_large.jpg		35000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:43:07.093
+8	Latte	latte	NULL	/assets/Data/Images/images/latte__1__large.jpg		45000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:43:38.893
+9	Mocha	mocha	NULL	/assets/Data/Images/images/mocha_large.jpg		49000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:45:41.020
+10	Socola	socola	NULL	/assets/Data/Images/images/iced_chocolate_large.jpg		55000	True	1	2018-11-10 10:54:29.000	2018-12-12 01:46:13.267
+11	Trà Đào Cam Sả	tra-dao-cam-sa	NULL	/assets/Data/Images/images/tra-xanh-0do.jpg		45000	True	2	2018-11-10 10:54:29.000	NULL
+12	Trà Đen Macchiato	tra-den-macchiato	NULL	/assets/Data/Images/images/revive-chai.jpg		42000	True	2	2018-11-10 10:54:29.000	NULL
+13	Redbull	redbull	NULL	/assets/Data/Images/images/redbull.jpg		48000	True	2	2018-11-10 10:54:29.000	NULL
+14	Trà Gạo Rang Macchiato	tra-gao-rang-macchiato	NULL	/assets/Data/Images/images/tra-dao.jpg		42000	True	2	2018-11-10 10:54:29.000	NULL
+15	Trà Kim Quất Trân Châu	tra-kim-quat-tran-chau	NULL	/assets/Data/Images/images/tra-gung.jpg		55000	True	2	2018-11-10 10:54:29.000	NULL
+16	Trà Matcha Latte	tra-matcha-latte	NULL	/assets/Data/Images/images/nuoc-mia.jpg		45000	True	2	2018-11-10 10:54:29.000	NULL
+17	Trà Matcha Macchiato	tra-matcha-macchiato	NULL	/assets/Data/Images/images/nuoc-ep-carot.jpg		48000	True	2	2018-11-10 10:54:29.000	NULL
+18	Trà Ổi Thanh Long Macchiato	tra-oi-thanh-long-macchiato	NULL	/assets/Data/Images/images/thom-ep.jpg		45000	True	2	2018-11-10 10:54:29.000	NULL
+19	Caramel Đá Xay	caramel-da-xay	NULL	/assets/Data/Images/images/cafe-den.png		59000	True	4	2018-11-10 23:38:40.000	NULL
+20	Cookies Đá Xay	cookies-da-xay	NULL	/assets/Data/Images/images/americano.jpg		59000	True	4	2018-11-10 23:43:05.000	NULL
+21	Matcha Đá Xay	matcha-da-xay	NULL	/assets/Data/Images/images/caramel-macchiato.jpg		59000	True	4	2018-11-10 23:46:06.000	NULL
+22	Mocha Đá Xay	mocha-da-xay	NULL	/assets/Data/Images/images/latte-coffee.jpg		59000	True	4	2018-11-10 23:47:09.000	NULL
+23	Socola Đá Xay	socola-da-xay	NULL	/assets/Data/Images/images/mocha-coffee.jpg		59000	True	4	2018-11-10 23:47:53.000	NULL
+24	Nước Ép Cam Tươi	nuoc-ep-cam-tuoi	NULL	/assets/Data/Images/images/espresso-sua.jpg		65000	True	3	2018-11-10 23:49:00.000	NULL
+25	Sinh Tố Xoài	sinh-to-xoai	NULL	/assets/Data/Images/images/vanila-latte.jpg		59000	True	3	2018-11-10 23:49:35.000	NULL
+26	Sinh Tố Việt Quất	sinh-to-viet-quat	NULL	/assets/Data/Images/images/green-mint-mocha.jpg		59000	True	3	2018-11-10 23:50:26.000	NULL
+NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
