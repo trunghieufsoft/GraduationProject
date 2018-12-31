@@ -152,7 +152,93 @@
                     console.log(error);
                 }
             });
-        })
+        });
+
+        // edit comment
+        $('i#edit-comment').off('click').on('click', function () {
+            var parent = $(this).parent().parent().parent();
+            var content = parent.children('.comment-content');
+            var p = content.children('p');
+            var input = content.children('input#cmet');
+            input.attr('value', p.text());
+            if (input.hasClass('hidden')) {
+                input.removeClass('hidden');
+                p.addClass('hidden');
+            }
+            // focus
+            input.focus();
+        });
+
+        // edit reply
+        $('i#edit-reply').off('click').on('click', function () {
+            var parent = $(this).parent().parent().parent();
+            var content = parent.children('.comment-content');
+            var p = content.children('p');
+            var input = content.children('input#rep');
+            input.attr('value', p.text());
+            if (input.hasClass('hidden')) {
+                input.removeClass('hidden');
+                p.addClass('hidden');
+            }
+            // focus
+            input.focus();
+        });
+
+        // handle lost focus input comment
+        $('input#cmet').focusout(function () {
+            var input = $(this);
+            var p = input.parent().children('p');
+            if (p.hasClass('hidden')) {
+                p.removeClass('hidden');
+                input.addClass('hidden');
+                controller.changeRepOrComment(true, input.data('comid'), null, input.val());
+                p.text(input.val());
+            }
+        });
+
+        // handle lost focus input rep
+        $('input#rep').focusout(function () {
+            var input = $(this);
+            var p = input.parent().children('p');
+            if (p.hasClass('hidden')) {
+                p.removeClass('hidden');
+                input.addClass('hidden');
+                controller.changeRepOrComment(false, input.data('comid'), input.data('repno'), input.val());
+                p.text(input.val());
+            }
+        });
+
+        // handle enter key
+        $('input#cmet').on('keypress', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                // Enter pressed... do anything here...
+                var input = $(this);
+                var p = input.parent().children('p');
+                if (p.hasClass('hidden')) {
+                    p.removeClass('hidden');
+                    input.addClass('hidden');
+                    controller.changeRepOrComment(true, input.data('comid'), null, input.val());
+                    p.text(input.val());
+                }
+            };
+        });
+
+        // handle enter key
+        $('input#rep').on('keypress', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                // Enter pressed... do anything here...
+                var input = $(this);
+                var p = input.parent().children('p');
+                if (p.hasClass('hidden')) {
+                    p.removeClass('hidden');
+                    input.addClass('hidden');
+                    controller.changeRepOrComment(false, input.data('comid'), input.data('repno'), input.val());
+                    p.text(input.val());
+                }
+            };
+        });
     },
     loadComments: function () {
         var prodId = $('#commentInput').data('prodid');
@@ -180,8 +266,11 @@
                                     Img: elm.userGrant === 1 ? 'user' : 'custommer',
                                     UserName: elm.userName,
                                     Content: elm.reply.Content,
+                                    RepNo: elm.reply.RepNo,
+                                    ComID: elm.reply.ComID,
                                     CreatedAt: controller.formatDayTime(elm.reply.CreatedAt),
-                                    isDelete: elm.reply.UserID === item.userID ? '<p><i id="trash-reply" data-comid="' + elm.reply.ComID + '" data-repno="' + elm.reply.RepNo + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : ''
+                                    isDelete: elm.reply.UserID === item.userID ? '<p><i id="trash-reply" data-comid="' + elm.reply.ComID + '" data-repno="' + elm.reply.RepNo + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : '',
+                                    isEdit: elm.reply.UserID === item.userID ? '<p><i id="edit-reply" class="fa fa-pencil" aria-hidden="true"></i></p>' : ''
                                 });
                                 count++;
                             });
@@ -193,8 +282,8 @@
                             Content: item.comment.Content,
                             CreatedAt: controller.formatDayTime(item.comment.CreatedAt),
                             Replies: repliesHtml,
-                            Height: 93 * count + 54,
-                            isDelete: item.comment.UserID === item.userID ? '<p><i id="trash-comment" data-comid="' + item.comment.ComID  + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : ''
+                            isDelete: item.comment.UserID === item.userID ? '<p><i id="trash-comment" data-comid="' + item.comment.ComID + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : '',
+                            isEdit: item.comment.UserID === item.userID ? '<p><i id="edit-comment" class="fa fa-pencil" aria-hidden="true"></i></p>' : ''
                         });
                         
                     });
@@ -323,6 +412,31 @@
         });
         return dateString + ' ' + timeString;
     },
+    changeRepOrComment: function (isComment, comment, rep, text) {
+        var url = isComment ? '/comment/changeComment' : '/comment/changeReply';
+        $.ajax({
+            type: 'POST',
+            data: {
+                comId: comment,
+                repNo: rep,
+                value: text
+            },
+            url: url,
+            dataType: 'json',
+            success: function (reponse) {
+                if (reponse.result == null) {
+                    controller.loadComments();
+                    console.log('change success!');
+                }
+                else {
+                    console.log(reponse.result);
+                }
+            },
+            error: function (error) {
+                console.log(error.message);
+            }
+        });
+    }
 };
 
 controller.init();

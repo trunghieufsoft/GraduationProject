@@ -97,13 +97,22 @@ namespace Models.DataAccess
          * @description -- change new context comment
          * @param _request: CommentRequestDto -- is the data transmitted down from the display screen
          */
-        public bool changeContent(CommentRequestDto _request)
+        public Exception changeContent(string _comID, string _content)
         {
-            var Comment = getByID(_request.ComID);
-            Comment.Content = _request.Content;
-            Comment.UpdatedAt = DateTime.Now;
-            db.SaveChanges();
-            return Constants.trueValue;
+            try
+            {
+                var Comment = getByID(_comID);
+                if (Comment == default(Comment))
+                    throw new NullReferenceException();
+                Comment.Content = _content;
+                Comment.UpdatedAt = DateTime.Now;
+                db.SaveChanges();
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
         }
 
         /**

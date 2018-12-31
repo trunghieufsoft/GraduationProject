@@ -51,6 +51,11 @@ namespace ShopNetMVC
                     .ForMember(d => d.CreatedAt, option => option.MapFrom(s => s.CreatedAt.ToString()))
                     .ForMember(d => d.UpdatedAt, option => option.MapFrom(s => s.UpdatedAt.ToString()));
                 cfg.CreateMap<RepliesRequestDto, Reply>();
+
+                cfg.CreateMap<Rating, RatingRequestDto>()
+                    .ForMember(d => d.CreatedAt, option => option.MapFrom(s => s.CreatedAt.ToString()))
+                    .ForMember(d => d.UpdatedAt, option => option.MapFrom(s => s.UpdatedAt.ToString()));
+                cfg.CreateMap<RatingRequestDto, Rating>();
             });
         }
     }

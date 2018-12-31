@@ -88,14 +88,22 @@ namespace Models.DataAccess.Dao
         /// </summary>
         /// <param name="_request"></param> -- is the data transmitted down from the display screen
         /// <returns></returns>
-        public bool update(RepliesRequestDto _request)
+        public Exception changeContent(int _repNo, string _comID, string _content)
         {
-            var Replies = getByID(_request.RepNo, _request.ComID);
-            if (Replies == default(Reply))
-                return Constants.falseValue;
-            Replies.Content = _request.Content;
-            db.SaveChanges();
-            return Constants.trueValue;
+            try
+            {
+                var Replies = getByID(_repNo, _comID);
+                if (Replies == default(Reply))
+                    throw new NullReferenceException();
+                Replies.Content = _content;
+                Replies.UpdatedAt = DateTime.Now;
+                db.SaveChanges();
+                return null;
+            }
+            catch(Exception ex)
+            {
+                return ex;
+            }
         }
 
         /// <summary>

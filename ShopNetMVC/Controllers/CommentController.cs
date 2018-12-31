@@ -33,6 +33,7 @@ namespace ShopNetMVC.Controllers
 
             return Json(new { model, status = true });
         }
+
         [HttpPost]
         public JsonResult AddReply(string comment, string comId)
         {
@@ -102,6 +103,18 @@ namespace ShopNetMVC.Controllers
         {
             var result = RepliesDao.Instance.delete(repNo, comId);
             return Json(new { result = result });
+        }
+        
+        [HttpPost]
+        public JsonResult changeCommentOrReply(string comId, int? repNo, string value)
+        {
+            return Json(new { result = CommentDao.Instance.changeContent(comId, value) });
+        }
+        
+        [HttpPost]
+        public JsonResult changeReply(string comId, int repNo, string value)
+        {
+            return Json(new { result = RepliesDao.Instance.changeContent(repNo, comId, value) });
         }
     }
 }

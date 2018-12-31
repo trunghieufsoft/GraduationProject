@@ -58,7 +58,7 @@ namespace ShopNetMVC.Controllers
             // rating star
             var LsRating = new List<RatingRequestDto>();
             var ListRat = RatingDao.Instance.getObjectList();
-            LsRating = Mapper.Map<List<RatingRequestDto>>(ListRat.ToList());
+            LsRating = Mapper.Map<List<RatingRequestDto>>(ListRat);
             var CountStar = new List<double>() { 0, 0, 0, 0, 0 };
             var PercentStar = new List<double>();
             foreach (var item in LsRating)

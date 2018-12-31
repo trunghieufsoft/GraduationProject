@@ -153,7 +153,6 @@
 
 <script id="comment-template" type="x-tmpl-mustache">
     <li>
-        <div class="line-comment" style="height: {{Height}}px"></div>
         <div class="comment-main-level">
             <!-- Avatar -->
             <div class="comment-avatar"><img src="/assets/client/images/{{Img}}.jpg" /></div>
@@ -161,10 +160,12 @@
                 <div class="comment-head">
                     <h6 class="comment-name">{{UserName}}</h6>
                     <span>{{CreatedAt}}</span>
+                    {{{isEdit}}}
                     {{{isDelete}}}
                 </div>
                 <div class="comment-content">
-                    {{Content}}
+                    <p style="padding: 10px 12px">{{Content}}</p>
+                    <input id="cmet" class="edit-comment hidden" data-comid="{{ComID}}" value="" type="text" placeholder="Nội dung bình luận..." >
                 </div>
             </div>
         </div>
@@ -175,7 +176,7 @@
                 <ul>{{{Replies}}}</ul>
             </li>
             <li>
-                <input style="width: 100%" type="text" placeholder="Phản hồi bình luận" name="reply-{{ComID}}" id="reply-{{ComID}}" data-prodId="{{ProdId}}" data-comid="{{ComID}}" class="form-control reply-input" />
+                <input style="width: 100%; font-size: 14px; margin: 3px 0;" type="text" placeholder="Phản hồi bình luận" name="reply-{{ComID}}" id="reply-{{ComID}}" data-prodId="{{ProdId}}" data-comid="{{ComID}}" class="form-control reply-input" />
             </li>
         </ul>
     </li>
@@ -188,10 +189,12 @@
             <div class="comment-head">
                 <h6 class="comment-name">{{UserName}}</h6>
                 <span>{{CreatedAt}}</span>
+                {{{isEdit}}}
                 {{{isDelete}}}
             </div>
             <div class="comment-content">
-                {{Content}}
+                <p class="" style="padding: 10px 12px">{{Content}}</p>
+                <input id="rep" class="edit-comment hidden" data-comid="{{ComID}}" data-repno="{{RepNo}}" value="" type="text" placeholder="Phản hồi bình luận..." />
             </div>
         </div>
     </li>
