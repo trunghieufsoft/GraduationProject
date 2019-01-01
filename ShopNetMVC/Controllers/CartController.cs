@@ -17,7 +17,7 @@ namespace ShopNetMVC.Controllers
         public ActionResult Index()
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null ? true : false;
+            ViewBag.LoginSuccess = session != null;
 
             // Get Session order
             var orders = (List<OrderRequestDto>)Session[Constants.CART_SESSION];

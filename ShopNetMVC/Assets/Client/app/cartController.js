@@ -25,7 +25,7 @@
                         html += Mustache.render(template, {
                             Code: item.Product.Code,
                             ProdName: item.Product.ProdName,
-                            Cost: cartController.formatPrice(item.Product.Cost),
+                            Cost: main.formatPrice(item.Product.Cost),
                             ImageUrl: item.Product.ImageUrl,
                             Amount: item.Count,
                             ProdId: item.Product.ProdID
@@ -142,7 +142,7 @@
 	                            <div class ="col-md-6 product_content" style="font-weight: 400;color: #965c2c;font-weight: bold;">
 		                            <p>Tên sản phẩm: <span class ="text-info" style="color: #e0a22f;"> ` + data.ProdName + ` </span></p>
 		                            <p>Mã sản phẩm: ` + data.Code + ` </p>
-		                            <p class ="cost">Giá sản phẩm: ` + cartController.formatPrice(data.Cost) + ` </p>
+		                            <p class ="cost">Giá sản phẩm: ` + main.formatPrice(data.Cost) + ` </p>
 		                            <p>Mô tả sản phẩm: </p>
 		                            <p>Sản phẩm nước giải khát được phân phối chính thức bởi công ty.</p>
 		                            <div class ="row">
@@ -462,15 +462,6 @@
             html = "";
         }
         $('#dataTables_info').html(html);
-    },
-    formatPrice: function (price) {
-        var priceString = String(price);
-        const comma = ',';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(priceString)) {
-            priceString = priceString.replace(rgx, '$1' + comma + '$2');
-        }
-        return priceString + ' đồng';
     },
     getUserInfo: function () {
         $.ajax({

@@ -3,7 +3,6 @@
         controller.loadData();
     },
     loadData: function () {
-
         $.ajax({
             url: '/product/homeproductspaging',
             type: 'get',
@@ -34,7 +33,6 @@
                 $('#products').html(html);
             }
         });
-
         controller.registerEvents();
     },
     registerEvents: function () {

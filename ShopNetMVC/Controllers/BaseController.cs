@@ -10,7 +10,7 @@ namespace ShopNetMVC.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null;
+            ViewBag.LoginSuccess = session != null;
             var cateCounts = ProductDao.Instance.GetProductCount();
             ViewBag.CateCount = cateCounts;
             var listCate = CategoryDao.Instance.GetListCategory();

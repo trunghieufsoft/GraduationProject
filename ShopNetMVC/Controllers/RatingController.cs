@@ -12,12 +12,6 @@ namespace ShopNetMVC.Controllers
 {
     public class RatingController : Controller
     {
-        [HttpPost]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // POST: add rating
         [HttpPost]
         public JsonResult AddRating(string content, double rating, int product)

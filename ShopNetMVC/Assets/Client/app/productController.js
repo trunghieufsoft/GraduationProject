@@ -156,88 +156,38 @@
 
         // edit comment
         $('i#edit-comment').off('click').on('click', function () {
-            var parent = $(this).parent().parent().parent();
-            var content = parent.children('.comment-content');
-            var p = content.children('p');
-            var input = content.children('input#cmet');
-            input.attr('value', p.text());
-            if (input.hasClass('hidden')) {
-                input.removeClass('hidden');
-                p.addClass('hidden');
-            }
-            // focus
-            input.focus();
+            var btn = $(this);
+            controller.handleEditClick(btn, true);
         });
 
         // edit reply
         $('i#edit-reply').off('click').on('click', function () {
-            var parent = $(this).parent().parent().parent();
-            var content = parent.children('.comment-content');
-            var p = content.children('p');
-            var input = content.children('input#rep');
-            input.attr('value', p.text());
-            if (input.hasClass('hidden')) {
-                input.removeClass('hidden');
-                p.addClass('hidden');
-            }
-            // focus
-            input.focus();
+            var btn = $(this);
+            controller.handleEditClick(btn, false);
         });
 
         // handle lost focus input comment
         $('input#cmet').focusout(function () {
             var input = $(this);
-            var p = input.parent().children('p');
-            if (p.hasClass('hidden')) {
-                p.removeClass('hidden');
-                input.addClass('hidden');
-                controller.changeRepOrComment(true, input.data('comid'), null, input.val());
-                p.text(input.val());
-            }
+            controller.handleFocusOut(input, true);
         });
 
         // handle lost focus input rep
         $('input#rep').focusout(function () {
             var input = $(this);
-            var p = input.parent().children('p');
-            if (p.hasClass('hidden')) {
-                p.removeClass('hidden');
-                input.addClass('hidden');
-                controller.changeRepOrComment(false, input.data('comid'), input.data('repno'), input.val());
-                p.text(input.val());
-            }
+            controller.handleFocusOut(input, false);
         });
 
         // handle enter key
         $('input#cmet').on('keypress', function (e) {
-            var code = e.keyCode || e.which;
-            if (code == 13) {
-                // Enter pressed... do anything here...
-                var input = $(this);
-                var p = input.parent().children('p');
-                if (p.hasClass('hidden')) {
-                    p.removeClass('hidden');
-                    input.addClass('hidden');
-                    controller.changeRepOrComment(true, input.data('comid'), null, input.val());
-                    p.text(input.val());
-                }
-            };
+            var inputs = $(this);
+            controller.handleEnterKey(e, input, true);
         });
 
         // handle enter key
         $('input#rep').on('keypress', function (e) {
-            var code = e.keyCode || e.which;
-            if (code == 13) {
-                // Enter pressed... do anything here...
-                var input = $(this);
-                var p = input.parent().children('p');
-                if (p.hasClass('hidden')) {
-                    p.removeClass('hidden');
-                    input.addClass('hidden');
-                    controller.changeRepOrComment(false, input.data('comid'), input.data('repno'), input.val());
-                    p.text(input.val());
-                }
-            };
+            var inputs = $(this);
+            controller.handleEnterKey(e, input, false);
         });
     },
     loadComments: function () {
@@ -268,7 +218,7 @@
                                     Content: elm.reply.Content,
                                     RepNo: elm.reply.RepNo,
                                     ComID: elm.reply.ComID,
-                                    CreatedAt: controller.formatDayTime(elm.reply.CreatedAt),
+                                    CreatedAt: main.formatDayTime(elm.reply.CreatedAt),
                                     isDelete: elm.reply.UserID === item.userID ? '<p><i id="trash-reply" data-comid="' + elm.reply.ComID + '" data-repno="' + elm.reply.RepNo + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : '',
                                     isEdit: elm.reply.UserID === item.userID ? '<p><i id="edit-reply" class="fa fa-pencil" aria-hidden="true"></i></p>' : ''
                                 });
@@ -280,7 +230,7 @@
                             Img: item.userGrant === 1 ? 'user' : 'custommer',
                             UserName: item.userName,
                             Content: item.comment.Content,
-                            CreatedAt: controller.formatDayTime(item.comment.CreatedAt),
+                            CreatedAt: main.formatDayTime(item.comment.CreatedAt),
                             Replies: repliesHtml,
                             isDelete: item.comment.UserID === item.userID ? '<p><i id="trash-comment" data-comid="' + item.comment.ComID + '" class="fa fa-trash-o" aria-hidden="true"></i></p>' : '',
                             isEdit: item.comment.UserID === item.userID ? '<p><i id="edit-comment" class="fa fa-pencil" aria-hidden="true"></i></p>' : ''
@@ -328,7 +278,7 @@
                         html += Mustache.render(template, {
                             Img: 'user',
                             UserName: response.Uname[i],
-                            CreatedAt: controller.formatDayTime(item.CreatedAt),
+                            CreatedAt: main.formatDayTime(item.CreatedAt),
                             Content: item.Content,
                             Level: item.Level,
                             Level_width: 80 - (5 - item.Level) * 16
@@ -397,20 +347,40 @@
             }
         });
     },
-    formatDayTime: function (date) {
-        if (date == '')
-            return 'Chưa có chỉnh sửa';
-        date = new Date(date);
-        var dateString = date.toLocaleDateString('vi-vi', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            timeZone: 'Asia/Ho_Chi_Minh'
-        });
-        var timeString = date.toLocaleTimeString('en-vi', {
-            timeZone: 'Asia/Ho_Chi_Minh'
-        });
-        return dateString + ' ' + timeString;
+    handleEditClick: function (btn, isComment) {
+        var parent = btn.parent().parent().parent();
+        var content = parent.children('.comment-content');
+        var p = content.children('p');
+        var input = content.children(isComment ? 'input#cmet' : 'input#rep');
+        input.attr('value', p.text());
+        if (input.hasClass('hidden')) {
+            input.removeClass('hidden');
+            p.addClass('hidden');
+        }
+        // focus
+        input.focus();
+    },
+    handleEnterKey: function (e, input, isComment) {
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+            // Enter pressed... do anything here...
+            var p = input.parent().children('p');
+            if (p.hasClass('hidden')) {
+                p.removeClass('hidden');
+                input.addClass('hidden');
+                controller.changeRepOrComment(isComment, input.data('comid'), !isComment ? input.data('repno') : null, input.val());
+                p.text(input.val());
+            }
+        };
+    },
+    handleFocusOut: function (input, isComment) {
+        var p = input.parent().children('p');
+        if (p.hasClass('hidden')) {
+            p.removeClass('hidden');
+            input.addClass('hidden');
+            controller.changeRepOrComment(isComment, input.data('comid'), !isComment ? input.data('repno') : null, input.val());
+            p.text(input.val());
+        }
     },
     changeRepOrComment: function (isComment, comment, rep, text) {
         var url = isComment ? '/comment/changeComment' : '/comment/changeReply';

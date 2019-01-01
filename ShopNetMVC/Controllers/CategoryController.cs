@@ -18,7 +18,7 @@ namespace ShopNetMVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var session = (UserSession)Session[Constants.USER_SESSION];
-            ViewBag.UserSession = session != null ? true : false;
+            ViewBag.LoginSuccess = session != null;
             var products = ProductDao.Instance.GetByCategoryCode(code);
 
             // Get Session order
