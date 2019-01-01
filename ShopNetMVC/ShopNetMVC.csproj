@@ -1431,6 +1431,7 @@
     <Content Include="Assets\Client\app\cartController.js" />
     <Content Include="Assets\Client\app\contactController.js" />
     <Content Include="Assets\Client\app\home.js" />
+    <Content Include="Assets\Client\app\login.js" />
     <Content Include="Assets\Client\app\main.js" />
     <Content Include="Assets\Client\app\productController.js" />
     <Content Include="Assets\Client\css\bootstrap.css" />
