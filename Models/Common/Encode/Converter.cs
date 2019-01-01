@@ -99,7 +99,7 @@ namespace Models.Common.Encode
             //table = table.ToLower();
             string now = DateTime.Now.ToString("ddMMyy");
             var indexString = "";
-            var indexNumber = Constants.zeroNumber;
+            var indexNumber = 0;
             List<string> listData = null;
             switch (table)
             {
@@ -123,7 +123,7 @@ namespace Models.Common.Encode
             }
             if (listData != null)
             {
-                var count = Constants.zeroNumber;
+                var count = 0;
                 foreach (var item in listData)
                 {
                     indexString = item.ToString().Substring(6);
@@ -151,7 +151,6 @@ namespace Models.Common.Encode
         // method create id format for Reply
         public static int genIdFormat_numberNo(ShopDbContext db, string _comID, ItemTypes table = ItemTypes.Reply)
         {
-            var indexNumber = Constants.zeroNumber;
             List<int> listData = null;
             switch (table)
             {
@@ -161,18 +160,16 @@ namespace Models.Common.Encode
                             .Select(s => s.RepNo).ToList();
                     break;
                 case ItemTypes.Bill:
-                    // TODO
+                // TODO
                 case ItemTypes.Comment:
-                    // TODO
+                // TODO
                 case ItemTypes.Rating:
-                    // TODO
+                // TODO
                 default:
-                    return Constants.minusOneNumber; // error: return false
+                    return -1; // error: return false
             }
-            
-            return listData.Count > 0
-                ? listData[listData.Count + Constants.minusOneNumber] + Constants.oneNumber 
-                : Constants.oneNumber;
+
+            return listData.Count > 0 ? listData[listData.Count - 1] + 1 : 1;
         }
 
         public static string formatPrice(int cost)

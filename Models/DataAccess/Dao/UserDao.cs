@@ -61,11 +61,11 @@ namespace Models.DataAccess
 
         public bool hasUser(User _request)
         {
-            var user = (_request.Email != Constants.nullValue && _request.Email != Constants.stringEmpty) ?
+            var user = (_request.Email != null && _request.Email != Constants.stringEmpty) ?
                 db.Users.SingleOrDefault(obj => obj.Phone == _request.Phone || obj.Email == _request.Email)
                 :
                 db.Users.SingleOrDefault(obj => obj.Phone == _request.Phone);
-            return user != default(User) ? Constants.trueValue : Constants.falseValue;
+            return user != default(User) ? true : false;
         }
 
         /**
@@ -80,10 +80,10 @@ namespace Models.DataAccess
                 if (!hasUser(_request))
                 {
                     _request.CreatedAt = DateTime.Now;
-                    _request.Password = Encrypt.Encrypt_Code(_request.Password, Constants.trueValue);
+                    _request.Password = Encrypt.Encrypt_Code(_request.Password, true);
                     db.Users.Add(_request);
                     db.SaveChanges();
-                    return Constants.trueValue;
+                    return true;
                 }
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace Models.DataAccess
                 throw ex;
             }
 
-            return Constants.falseValue;
+            return false;
         }
 
         /**
@@ -102,10 +102,10 @@ namespace Models.DataAccess
         public bool delete(string _key)
         {
             if (hasReference(_key))
-                return Constants.falseValue;
+                return false;
             db.Users.Remove(getByID(_key));
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -130,13 +130,13 @@ namespace Models.DataAccess
         public bool changePasswd(UserRequestDto _request)
         {
             var user = getByID(_request.UserID);
-            var new_password = Encrypt.Encrypt_Code(_request.Password, Constants.trueValue);
+            var new_password = Encrypt.Encrypt_Code(_request.Password, true);
             if (user.Password.Equals(new_password))
-                return Constants.falseValue;
+                return false;
             user.Password = new_password;
             user.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -153,13 +153,13 @@ namespace Models.DataAccess
             user.Email = _request.Email;
             if (!string.IsNullOrEmpty(_request.Password))
             {
-                var new_password = Encrypt.Encrypt_Code(_request.Password, Constants.trueValue);
+                var new_password = Encrypt.Encrypt_Code(_request.Password, true);
                 if (!user.Password.Equals(new_password))
                     user.Password = new_password;
             }
             user.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -216,7 +216,7 @@ namespace Models.DataAccess
             if (string.IsNullOrEmpty(_user.Password))
                 return Constants.LoginState.PasswordNull;
             // encode
-            string encrypt = Encrypt.Encrypt_Code(_user.Password, Constants.trueValue);
+            string encrypt = Encrypt.Encrypt_Code(_user.Password, true);
             // create parameter to use store
             object[] parameter =
             {
@@ -241,8 +241,8 @@ namespace Models.DataAccess
 
         private bool hasUser(string _uname, string _pass)
         {
-            var User = db.Users.SingleOrDefault(x => x.UserID == _uname && x.Password == _pass && x.Grant.isActive == Constants.trueValue);
-            return User != default(User) ? Constants.trueValue : Constants.falseValue;
+            var User = db.Users.SingleOrDefault(x => x.UserID == _uname && x.Password == _pass && x.Grant.isActive == true);
+            return User != default(User) ? true : false;
         }
 
         public bool checkUserName(string username)
@@ -258,9 +258,9 @@ namespace Models.DataAccess
                 var count_one = db.Bills.Where(obj => obj.UserID == _key).ToList().Count;
                 var count_two = db.Replies.Where(obj => obj.UserID == _key).ToList().Count;
                 var count_three = db.Comments.Where(obj => obj.UserID == _key).ToList().Count;
-                return (count_one + count_two + count_three) > Constants.zeroNumber;
+                return (count_one + count_two + count_three) > 0;
             }
-            return Constants.falseValue;
+            return false;
         }
         #endregion Handle
     }

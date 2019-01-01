@@ -61,7 +61,7 @@ namespace Models.DataAccess.Dao
             _request.CreatedAt = DateTime.Now;
             db.Replies.Add(_request);
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -78,9 +78,9 @@ namespace Models.DataAccess.Dao
             }
             catch
             {
-                return Constants.falseValue;
+                return false;
             }
-            return Constants.trueValue;
+            return true;
         }
 
         /// <summary>

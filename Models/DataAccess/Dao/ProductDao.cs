@@ -86,7 +86,7 @@ namespace Models.DataAccess
         public bool hasProcuct(Product _prod)
         {
             var product = db.Products.SingleOrDefault(obj => obj.ProdID == _prod.ProdID || obj.Code == _prod.Code);
-            return product != default(Product) ? Constants.trueValue : Constants.falseValue;
+            return product != default(Product) ? true : false;
         }
 
         /**
@@ -104,9 +104,9 @@ namespace Models.DataAccess
                 _request.CreatedAt = DateTime.Now;
                 db.Products.Add(_request);
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         /**
@@ -117,10 +117,10 @@ namespace Models.DataAccess
         public bool delete(int _key)
         {
             if (hasReference(_key))
-                return Constants.falseValue;
+                return false;
             db.Products.Remove(getByID(_key));
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -153,9 +153,9 @@ namespace Models.DataAccess
                 product.ImageUrl = imageUrl;
                 product.UpdatedAt = DateTime.Now;
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         /**
@@ -179,9 +179,9 @@ namespace Models.DataAccess
                 product.UpdatedAt = DateTime.Now;
                 product.isActive = _request.isActive;
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         /**
@@ -199,7 +199,7 @@ namespace Models.DataAccess
             product.UpdatedAt = DateTime.Now;
             product.isActive = _request.isActive;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /// <summary>
@@ -276,9 +276,9 @@ namespace Models.DataAccess
             {
                 var count_one = db.Orders.Where(obj => obj.ProdID == _key).ToList().Count;
                 var count_two = db.Ratings.Where(obj => obj.ProdID == _key).ToList().Count;
-                return (count_one + count_two) > Constants.zeroNumber;
+                return (count_one + count_two) > 0;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         public IEnumerable<Product> RelatedProducts(int id, int amount)

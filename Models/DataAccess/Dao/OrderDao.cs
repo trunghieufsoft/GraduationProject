@@ -57,7 +57,7 @@ namespace Models.DataAccess
             _request.CreatedAt = DateTime.Now;
             db.Orders.Add(_request);
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -77,9 +77,9 @@ namespace Models.DataAccess
             }
             catch
             {
-                return Constants.falseValue;
+                return false;
             }
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -92,7 +92,7 @@ namespace Models.DataAccess
             db.Orders.Remove(getByID(_keyBill, _keyPro));
             db.SaveChanges();
             BillDao.Instance.changeBillTotalPrice(_keyBill, totalPrice(_keyBill));
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -106,7 +106,7 @@ namespace Models.DataAccess
             Order.UpdatedAt = DateTime.Now;
             db.SaveChanges();
             BillDao.Instance.changeBillTotalPrice(_request.BillID, totalPrice(_request.BillID));
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -128,14 +128,14 @@ namespace Models.DataAccess
             var orderList = getObjectList(_keyBill).ToList();
             if (orderList.Count > 0)
             {
-                int total = Constants.zeroNumber;
+                int total = 0;
                 foreach (var item in orderList)
                 {
                     total += item.Count * item.Product.Cost;
                 }
                 return total > 150000 ? total > 300000 ? 30000 : 15000 : 0;
             }
-            return Constants.zeroNumber;
+            return 0;
         }
         #endregion Handle
     }

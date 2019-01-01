@@ -73,7 +73,7 @@ namespace Models.DataAccess
             _request.CreatedAt = DateTime.Now;
             db.Comments.Add(_request);
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -88,9 +88,9 @@ namespace Models.DataAccess
                 res = deleteReference(_key);
             if (res)
                 db.Comments.Remove(comment);
-            else return Constants.falseValue;
+            else return false;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -142,9 +142,9 @@ namespace Models.DataAccess
             if (comment != default(Comment))
             {
                 var count = db.Replies.Where(obj => obj.ComID == _key).ToList().Count;
-                return count > Constants.zeroNumber ? Constants.trueValue : Constants.falseValue;
+                return count > 0 ? true : false;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         private bool deleteReference(string _key)
@@ -161,10 +161,10 @@ namespace Models.DataAccess
                 }
                 catch
                 {
-                    return Constants.falseValue;
+                    return false;
                 }
             }
-            return Constants.trueValue;
+            return true;
         }
 
         #endregion Handle

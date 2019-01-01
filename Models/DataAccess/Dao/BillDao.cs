@@ -71,7 +71,7 @@ namespace Models.DataAccess
             _request.CreatedAt = DateTime.Now;
             _request.BillID = Converter.genIdFormat_ddmmyy(db, Converter.ItemTypes.Bill);
             if (_request.UserID.Equals(""))
-                _request.UserID = Constants.nullValue;
+                _request.UserID = null;
             db.Bills.Add(_request);
             var x = db.Bills.ToList();
             db.SaveChanges();
@@ -107,9 +107,9 @@ namespace Models.DataAccess
             {
                 db.Bills.Remove(delItem);
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         /**
@@ -123,7 +123,7 @@ namespace Models.DataAccess
             bill.TotalPrice = totalPrice;
             bill.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -137,7 +137,7 @@ namespace Models.DataAccess
             bill.Note = _request.Note;
             bill.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -151,7 +151,7 @@ namespace Models.DataAccess
             bill.UserID = _request.UserID;
             bill.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -168,7 +168,7 @@ namespace Models.DataAccess
             bill.Note = _request.Note;
             bill.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -203,7 +203,7 @@ namespace Models.DataAccess
                 }
                 db.SaveChanges();
             }
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -217,9 +217,9 @@ namespace Models.DataAccess
             if (bill != default(Bill))
             {
                 var count = db.Orders.Where(obj => obj.BillID == _key).ToList().Count;
-                return count > Constants.zeroNumber ? Constants.trueValue : Constants.falseValue;
+                return count > 0 ? true : false;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         #endregion Handle

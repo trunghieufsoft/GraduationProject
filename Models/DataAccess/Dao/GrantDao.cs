@@ -58,11 +58,11 @@ namespace Models.DataAccess
 
         public bool insert(Grant _request)
         {
-            _request.isActive = Constants.falseValue;
+            _request.isActive = false;
             _request.CreatedAt = DateTime.Now;
             db.Grants.Add(_request);
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -76,7 +76,7 @@ namespace Models.DataAccess
             grant.isActive = !grant.isActive;
             grant.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -90,7 +90,7 @@ namespace Models.DataAccess
             grant.GrantName = _request.GrantName;
             grant.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**

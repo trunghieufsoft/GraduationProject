@@ -63,9 +63,9 @@ namespace Models.DataAccess
                 _request.CreatedAt = DateTime.Now;
                 db.Ratings.Add(_request);
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         /**
@@ -77,7 +77,7 @@ namespace Models.DataAccess
         {
             db.Ratings.Remove(getByID(_key));
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -91,7 +91,7 @@ namespace Models.DataAccess
             Rating.Level = _request.Level;
             Rating.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace Models.DataAccess
                 Rating.ProdID = _request.ProdID;
                 Rating.Content = _request.Content;
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Models.DataAccess
         private bool hasRating(string _userID, int _prodID)
         {
             var rating = db.Ratings.SingleOrDefault(obj => obj.UserID == _userID && obj.ProdID == _prodID);
-            return rating != default(Rating) ? Constants.trueValue : Constants.falseValue;
+            return rating != default(Rating) ? true : false;
         }
 
         public IEnumerable<Rating> lsRatProd(int _prodID)

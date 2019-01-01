@@ -6,6 +6,7 @@ using Models.DataAccess.Dto;
 using Models.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace ShopNetMVC.Controllers
@@ -19,7 +20,7 @@ namespace ShopNetMVC.Controllers
             //var related = ProductDao.Instance.RelatedProducts(4);
             var related = ProductDao.Instance.Recommendations();
 
-            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+            ViewBag.Related = Mapper.Map<List<Product>, List<ProductRequestDto>>(related.ToList());
 
             var listPrice = new List<string>();
             foreach (var item in related)
@@ -36,7 +37,7 @@ namespace ShopNetMVC.Controllers
             //var related = ProductDao.Instance.RelatedProducts(4);
             var related = ProductDao.Instance.Recommendations();
 
-            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
+            ViewBag.Related = Mapper.Map<List<Product>, List<ProductRequestDto>>(related.ToList());
 
             var listPrice = new List<string>();
             foreach (var item in related)

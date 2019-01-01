@@ -58,7 +58,7 @@ namespace Models.DataAccess
         public bool hasCategory(Category _cate)
         {
             var category = db.Categories.SingleOrDefault(obj => obj.CateID == _cate.CateID || obj.CodeName.ToLower() == _cate.CodeName.ToLower());
-            return category != default(Category) ? Constants.trueValue : Constants.falseValue;
+            return category != default(Category) ? true : false;
         }
 
         /**
@@ -74,9 +74,9 @@ namespace Models.DataAccess
                 _request.CreatedAt = DateTime.Now;
                 db.Categories.Add(_request);
                 db.SaveChanges();
-                return Constants.trueValue;
+                return true;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         public List<Category> GetListCategory()
@@ -93,10 +93,10 @@ namespace Models.DataAccess
         {
             var category = getByID(_keyCategory);
             if (hasReference(_keyCategory))
-                return Constants.falseValue;
+                return false;
             db.Categories.Remove(category);
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -125,7 +125,7 @@ namespace Models.DataAccess
             category.isActive = _request.isActive;
             category.UpdatedAt = DateTime.Now;
             db.SaveChanges();
-            return Constants.trueValue;
+            return true;
         }
 
         /**
@@ -154,9 +154,9 @@ namespace Models.DataAccess
             if (category != default(Category))
             {
                 var count = db.Products.Where(obj => obj.CateID == _key).ToList().Count;
-                return count > Constants.zeroNumber ? Constants.trueValue : Constants.falseValue;
+                return count > 0 ? true : false;
             }
-            return Constants.falseValue;
+            return false;
         }
 
         public Category getByCode(string code)

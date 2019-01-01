@@ -71,7 +71,7 @@ namespace ShopNetMVC.Areas.Admin.Controllers
         public JsonResult loadData(int page, int pageSize, string search)
         {
             var categories = string.IsNullOrEmpty(search) ? CategoryDao.Instance.getObjectList() : CategoryDao.Instance.getObjectList(search);
-            var data = Mapper.Map<List<CategoryRequestDto>>(categories);
+            var data = Mapper.Map<List<Category>, List<CategoryRequestDto>>(categories.ToList());
             var response = data.Skip((page - 1) * pageSize).Take(pageSize);
             return Json(new
             {
