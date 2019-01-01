@@ -70,13 +70,6 @@
         var rgx = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
         return regex.test(value) && rgx.test(value);
     },
-    validateInfo: function (e, controlIndex) {
-        event.preventDefault();
-        var control = controlIndex === 1 ? $('#validator-name') : controlIndex === 2 ? $('#validator-phone') : controlIndex === 3 ? $('#validator-email') : $('#validator-content');
-        if (!control.hasClass("validator")) {
-            control.addClass("validator");
-        }
-    },
     paging: function (totalRows,totalPages, callback) {
         if (totalPages !== 1) {
             $('#pagination').twbsPagination({
@@ -98,5 +91,5 @@
             posEnd = totalRows;
         var html = 'Hiển thị ' + posStart + ' đến ' + posEnd + ' trong tổng số ' + totalRows + ' mục';
         $('#table-info').html(html);
-    },
+    }
 };

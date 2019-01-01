@@ -2754,3 +2754,10 @@ p.box-title {
 #feedback {
     padding-top: 20px;
 }
+label.login {
+    padding: 13px;
+    text-align: center;
+}
+.slidesImg {
+    height: 460px!important;
+}

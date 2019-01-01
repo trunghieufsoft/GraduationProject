@@ -249,21 +249,21 @@
                                     <form id="form-add-bill">
                                         <div class ="text-fields">
                                             <div class ="float-input tag-input">
-                                                <input type="text" name="cusName" style="text-transform: capitalize;" id="cusName" class ="input-info" placeholder="họ tên khách hàng" value= "` + fullName + `" onclick="gotFocus(0)">
+                                                <input type="text" name="cusName" style="text-transform: capitalize;" id="cusName" class ="input-info" placeholder="họ tên khách hàng" value= "` + fullName + `" onfocusout="lostFocus('validator-cusname')">
                                                 <span><i class ="fa fa-user tag-i"></i></span>
                                                 <div id="validator-cusname" class ="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                                             </div>
                                         </div>
                                         <div class ="submit-area">
                                             <div class ="float-input tag-input">
-                                                <input type="text" name="phone" id="phone" class ="input-info" placeholder="số điện thoại liên hệ" value= "` + phone + `" onkeyup="testNumber()" onclick="gotFocus(1)">
+                                                <input type="text" name="phone" id="phone" class ="input-info" placeholder="số điện thoại liên hệ" value= "` + phone + `" onkeyup="testNumber()" onfocusout="lostFocus('validator-phone')">
                                                 <span><i class ="fa fa-phone tag-i"></i></span>
                                                 <div id="validator-phone" class ="validator tooltips-validator"><label></label></div>
                                             </div>
                                         </div>
                                         <div class ="address-area">
                                             <div class ="float-input tag-input">
-                                                <textarea name="address" cols="60" placeholder="địa chỉ giao hàng" id="address" class ="input-info" rows="7" onclick="gotFocus(2)">` + address + `</textarea>
+                                                <textarea name="address" cols="60" placeholder="địa chỉ giao hàng" id="address" class ="input-info" rows="7" onfocusout="lostFocus('validator-address')"> ` + address + ` </textarea>
                                                 <span><i class ="fa fa-map-marker tag-i"></i></span>
                                                 <div id="validator-address" class ="validator tooltips-validator"><label>Vui lòng điền vào trường này.</label></div>
                                             </div>
@@ -281,37 +281,17 @@
                                                 text = text.substring(0, text.length -1);
                                                 document.getElementById("phone").value = text;
                                             }
-                                        }
-                                        function gotFocus(key) {
+                                        };
+                                        function lostFocus(attrid) {
                                             var name = "validator";
-                                            var element, arr;
-                                            switch (key) {
-                                                case 0:
-                                                    element = document.getElementById("validator-cusname");
-                                                    arr = element.className.split(" ");
-                                                    if (arr.indexOf(name) == -1) {
-                                                        element.className += " " +name;
-                                                    }
-                                                    break;
-                                                case 1:
-                                                    element = document.getElementById("validator-phone");
-                                                    arr = element.className.split(" ");
-                                                    if (arr.indexOf(name) == -1) {
-                                                        element.className += " " +name;
-                                                    }
-                                                    break;
-                                                case 2:
-                                                    element = document.getElementById("validator-address");
-                                                    arr = element.className.split(" ");
-                                                    if (arr.indexOf(name) == -1) {
-                                                        element.className += " " +name;
-                                                    }
-                                                    break;
-                                                default:
-                                                    break;
+                                            var element = document.getElementById(attrid);
+                                            var arr = element.className.split(" ");
+                                            if (arr.indexOf(name) == -1) {
+                                                element.className += " " +name;
                                             }
                                         }
                                     </script>
+                                </div>
                                 `,
                                 buttons: {
                                     cancel: {
@@ -331,20 +311,23 @@
                                                 pay: totalpay
                                             };
                                             if (data.cusName === "") {
-                                                var x = $('#validator-cusName label').text();
                                                 $('#validator-cusname').removeClass('validator');
+                                                $('#cusName').focus();
                                                 return false;
                                             }
                                             if (data.phone === "") {
                                                 $('#validator-phone').removeClass('validator');
                                                 $('#validator-phone label').text('Vui lòng điền vào trường này.');
+                                                $('#phone').focus();
                                                 return false;
                                             }
                                             if (data.phone.length !== 10) {
                                                 $('#validator-phone').removeClass('validator');
                                                 $('#validator-phone label').text('Vui lòng nhập đúng format 10 số.');
+                                                $('#phone').focus();
                                             } else if (data.address === "") {
                                                 $('#validator-address').removeClass('validator');
+                                                $('#address').focus();
                                             } else {
                                                 $.ajax({
                                                     type: 'POST',

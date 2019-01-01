@@ -166,4 +166,22 @@
     #validator-address {
         top: -35px;
     }
+    .slidesImg {
+        height: 250px!important;
+    }
+    .icon-blocks .col-sm-4 p span {
+        display: none;
+    }
+    .icon-blocks .col-sm-4 p i {
+        margin-bottom: 0;
+    }
+    .articles .itemProduct {
+        width: 80%;
+    }
+}
+@media (max-width:487px) {
+    label.login {
+        padding: 13px 0;
+        text-align: center;
+    }
 }
