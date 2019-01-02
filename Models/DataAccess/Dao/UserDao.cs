@@ -119,7 +119,6 @@ namespace Models.DataAccess
             var user = getByID(_key);
             user.Phone = user.Phone == "" ? "03" : user.Phone;
             user.isActive = !user.isActive;
-            user.Grant = GrantDao.Instance.getByID(user.GrantID);
             user.UpdatedAt = DateTime.Now;
             try
             {
