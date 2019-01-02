@@ -3,8 +3,7 @@
         controller.registerEvents();
     },
     registerEvents: function () {
-        $("#btn-order").off("click").on("click",
-        function(e) {
+        $("#btn-order").off("click").on("click", function(e) {
             var quantity = $('.qty').val();
             var prodID = $(this).data('id');
             $.ajax({

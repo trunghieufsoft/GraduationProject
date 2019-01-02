@@ -25,7 +25,7 @@
                     var template = $('#data-template').html();
                     if (response.totalRows === 0) {
                         html = `<tr>
-                                <td colspan="6" style="text-align: center">
+                                <td colspan="8" style="text-align: center">
                                     Chưa có đơn hàng!
                                 </td>
                             </tr>`;

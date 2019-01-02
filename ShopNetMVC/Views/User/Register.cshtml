@@ -7,7 +7,7 @@
 }
 
 @section JavaScript{
-    @*<script src="~/assets/client/app/loginController.js"></script>*@
+    <script src="~/assets/client/app/register.js"></script>
 }
 
 <!--articles-->
@@ -22,48 +22,39 @@
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <!-- Content -->
-                    <div style="width: 60%; margin: auto">
-                        @using (Html.BeginForm("Register", "User", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group ">
-                            </div>
-                            <div class="form-group ">
-                                @Html.TextBoxFor(model => model.UserID, new { @class = "form-control", @placeholder = "Tên đăng nhập", @autofocus = "autofocus" })
-                                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group ">
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group ">
-                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu" })
-                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group ">
-                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Tên người dùng" })
-                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group ">
-                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group ">
-                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Số điện thoại" })
-                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group ">
-                                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
-                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng ký</button>
-                            </div>
-                            <div class="clear-fix" style="margin-top: 10px;">
-                                Đã có tài khoản? <a href="/user/login" class="text-center">Đăng nhập</a>
-                            </div>
-                        }
+                    <div id="registerForm" style="width: 60%; margin: auto">
+                        <div id="validation" class="form-group alert-danger" style="margin: 10px 0px;"></div>
+                        <div class="form-group ">
+                            <label for="userid">Tên đăng nhập</label>
+                            <input type="text" name="userid" id="userid" style="margin-top: 5px;" class="form-control" required autofocus />
+                        </div>
+                        <div class="form-group ">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" name="password" id="password" style="margin-top: 5px;" class="form-control" required />
+                        </div>
+                        <div class="form-group ">
+                            <label for="confirmPassword">Xác nhận mật khẩu</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" style="margin-top: 5px;" class="form-control" required />
+                        </div>
+                        <div class="form-group ">
+                            <label for="fullName">Tên người dùng</label>
+                            <input type="text" name="fullName" id="fullName" style="margin-top: 5px;" class="form-control" required />
+                        </div>
+                        <div class="form-group ">
+                            <label for="email">Địa chỉ email</label>
+                            <input type="email" name="email" id="email" style="margin-top: 5px;" class="form-control" required />
+                        </div>
+                        <div class="form-group ">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="text" name="phone" id="phone" style="margin-top: 5px;" class="form-control" />
+                        </div>
+                        <div class="form-group ">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" name="address" id="address" style="margin-top: 5px;" class="form-control" />
+                        </div>
+                        <div>
+                            <button type="button" id="btnRegister" class="btn btn-primary btn-block btn-flat">Đăng ký</button>
+                        </div>
                     </div>
                 </div>
                 <!-- /.box-body -->

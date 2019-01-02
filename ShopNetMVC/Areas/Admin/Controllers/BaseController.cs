@@ -10,7 +10,7 @@ namespace ShopNetMVC.Areas.Admin.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = (UserSession)Session[Constants.USER_SESSION];
-            if (session == null || session.GrantID == (int)Constants.GrantID.User)
+            if (session == null || session.GrantID == (int)Constants.GrantID.User || session.GrantID == (int)Constants.GrantID.Staff)
             {
                 filterContext.Result = new RedirectToRouteResult(new
                    RouteValueDictionary(new { Controller = "Login", Action = "Index", Area = "Admin" }));

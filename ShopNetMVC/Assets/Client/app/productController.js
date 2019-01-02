@@ -40,34 +40,7 @@
                 title: 'Thông báo',
                 callback: function (result) {
                     if (result) {
-                        $.ajax({
-                            type: 'POST',
-                            data: {
-                                request: comId
-                            },
-                            url: '/comment/deletecomment',
-                            dataType: 'json',
-                            success: function (response) {
-                                if (response.result) {
-                                    controller.loadComments();
-                                } else {
-                                    bootbox.alert({
-                                        title: 'Thông báo',
-                                        size: 'small',
-                                        message: 'Đã xảy ra lỗi!'
-                                    });
-                                    console.log(response.message);
-                                }
-                            },
-                            error: function (response) {
-                                bootbox.alert({
-                                    title: 'Thông báo',
-                                    size: 'small',
-                                    message: 'Đã xảy ra lỗi!'
-                                });
-                                console.log(response.message);
-                            }
-                        })
+                        controller.removeComment(comId);
                     }
                 }
             });
@@ -83,35 +56,7 @@
                 title: 'Thông báo',
                 callback: function (result) {
                     if (result) {
-                        $.ajax({
-                            type: 'POST',
-                            data: {
-                                comId: comId,
-                                repNo: repNo
-                            },
-                            url: '/comment/deletereply',
-                            dataType: 'json',
-                            success: function (response) {
-                                if (response.result) {
-                                    controller.loadComments();
-                                } else {
-                                    bootbox.alert({
-                                        title: 'Thông báo',
-                                        size: 'small',
-                                        message: 'Đã xảy ra lỗi!'
-                                    });
-                                    console.log(response.message);
-                                }
-                            },
-                            error: function (response) {
-                                bootbox.alert({
-                                    title: 'Thông báo',
-                                    size: 'small',
-                                    message: 'Đã xảy ra lỗi!'
-                                });
-                                console.log(response.message);
-                            }
-                        })
+                        controller.removeReplies(comId, repNo);
                     }
                 }
             });
@@ -120,38 +65,7 @@
         // add rating to customer
         $('#add-rating').off('click').on('click', function () {
             var ri = $('.bigstars #rateit_star');
-            var rating = ri.rateit('value');
-            var product = ri.data('id');
-            var content = $('#ratingContent').val();
-            // handle
-            $.ajax({
-                url: '/rating/addrating',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    content: content,
-                    product: product,
-                    rating: rating
-                },
-                success: function (response) {
-                    if (response.status) {
-                        $('#ratingContent').val('');
-                        controller.loadRatings(product);
-                        bootbox.alert({
-                            message: 'Bạn đã đánh giá ' + rating + ' sao cho sản phẩm ' + response.prdName,
-                            size: 'small'
-                        });
-                    } else {
-                        bootbox.alert({
-                            message: response.message,
-                            size: 'small'
-                        });
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
+            controller.addRating($('#ratingContent').val(), ri.data('id'), ri.rateit('value'));
         });
 
         // edit comment
@@ -189,6 +103,67 @@
             var inputs = $(this);
             controller.handleEnterKey(e, input, false);
         });
+    },
+    removeComment: function (comId) {
+        $.ajax({
+            type: 'POST',
+            data: {
+                request: comId
+            },
+            url: '/comment/deletecomment',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+                    controller.loadComments();
+                } else {
+                    bootbox.alert({
+                        title: 'Thông báo',
+                        size: 'small',
+                        message: 'Đã xảy ra lỗi!'
+                    });
+                    console.log(response.message);
+                }
+            },
+            error: function (response) {
+                bootbox.alert({
+                    title: 'Thông báo',
+                    size: 'small',
+                    message: 'Đã xảy ra lỗi!'
+                });
+                console.log(response.message);
+            }
+        })
+    },
+    removeReplies: function (comId, repNo) {
+        $.ajax({
+            type: 'POST',
+            data: {
+                comId: comId,
+                repNo: repNo
+            },
+            url: '/comment/deletereply',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+                    controller.loadComments();
+                } else {
+                    bootbox.alert({
+                        title: 'Thông báo',
+                        size: 'small',
+                        message: 'Đã xảy ra lỗi!'
+                    });
+                    console.log(response.message);
+                }
+            },
+            error: function (response) {
+                bootbox.alert({
+                    title: 'Thông báo',
+                    size: 'small',
+                    message: 'Đã xảy ra lỗi!'
+                });
+                console.log(response.message);
+            }
+        })
     },
     loadComments: function () {
         var prodId = $('#commentInput').data('prodid');
@@ -344,6 +319,36 @@
                     $('#commentInput').val('');
                     controller.loadComments();
                 }
+            }
+        });
+    },
+    addRating: function (content, product, rating) {
+        $.ajax({
+            url: '/rating/addrating',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                content: content,
+                product: product,
+                rating: rating
+            },
+            success: function (response) {
+                if (response.status) {
+                    $('#ratingContent').val('');
+                    controller.loadRatings(product);
+                    bootbox.alert({
+                        message: 'Bạn đã đánh giá ' + rating + ' sao cho sản phẩm ' + response.prdName,
+                        size: 'small'
+                    });
+                } else {
+                    bootbox.alert({
+                        message: response.message,
+                        size: 'small'
+                    });
+                }
+            },
+            error: function (error) {
+                console.log(error);
             }
         });
     },

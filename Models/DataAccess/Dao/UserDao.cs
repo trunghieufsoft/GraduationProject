@@ -2,6 +2,7 @@
 using Models.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -116,10 +117,23 @@ namespace Models.DataAccess
         public bool changeStatus(string _key)
         {
             var user = getByID(_key);
+            user.Phone = user.Phone == "" ? "03" : user.Phone;
             user.isActive = !user.isActive;
+            user.Grant = GrantDao.Instance.getByID(user.GrantID);
             user.UpdatedAt = DateTime.Now;
-            db.SaveChanges();
-            return user.isActive;
+            try
+            {
+                db.SaveChanges();
+                return user.isActive;
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw e;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /**

@@ -6,8 +6,6 @@ using Models.DataAccess.Dto;
 using Models.EntityFramework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ShopNetMVC.Controllers
@@ -18,10 +16,9 @@ namespace ShopNetMVC.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            //var related = ProductDao.Instance.RelatedProducts(4);
             var related = ProductDao.Instance.Recommendations();
 
-            ViewBag.Related = Mapper.Map<List<Product>, List<ProductRequestDto>>(related.ToList());
+            ViewBag.Related = Mapper.Map<List<ProductRequestDto>>(related);
 
             var listPrice = new List<string>();
             foreach (var item in related)
@@ -33,14 +30,14 @@ namespace ShopNetMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(UserRegister model)
+        public JsonResult Register(UserRegister model)
         {
             if (ModelState.IsValid)
             {
                 var existed = UserDao.Instance.checkUserName(model.UserID);
                 if (existed)
                 {
-                    ModelState.AddModelError("", "Tên đăng nhập đã tồn tại.");
+                    return Json(new { message = "Tên đăng nhập đã tồn tại" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -57,15 +54,15 @@ namespace ShopNetMVC.Controllers
                     var result = UserDao.Instance.insert(user);
                     if (result)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Địa chỉ email hoặc số điện thoại đã tồn tại");
+                        return Json(new { message = "Địa chỉ email hoặc số điện thoại đã tồn tại" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            return View(model);
+            return Json(new { message = "Đăng kí thất bại. Vui lòng kiểm tra thông tin" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -81,43 +78,42 @@ namespace ShopNetMVC.Controllers
             try
             {
                 result = UserDao.Instance.checkLogin(model);
+                switch (result)
+                {
+                    case Constants.LoginState.UsernameAndPasswordNull:
+                        msg = "Tài khoản và mật khẩu không được rỗng!";
+                        break;
+
+                    case Constants.LoginState.UsernameNull:
+                        msg = "Tên đăng nhập bị rỗng!";
+                        break;
+
+                    case Constants.LoginState.PasswordNull:
+                        msg = "Mật khẩu không được rỗng!";
+                        break;
+
+                    case Constants.LoginState.Failed:
+                        msg = "Tên đăng nhập hoặc mật khẩu không đúng!";
+                        break;
+
+                    case Constants.LoginState.Locked:
+                        msg = "Tài khoản đã bị khóa!";
+                        break;
+
+                    case Constants.LoginState.Successed:
+                    default:
+                        var use = UserDao.Instance.getByID(model.UserName);
+                        var userSession = new UserSession(use.UserID, use.FullName, use.GrantID);
+                        Session.Add(Constants.USER_SESSION, userSession);
+
+                        return Json(new { result = true, message = "đăng nhập thành công!" });
+                }
+                return Json(new { result = false, message = msg });
             }
             catch (Exception ex)
             {
                 return Json(new { result = false, message = ex.Message });
             }
-            switch (result)
-            {
-                case Constants.LoginState.UsernameAndPasswordNull:
-                    msg = "Tài khoản và mật khẩu không được rỗng";
-                    break;
-
-                case Constants.LoginState.UsernameNull:
-                    msg = "Tên đăng nhập bị rỗng";
-                    break;
-
-                case Constants.LoginState.PasswordNull:
-                    msg = "Mật khẩu không được rỗng";
-                    break;
-
-                case Constants.LoginState.Failed:
-                    msg = "Tên đăng nhập hoặc mật khẩu không đúng";
-                    break;
-
-                case Constants.LoginState.Locked:
-                    msg = "Tài khoản đã bị khóa";
-                    break;
-
-                case Constants.LoginState.Successed:
-                default:
-                    var use = UserDao.Instance.getByID(model.UserName);
-                    var userSession = new UserSession(use.UserID, use.FullName, use.GrantID);
-                    Session.Add(Constants.USER_SESSION, userSession);
-
-                    return Json(new { result = true, message = "đăng nhập thành công" });
-            }
-
-            return Json(new { result = false, message = msg });
         }
 
         [HttpPost]

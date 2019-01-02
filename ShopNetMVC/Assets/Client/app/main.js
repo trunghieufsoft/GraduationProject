@@ -91,5 +91,28 @@
             posEnd = totalRows;
         var html = 'Hiển thị ' + posStart + ' đến ' + posEnd + ' trong tổng số ' + totalRows + ' mục';
         $('#table-info').html(html);
-    }
+    },
+    toJsonObject: function (formName) {
+        if (formName == null) {
+            formName = 'form-data';
+        }
+        var form = document.getElementById(formName);
+        var obj = {};
+        var elements = form.querySelectorAll("input, select, textarea");
+        for (var i = 0; i < elements.length; ++i) {
+            var element = elements[i];
+            var name = element.name;
+            var value = element.value;
+            var type = element.type;
+            if (name) {
+                if (type == 'checkbox') {
+                    obj[name] = element.checked;
+                } else {
+                    obj[name] = value;
+                }
+
+            }
+        }
+        return JSON.stringify(obj);
+    },
 };

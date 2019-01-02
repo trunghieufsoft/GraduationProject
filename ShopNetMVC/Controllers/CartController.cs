@@ -111,10 +111,12 @@ namespace ShopNetMVC.Controllers
                 var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
 
                 double totalRows = orders.Count();
-                
+
+                var response = orders.Skip((page - 1) * pageSize).Take(pageSize);
+
                 return Json(new
                 {
-                    orders,
+                    data = response,
                     totalPrice,
                     totalRows,
                     result = true
@@ -167,14 +169,15 @@ namespace ShopNetMVC.Controllers
             }
 
             var totalPrice = orders.Sum(o => o.Count * o.Product.Cost);
-
-            double totalRows = orders.Count();
+            
             ViewBag._Price = Converter.formatPrice(totalPrice);
             var count = 0;
             foreach(var item in orders)
             {
                 if (item.Count > 0)
-                    count++;
+                {
+                    count += item.Count;
+                }
             }
             ViewBag._Count = count.ToString() + (orders.Count >= 0 ? " SP" : "");
             var fee = totalPrice > 150000 ? totalPrice > 300000 ? 30000 : 15000 : 0;

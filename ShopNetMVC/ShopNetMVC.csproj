@@ -1434,6 +1434,7 @@
     <Content Include="Assets\Client\app\login.js" />
     <Content Include="Assets\Client\app\main.js" />
     <Content Include="Assets\Client\app\productController.js" />
+    <Content Include="Assets\Client\app\register.js" />
     <Content Include="Assets\Client\css\bootstrap.css" />
     <Content Include="Assets\Client\css\comment.css" />
     <Content Include="Assets\Client\css\flexslider.css" />
@@ -1866,7 +1867,6 @@
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Bill\Index.cshtml" />
     <Content Include="Views\Shared\_Category.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />

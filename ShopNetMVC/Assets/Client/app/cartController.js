@@ -17,12 +17,13 @@
             dataType: 'json',
             success: function (response) {
                 if (response.result) {
-                    var data = response.orders;
+                    var data = response.data;
                     var html = '';
                     var template = $('#data-template').html();
 
                     $.each(data, function (i, item) {
                         html += Mustache.render(template, {
+                            Stt: i + 1,
                             Code: item.Product.Code,
                             ProdName: item.Product.ProdName,
                             Cost: main.formatPrice(item.Product.Cost),
@@ -33,7 +34,7 @@
                     });
                     if (response.totalPrice < 1) {
                         html = `<tr>
-                                <td colspan="6" style="text-align: center">
+                                <td colspan="7" style="text-align: center">
                                     Chưa có sản phẩm nào được chọn!
                                 </td>
                             </tr>`;
