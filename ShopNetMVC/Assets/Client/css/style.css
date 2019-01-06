@@ -367,6 +367,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
   display:block;
 }
 body {
+  min-width: 400px;
+  width: auto !important;
   line-height:1;
   font-family:Open Sans;
   background:#5a423b!important;

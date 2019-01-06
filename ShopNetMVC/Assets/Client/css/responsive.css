@@ -88,6 +88,16 @@
     }
 }
 @media (max-width:581px) {
+    #form-contact .contact-inpleft {
+        width: 100%;
+    }
+    #form-contact .contact-inpright {
+        width: 91%;
+        margin-bottom: 10px;
+    }
+    #form-contact {
+        padding: 5px;
+    }
     .main-flexslider .slides .slides .slide-caption h2 {
 		display:none;
     }

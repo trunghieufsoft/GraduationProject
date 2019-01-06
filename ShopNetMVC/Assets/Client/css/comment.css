@@ -285,14 +285,14 @@ input.edit-comment {
  ========================*/
 @media only screen and (max-width: 1200px) {
     .evalua-persent {
-        width:77%;
+        width:71%;
         display: inline-block;
     }
 }
 
 @media only screen and (max-width: 766px) {
     .evalua-persent {
-        width:73%;
+        width:91%;
         display: inline-block;
     }
     .reply-list {
@@ -309,6 +309,12 @@ input.edit-comment {
     }
 }
 
+@media only screen and (max-width: 699px) {
+    .evalua-persent {
+        width:89%;
+    }
+}
+
 @media only screen and (max-width: 660px) {
     .reply-list {
         padding-left: 72px;
@@ -321,6 +327,12 @@ input.edit-comment {
 
     .comments-list .comment-box {
         width: 85%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .evalua-persent {
+        width:78%;
     }
 }
 
