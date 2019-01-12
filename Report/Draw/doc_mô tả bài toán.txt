@@ -1,0 +1,14 @@
+vai trò là khách hàng:
+- biết thông tin qua website, order sản phẩm qua giao diện web
+- quản lý được các đơn hàng nếu là khách hàng thân thuộc (có account)
+- đánh giá sản phẩm cũng như bình luận và trả lời các bình luận (có account)
+- quản lý thay đổi thông tin tài khoản (có account)
+- thanh toán sản phẩm khi giao hàng tới nơi.
+- gửi mail phản hồi về chất lượng hay ý kiến cho người quản lý
+vai trò nhân viên:
+- nhận được thông tin về đơn đặt hàng, liên hệ với khách hàng và xác thực đơn hàng
+- giao sản phẩm và thanh toán, in hóa đơn
+- có các quyền của khách hàng
+vai trò người quản lý:
+- quản lý sản phẩm, giỏ sản phẩm, thông tin quyền và thông tin người sử dụng là khách hàng thân thuộc
+- có các quyền của người dùng và nhân viên
