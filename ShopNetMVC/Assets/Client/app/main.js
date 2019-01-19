@@ -1,7 +1,8 @@
 ﻿var main = {
     config: {
         pageIndex: 1,
-        pageSize: 8
+        pageSizeHome: 8,
+        pageSizePage: 5
     },
     formatPrice: function (price) {
         var priceString = String(price);
@@ -70,9 +71,9 @@
         var rgx = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
         return regex.test(value) && rgx.test(value);
     },
-    paging: function (totalRows,totalPages, callback) {
+    paging: function (totalRows,totalPages, callback, idPagination, isPageHome) {
         if (totalPages !== 1) {
-            $('#pagination').twbsPagination({
+            $(idPagination).twbsPagination({
                 totalPages: totalPages,
                 visiblePages: 5,
                 first: 'Đầu',
@@ -85,8 +86,8 @@
                 }
             });
         }
-        var posStart = (main.config.pageIndex - 1) * main.config.pageSize + 1;
-        var posEnd = posStart + main.config.pageSize - 1;
+        var posStart = (main.config.pageIndex - 1) * (isPageHome ? main.config.pageSizeHome : main.config.pageSizePage) + 1;
+        var posEnd = posStart + (isPageHome ? main.config.pageSizeHome : main.config.pageSizePage) - 1;
         if (posEnd > totalRows)
             posEnd = totalRows;
         var html = 'Hiển thị ' + posStart + ' đến ' + posEnd + ' trong tổng số ' + totalRows + ' mục';

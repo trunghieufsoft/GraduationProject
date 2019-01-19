@@ -184,7 +184,7 @@ namespace Models.DataAccess
 
         public IEnumerable<Bill> GetBills(string userID, bool isStaff)
         {
-            return isStaff ? db.Bills.ToList() : db.Bills.Where(b => b.UserID == userID).AsEnumerable();
+            return isStaff ? db.Bills.OrderByDescending(x => x.CreatedAt).AsEnumerable() : db.Bills.Where(b => b.UserID == userID).OrderByDescending(x => x.CreatedAt).AsEnumerable();
         }
 
         /**

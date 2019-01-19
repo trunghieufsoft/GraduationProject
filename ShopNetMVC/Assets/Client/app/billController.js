@@ -1,7 +1,5 @@
 ﻿var controller = {
     config: {
-        page: 1,
-        pageSize: 10,
         bills: []
     },
     init: function () {
@@ -13,8 +11,8 @@
             url: '/bill/getbills',
             type: 'GET',
             data: {
-                pageIndex: controller.config.page,
-                pageSize: controller.config.pageSize
+                pageIndex: main.config.pageIndex,
+                pageSize: main.config.pageSizePage
             },
             dataType: 'json',
             success: function (response) {
@@ -32,7 +30,7 @@
                     } else {
                         $.each(data, function (i, item) {
                             html += Mustache.render(template, {
-                                Stt: i + 1,
+                                Stt: i + ((response.pageIndex - 1) * response.pageSize) + 1,
                                 BillID: item.BillID,
                                 CustomerName: item.CustomerName,
                                 TotalPrice: main.formatPriceBill(item.TotalPrice),
@@ -45,7 +43,7 @@
 
                         main.paging(response.totalRows, response.totalPages, function () {
                             controller.getBills();
-                        });
+                        }, 'ul#pagination');
                     }
                     $('#table-data').html(html);
                     controller.registerEvents();

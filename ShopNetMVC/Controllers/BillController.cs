@@ -58,10 +58,10 @@ namespace ShopNetMVC.Controllers
                 return Json(new { status = false }, JsonRequestBehavior.AllowGet);
             }
 
+            int totalRows = bills.Count();
             bills = bills.Skip((pageIndex - 1) * pageSize)
                                         .Take(pageSize)
                                         .ToList();
-            int totalRows = bills.Count();
             int totalPages = (int)Math.Ceiling((double)totalRows / pageSize);
             var model = Mapper.Map<List<BillRequestDto>>(bills);
 
@@ -70,7 +70,9 @@ namespace ShopNetMVC.Controllers
                 status = true,
                 totalRows,
                 totalPages,
-                data = model
+                pageIndex,
+                pageSize,
+                data = model,
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

@@ -119,6 +119,8 @@ namespace ShopNetMVC.Controllers
                     data = response,
                     totalPrice,
                     totalRows,
+                    page,
+                    pageSize,
                     result = true
                 }, JsonRequestBehavior.AllowGet);
             }

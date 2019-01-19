@@ -23,7 +23,7 @@
 
                     $.each(data, function (i, item) {
                         html += Mustache.render(template, {
-                            Stt: i + 1,
+                            Stt: i + ((response.page - 1) * response.pageSize) + 1,
                             Code: item.Product.Code,
                             ProdName: item.Product.ProdName,
                             Cost: main.formatPrice(item.Product.Cost),

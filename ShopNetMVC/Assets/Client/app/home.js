@@ -8,7 +8,7 @@
             type: 'get',
             data: {
                 page: main.config.pageIndex,
-                pageSize: main.config.pageSize
+                pageSize: main.config.pageSizeHome
             },
             dataType: 'json',
             success: function (response) {
@@ -28,7 +28,7 @@
                 // paging
                 main.paging(response.totalRows, response.totalPages, function () {
                     controller.loadData();
-                });
+                }, 'ul#pagination', true);
 
                 $('#products').html(html);
             }
