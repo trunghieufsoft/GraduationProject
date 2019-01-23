@@ -39,6 +39,7 @@ namespace ShopNetMVC.Controllers
             var model = Mapper.Map<ProductRequestDto>(product);
 
             ViewBag.prdID = model.ProdID;
+            ViewBag.disabled = CategoryDao.Instance.getByID(product.CateID).isActive && product.isActive ? "" : "disabled";
             ViewBag.ProductName = model.ProdName;
             ViewBag.Price = Converter.formatPrice(model.Cost);
             ViewBag.CateName = CategoryDao.Instance.getByID(model.CateID).CateName;

@@ -7,6 +7,7 @@
         public static string USER_SESSION = "USER_SESSION";
         public static string CART_SESSION = "CART_SESSION";
         public static int PageSize = 10;
+        public static int RecommendationsNumber = 30;
 
         public static string Grant = "Grant";
         public enum LoginState

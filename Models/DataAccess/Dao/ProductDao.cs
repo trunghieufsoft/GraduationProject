@@ -71,8 +71,10 @@ namespace Models.DataAccess
 
         public List<Product> HomeProductsPaging(int page, int pageSize, out int totalPages, out int totalRows)
         {
-            var products = db.Products.OrderBy(p => p.CateID);
-
+            var products = db.Products.Join(db.Categories, prod => prod.CateID, cate => cate.CateID, (prod, cate) => new { prod, cate })
+                .Where(x => x.cate.isActive && x.prod.isActive)
+                .Select(x => x.prod).OrderBy(x => x.CateID);
+            
             totalRows = products.Count();
             totalPages = (int)Math.Ceiling((double)totalRows / pageSize);
             return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
@@ -326,8 +328,12 @@ namespace Models.DataAccess
                 amount = 4;
             }
             var lsObjPrdCount = new List<any>();
+            var products = db.Products.Join(db.Categories, prod => prod.CateID, cate => cate.CateID, (prod, cate) => new { prod, cate })
+                .Where(x => x.cate.isActive && x.prod.isActive)
+                .Select(x => x.prod);
+            products = isSearchByType ? products.Where(o => o.CateID == typeProd) : products;
             // step. 1: Get a list of favorite products
-            foreach (var product in db.Products)
+            foreach (var product in products)
             {
                 var item = new any() {
                     product = product,
@@ -343,9 +349,7 @@ namespace Models.DataAccess
                 lsObjPrdCount.Add(item);
             }
             // step. 2: Sort lsObjPrdCount get List product
-            var Products = isSearchByType
-                ? lsObjPrdCount.Where(o => o.product.CateID == typeProd).OrderByDescending(o => o.data).Select(l => l.product).ToList()
-                : lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product).ToList();
+            var Products = lsObjPrdCount.OrderByDescending(o => o.data).Select(l => l.product).ToList();
             // clear data source lsObjPrdCount
             lsObjPrdCount.Clear();
             // step. 3: Pick out the top 10 favorite products, with each favorite item, find in the 30 most recent orders, choose 4 most bought products
@@ -356,7 +360,7 @@ namespace Models.DataAccess
                     product = product,
                     data = 0
                 };
-                var flag = 30;
+                var flag = Constants.RecommendationsNumber;
                 foreach (var bill in db.Bills.OrderByDescending(i => i.CreatedAt).Select(i => i.BillID))
                 {
                     if (flag == 0)
